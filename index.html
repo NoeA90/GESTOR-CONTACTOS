@@ -513,23 +513,43 @@
       }
 
       // -----------------------------
-      // Utilidades NUEVAS (CSV simple + normalización + dedupe por teléfono)
+      // Utilidades NUEVAS (CSV robusto + normalización + dedupe por teléfono)
       // -----------------------------
 
-      // Parser CSV robusto (sin librerías): respeta comillas y comas.
+      // Detecta delimitador (comma, semicolon o tab) usando la primera línea real
+      function detectDelimiter(line) {
+        const comma = (line.match(/,/g) || []).length;
+        const semi  = (line.match(/;/g) || []).length;
+        const tab   = (line.match(/\t/g) || []).length;
+        if (tab > comma && tab > semi) return "\t";
+        return semi > comma ? ";" : ",";
+      }
+
+      // ✅ Parser CSV robusto:
+      // - Soporta , ; y tab
+      // - Limpia BOM
+      // - Respeta comillas
+      // - No rompe CRLF
       function parseCSV(text) {
+        let s = String(text || '')
+          .replace(/^\uFEFF/, '')   // BOM
+          .replace(/\r\n/g, '\n')
+          .replace(/\r/g, '\n');
+
+        const firstLine = (s.split('\n').find(l => l.trim() !== '') || '');
+        const delim = detectDelimiter(firstLine);
+
         const rows = [];
         let row = [];
         let field = '';
         let inQuotes = false;
-        const s = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
         for (let i = 0; i < s.length; i++) {
           const ch = s[i];
           const next = s[i + 1];
 
-          if (ch === '"' ) {
-            if (inQuotes && next === '"') { // "" -> "
+          if (ch === '"') {
+            if (inQuotes && next === '"') { // "" => "
               field += '"';
               i++;
             } else {
@@ -538,7 +558,7 @@
             continue;
           }
 
-          if (!inQuotes && ch === ',') {
+          if (!inQuotes && ch === delim) {
             row.push(field);
             field = '';
             continue;
@@ -547,7 +567,6 @@
           if (!inQuotes && ch === '\n') {
             row.push(field);
             field = '';
-            // evita filas totalmente vacías
             if (row.some(v => (v || '').trim() !== '')) rows.push(row);
             row = [];
             continue;
@@ -556,7 +575,6 @@
           field += ch;
         }
 
-        // último campo
         row.push(field);
         if (row.some(v => (v || '').trim() !== '')) rows.push(row);
 
@@ -570,28 +588,19 @@
         const s = String(raw || '').trim();
         if (!s) return { digits: '', e164: '' };
 
-        // Deja dígitos
         let digits = s.replace(/\D/g, '');
         if (!digits) return { digits: '', e164: '' };
 
-        // Argentina heurística:
-        // - Si arranca con 00 -> internacional
         if (s.startsWith('00')) {
           const intl = '+' + digits.slice(2);
           return { digits: intl.replace(/\D/g, ''), e164: intl };
         }
 
-        // Si ya incluye 54 al principio
-        // Nota: no metemos lógicas complejas de 9 / 15 acá para no romper,
-        // pero armamos un E.164 consistente.
         let e164 = '';
         if (digits.startsWith('54')) {
           e164 = '+' + digits;
         } else {
-          // Si viene 0 + área + número (muy común), sacamos el 0
           if (digits.startsWith('0') && digits.length >= 10) digits = digits.slice(1);
-          // Si viene 15 (celular viejo), lo sacamos (ej: 11 15 xxxx)
-          // (esto es opcional, pero ayuda a limpiar)
           digits = digits.replace(/^(\d{2,4})15/, '$1');
           e164 = '+54' + digits;
         }
@@ -616,7 +625,6 @@
 
         if (looksLikeSheet) return 'sheet';
         if (hasSimpleName && hasSimpleNumber) return 'simple';
-        // fallback: si no reconoce, intenta simple por posición (col 0 y 1)
         return 'unknown';
       }
 
@@ -696,7 +704,6 @@
 
           const origin = originInput.value.trim() || (isFromModal ? "Importación Modal" : "Importación Inicial");
 
-          // VCF (se mantiene para compatibilidad, pero tu foco es CSV)
           if (vcfFiles.length > 0) {
             let allNewVCFContacts = [];
             for (const file of vcfFiles) {
@@ -706,7 +713,6 @@
             await handleVCFContacts(allNewVCFContacts);
           }
 
-          // CSV (mejorado: soporta 2 columnas estilo Whaticket + planilla)
           for (const file of csvFiles) {
             const text = await file.text();
             await processCSVUnified(text, origin);
@@ -742,7 +748,7 @@
       }
 
       // -----------------------------
-      // Duplicados: MEJORA CLAVE => clave por teléfono (si existe)
+      // Duplicados: clave por teléfono
       // -----------------------------
       async function handleVCFContacts(newContacts) {
         const getKey = (c) => {
@@ -791,9 +797,7 @@
       }
 
       // -----------------------------
-      // VCF parser (se mantiene; tu foco es CSV, pero no rompemos nada)
-      // Nota: tu app original SOLO reconoce FN: y N:
-      // Acá lo hacemos un poco más tolerante, sin cambiar la salida.
+      // VCF parser
       // -----------------------------
       function parseVCF(text, origin) {
         const contacts = [];
@@ -804,7 +808,6 @@
           let name = 'Sin nombre';
           let phone = '';
 
-          // FN: o FN;...:
           const fnLine = lines.find(line => line.toUpperCase().startsWith('FN:') || line.toUpperCase().startsWith('FN;'));
           const nLine  = lines.find(line => line.toUpperCase().startsWith('N:')  || line.toUpperCase().startsWith('N;'));
           const telLine = lines.find(line => line.toUpperCase().startsWith('TEL'));
@@ -826,8 +829,8 @@
             contacts.push({
               id: `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
               name: name === 'Sin nombre' && norm.digits ? norm.digits : name,
-              phone: norm.digits || phone,         // para wa.me
-              phoneE164: norm.e164 || '',          // útil para export whaticket
+              phone: norm.digits || phone,
+              phoneE164: norm.e164 || '',
               origin,
               status: 'sin revisar',
               lastUpdated: new Date().toISOString()
@@ -838,9 +841,7 @@
       }
 
       // -----------------------------
-      // CSV UNIFICADO (NUEVO): soporta
-      // - CSV Simple: 2 columnas name/number (estilo Whaticket)
-      // - CSV Planilla: tu lógica anterior (manteniendo columnas)
+      // CSV UNIFICADO
       // -----------------------------
       async function processCSVUnified(text, origin = 'CSV Import') {
         try {
@@ -851,13 +852,17 @@
           }
 
           const headers = rows[0];
-          const headersLower = headers.map(h => String(h || '').trim().toLowerCase());
+
+          // ✅ BOM-safe en headers (por si quedó pegado a la primera celda)
+          const headersLower = headers.map(h =>
+            String(h || '').replace(/^\uFEFF/, '').trim().toLowerCase()
+          );
+
           const type = detectCSVType(headersLower);
 
           if (type === 'sheet') {
             await processCSVPlanilla(rows, origin);
           } else {
-            // simple o unknown => intentamos simple 2 columnas
             await processCSVSimple2Cols(rows, origin, type === 'unknown');
           }
 
@@ -871,20 +876,22 @@
       // CSV SIMPLE: name/number (Whaticket style)
       async function processCSVSimple2Cols(rows, origin, fallbackByPosition = false) {
         const headers = rows[0];
-        const headersLower = headers.map(h => String(h || '').trim().toLowerCase());
+
+        // ✅ BOM-safe en headers
+        const headersLower = headers.map(h =>
+          String(h || '').replace(/^\uFEFF/, '').trim().toLowerCase()
+        );
 
         let nameIdx = findHeaderIndex(headersLower, ['name','nombre','usuario','usuarios']);
         let numIdx  = findHeaderIndex(headersLower, ['number','numero','tel','telefono','phone','cel','celular','mobile','whatsapp']);
 
         if (fallbackByPosition || nameIdx === -1 || numIdx === -1) {
-          // fallback: col0 = name, col1 = number
           nameIdx = 0;
           numIdx = 1;
         }
 
         const data = rows.slice(1);
 
-        // mapa por teléfono: evita duplicados aunque cambie el nombre
         const existingByPhone = new Map();
         AppState.contacts.forEach(c => {
           const k = String(c.phone || '').replace(/\D/g,'');
@@ -906,25 +913,23 @@
 
           const finalName = nameRaw || norm.digits;
 
-          const key = norm.digits; // phone digits
+          const key = norm.digits;
           const exists = existingByPhone.get(key);
 
           if (exists) {
-            // actualiza nombre si estaba vacío / "Sin nombre"
             const oldName = (exists.name || '').trim();
             if (!oldName || oldName.toLowerCase() === 'sin nombre') {
               exists.name = finalName;
               updated++;
             }
-            // guarda e164 si no tenía
             if (!exists.phoneE164 && norm.e164) exists.phoneE164 = norm.e164;
             exists.lastUpdated = new Date().toISOString();
           } else {
             const contact = {
               id: `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
               name: finalName,
-              phone: norm.digits,     // wa.me
-              phoneE164: norm.e164,   // export whaticket
+              phone: norm.digits,
+              phoneE164: norm.e164,
               origin,
               status: 'sin revisar',
               lastUpdated: new Date().toISOString()
@@ -942,11 +947,9 @@
         }
       }
 
-      // CSV PLANILLA: tu lógica original, mantenida (con pequeños refuerzos)
+      // CSV PLANILLA: tu lógica original
       async function processCSVPlanilla(rows, origin) {
         try {
-          // rows ya viene parseado: [ [header...], [data...], ... ]
-          // Vamos a reconstruir lo esencial manteniendo tu lógica.
           const data = rows.slice(1);
 
           const statusMap = {
@@ -963,7 +966,6 @@
           const newContactNames = new Set();
 
           for (const row of data) {
-            // row[0] debería ser usuarios
             let name = (row[0] ?? '').trim();
             if (!name || String(name).toUpperCase() === '#ERROR!') continue;
 
@@ -1000,7 +1002,7 @@
               AppState.contacts.push({
                 id: `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 name,
-                phone: '',           // planilla no trae número normalmente
+                phone: '',
                 phoneE164: '',
                 origin: origin,
                 status: appStatus,
@@ -1056,7 +1058,6 @@
         updateBulkActionsBar();
       }
 
-      // Debounce búsqueda (MEJORA performance, no rompe nada)
       function debounce(fn, wait=150) {
         let t;
         return (...args) => {
@@ -1125,9 +1126,8 @@
         el.dataset.status = contact.status;
         if (AppState.selectedContacts.has(contact.id)) el.classList.add('selected');
 
-        // Mostrar número: preferimos E.164 si existe, sino digits
         const displayPhone = contact.phoneE164 || contact.phone || 'Sin número';
-        const waPhone = (contact.phone || '').replace(/\D/g,''); // wa.me necesita dígitos
+        const waPhone = (contact.phone || '').replace(/\D/g,'');
 
         el.innerHTML = `
           <div style="display:flex; gap: 15px; align-items:flex-start; width:100%;">
@@ -1220,13 +1220,11 @@
         elements.totalCount.textContent = `${total} totales`;
       }
 
-      // Mantiene la lógica existente: edición inline, etc.
       function updateContact(id, field, value) {
         const contact = AppState.contacts.find(c => c.id === id);
         if (!contact) return;
 
         if (field === 'phone') {
-          // Si editan el teléfono, normalizamos:
           const norm = normalizePhone(value);
           contact.phone = norm.digits || '';
           contact.phoneE164 = norm.e164 || '';
@@ -1267,7 +1265,6 @@
         showNotification('Exportación CSV completa completada', 'success');
       }
 
-      // NUEVO: export estilo Whaticket (2 columnas)
       function exportToWhaticket(contacts) {
         let csvContent = "name,number\n";
         contacts.forEach(c => {
@@ -1293,7 +1290,6 @@
         showNotification('Exportación a VCF completada', 'success');
       }
 
-      // Tu export planilla, intacto (solo leve ajuste: usa csvEscape seguro)
       function exportToSheetFormat(contacts) {
         const headers = "usuarios,estado de revision,,estado actual,\"VISTO, RESPONDIDO?\",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n";
 
@@ -1383,7 +1379,6 @@
           });
         });
 
-        // Búsqueda con debounce
         elements.searchInput.oninput = debounce(() => { AppState.currentPage = 1; render(); }, 150);
 
         $$('.stat-box').forEach(b => b.onclick = (e) => {
@@ -1444,7 +1439,6 @@
           showNotification('Todos los contactos han sido eliminados.', 'success');
         };
 
-        // Handler unificado tarjetas/lista
         const unifiedEventHandler = (e) => {
           const target = e.target;
           const contactEl = target.closest('[data-id]');
@@ -1499,7 +1493,6 @@
           const field = target.dataset.field;
           const originalValue = target.textContent;
 
-          // Si están editando phone, queremos editar el "E.164" preferentemente si existe
           const contact = AppState.contacts.find(c => c.id === id);
           const prefill = (field === 'phone' && contact) ? (contact.phoneE164 || contact.phone || originalValue) : originalValue;
 
@@ -1530,7 +1523,6 @@
           el.addEventListener('dblclick', unifiedDblClickHandler);
         });
 
-        // Bulk
         elements.selectAllCheckbox.onchange = (e) => {
           const pageContacts = AppState.filteredContacts.slice((AppState.currentPage - 1) * AppState.itemsPerPage, AppState.currentPage * AppState.itemsPerPage);
           pageContacts.forEach(c => {
@@ -1574,7 +1566,6 @@
           render();
         };
 
-        // Exportar
         $('#exportBtn').onclick = () => {
           $('#exportFilteredCount').textContent = `${AppState.filteredContacts.length} contactos`;
           $('#exportAllCount').textContent = `${AppState.contacts.length} contactos`;
