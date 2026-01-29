@@ -6,113 +6,307 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0f17; --card:#131a24; --accent:#9aff5c; --accent-soft:#c8ff9b;
-      --muted:#9aa5b7; --border:#1c2533; --danger:#ff4d4d; --ok:#31ff8a;
-      --row:#0d131d; --row2:#0f1722;
+      --bg:#0b0f17;
+      --panel:#0f141d;
+      --card:#131a24;
+      --border:#1c2533;
+      --text:#eef3ff;
+      --muted:#9aa5b7;
+
+      --accent:#9aff5c;
+      --accent-soft:#c8ff9b;
+
+      --good:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+
+      --shadow: 0 0 20px #0006;
     }
-    *{box-sizing:border-box;font-family:Inter,Roboto,Arial}
-    body{margin:0;padding:26px;min-height:100vh;background:var(--bg);color:white;}
-    h1{margin:0 0 14px 0;font-size:22px;font-weight:800;}
-    .card{background:var(--card);padding:22px;border-radius:14px;border:1px solid var(--border);box-shadow:0 0 20px #0004;}
-    .grid{display:flex;gap:18px;flex-wrap:wrap;}
-    .box{flex:1;min-width:300px;background:#0f141d;padding:14px;border-radius:12px;border:1px solid #1b2230;}
-    .section-title{font-size:13px;font-weight:900;margin-bottom:10px;color:var(--accent-soft);}
-    input[type=file]{width:100%;padding:12px;background:#0d131d;border:1px dashed #2a3647;border-radius:10px;color:var(--muted);cursor:pointer;}
-    .btn-main{width:100%;padding:14px;font-size:16px;font-weight:900;background:var(--accent);border:none;border-radius:10px;margin-top:16px;cursor:pointer;color:#121715;}
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
-    .btn-small{padding:10px 14px;font-size:13px;font-weight:900;background:#101a27;color:white;border:1px solid #1c2533;border-radius:10px;cursor:pointer;}
-    .btn-small.active{border-color:var(--accent);box-shadow:0 0 0 2px #9aff5c22 inset;}
-    .btn-export{background:#c7ffe6;color:#021d16;border:none;}
-    .summary{margin-top:14px;padding:12px;border-radius:10px;background:#0d131d;border:1px solid #1c2533;color:var(--muted);font-size:14px;display:grid;gap:10px;}
-    .kpis{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;}
-    .kpi{background:#0d131d;border:1px solid #1c2533;border-radius:12px;padding:12px;}
-    .kpi .label{color:var(--muted);font-size:12px;font-weight:800;}
-    .kpi .val{font-size:22px;font-weight:900;margin-top:4px;}
-    .val.ok{color:var(--ok);} .val.bad{color:var(--danger);} .val.neu{color:var(--accent-soft);}
-    .options{display:flex;flex-direction:column;gap:10px;}
-    label.inline{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;}
-    input[type=number]{width:160px;padding:8px;background:#0d131d;border-radius:8px;border:1px solid #1c2533;color:white;}
-    table{width:100%;margin-top:14px;border-collapse:collapse;background:#0d131d;border-radius:12px;overflow:hidden;border:1px solid #1c2533;}
-    th,td{padding:10px;border-bottom:1px solid #1c2533;font-size:13px;}
-    th{background:#16202c;font-weight:900;color:var(--accent-soft);text-align:left;}
-    tr:nth-child(odd) td{background:var(--row);}
-    tr:nth-child(even) td{background:var(--row2);}
-    tr:hover td{background:#141c27;}
-    .pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid #0000;}
-    .pill.ok{background:#0c2a1b;color:var(--ok);border-color:#1a5c3c;}
-    .pill.bad{background:#2a1010;color:var(--danger);border-color:#5c1a1a;}
-    .toast{position:fixed;right:20px;bottom:20px;background:#16202c;padding:12px 16px;border-radius:10px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s;display:flex;gap:10px;align-items:center;border:1px solid #2a3647;}
-    .toast.show{opacity:1;transform:translateY(0);pointer-events:auto;}
-    .spinner{width:16px;height:16px;border-radius:50%;border:2px solid #44546a;border-top-color:var(--accent);animation:spin 1s linear infinite;}
+    *{box-sizing:border-box;font-family:Inter,Roboto,Arial,sans-serif}
+    body{
+      margin:0;
+      padding:22px;
+      min-height:100vh;
+      background:linear-gradient(180deg,#070a10, var(--bg));
+      color:var(--text);
+    }
+    h1{margin:0 0 14px 0;font-size:20px;font-weight:700}
+    .wrap{max-width:1400px;margin:0 auto}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr; }
+    }
+    .box{
+      background:var(--panel);
+      border:1px solid #1b2230;
+      border-radius:12px;
+      padding:14px;
+      min-height:120px;
+    }
+    .title{
+      font-size:13px;
+      font-weight:800;
+      color:var(--accent-soft);
+      margin-bottom:10px;
+    }
+    input[type=file]{
+      width:100%;
+      padding:10px;
+      background:#0d131d;
+      border:1px dashed #2a3647;
+      border-radius:10px;
+      color:var(--muted);
+      cursor:pointer;
+    }
+    .hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
+    .btn{
+      border:none;
+      border-radius:10px;
+      padding:12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.15s;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-main{
+      width:100%;
+      justify-content:center;
+      background:var(--accent);
+      color:#0b120a;
+      font-size:15px;
+      margin-top:12px;
+    }
+    .btn-ghost{
+      background:#0d131d;
+      color:var(--text);
+      border:1px solid #233044;
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    label.inline{display:flex;gap:8px;align-items:center}
+    input[type=number]{
+      width:120px;
+      padding:8px;
+      background:#0d131d;
+      border-radius:8px;
+      border:1px solid #233044;
+      color:var(--text);
+    }
+
+    .statusline{
+      margin-top:12px;
+      background:#0d131d;
+      border:1px solid #233044;
+      border-radius:12px;
+      padding:12px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .pill{
+      flex:1;
+      min-width:200px;
+      background:#0d131d;
+      border:1px solid #233044;
+      border-radius:12px;
+      padding:12px;
+    }
+    .pill .k{color:var(--muted);font-size:12px}
+    .pill .v{font-size:22px;font-weight:900;margin-top:4px}
+    .v.good{color:var(--good)}
+    .v.bad{color:var(--bad)}
+    .v.accent{color:var(--accent)}
+    .toolbar{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid #233044;
+      background:#0d131d;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+    }
+    .tab.active{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(154,255,92,.12) inset;
+    }
+    table{
+      width:100%;
+      margin-top:12px;
+      border-collapse:collapse;
+      background:#0d131d;
+      border:1px solid #233044;
+      border-radius:12px;
+      overflow:hidden;
+    }
+    th,td{
+      padding:10px;
+      border-bottom:1px solid #1c2533;
+      font-size:13px;
+      vertical-align:top;
+    }
+    th{
+      background:#16202c;
+      font-weight:900;
+      color:var(--accent-soft);
+      text-align:left;
+      white-space:nowrap;
+    }
+    tr:hover td{background:#141c27}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      border:1px solid;
+    }
+    .badge.good{color:#baffd0;border-color:#1e7a44;background:rgba(34,197,94,.12)}
+    .badge.bad{color:#ffd1d1;border-color:#8c1d1d;background:rgba(239,68,68,.12)}
+
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      background:#16202c;
+      padding:12px 14px;
+      border-radius:12px;
+      opacity:0;
+      transform:translateY(16px);
+      pointer-events:none;
+      transition:.22s;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      border:1px solid #2a3647;
+      box-shadow: var(--shadow);
+      max-width: 420px;
+    }
+    .toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
+    .spinner{
+      width:16px;height:16px;border-radius:50%;
+      border:2px solid #44546a;border-top-color:var(--accent);
+      animation:spin 1s linear infinite;
+    }
     @keyframes spin{to{transform:rotate(360deg)}}
-    .note{font-size:12px;color:var(--muted);line-height:1.35;}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;}
-    @media(max-width: 900px){.kpis{grid-template-columns:1fr;}}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
   </style>
 </head>
 <body>
+<div class="wrap">
+  <h1>Recuperación • Activos vs No Activos</h1>
 
-<h1>Recuperación • Activos vs No Activos</h1>
-
-<div class="card">
-  <div class="grid">
-    <div class="box">
-      <div class="section-title">Cargas del mes (CSV)</div>
-      <input type="file" id="fileOps" accept=".csv,text/csv" />
-      <div class="note" id="opsInfo">Esperando archivo…</div>
-    </div>
-
-    <div class="box">
-      <div class="section-title">Contactos Whaticket (CSV)</div>
-      <input type="file" id="fileContacts" accept=".csv,text/csv" />
-      <div class="note" id="contactsInfo">Esperando archivo…</div>
-      <div class="note mono">Header esperado: number,name,email,tags,metadata</div>
-    </div>
-
-    <div class="box" style="max-width:340px;">
-      <div class="section-title">Opciones</div>
-      <div class="options">
-        <label class="inline"><input type="checkbox" id="exportOnlyInactive" /> Exportar SOLO NO ACTIVOS</label>
-        <label class="inline">Límite filas (0 = sin límite)</label>
-        <input type="number" id="maxRows" value="0" min="0" />
-        <label class="inline"><input type="checkbox" id="showDebug" /> Mostrar debug</label>
+  <div class="card">
+    <div class="grid">
+      <div class="box">
+        <div class="title">Cargas del mes (CSV)</div>
+        <input type="file" id="fileOps" accept=".csv" />
+        <div class="hint">
+          Este CSV es el de operaciones/cargas del período (como venías usando).<br>
+          Se detecta header automáticamente (Alias/Titular/Cantidad/Fecha).
+        </div>
       </div>
-      <div class="note" id="detectedDelims">Separadores detectados: —</div>
+
+      <div class="box">
+        <div class="title">Contactos Whaticket (CSV)</div>
+        <input type="file" id="fileContacts" accept=".csv" />
+        <div class="hint">
+          Debe exportar columnas: <b>number,name,email,tags,metadata</b>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="title">Opciones</div>
+        <div class="options">
+          <label class="inline">
+            <input type="checkbox" id="onlyNoActive" />
+            Exportar SOLO NO ACTIVOS
+          </label>
+
+          <label class="inline">
+            Límite filas export (0 = sin límite)
+            <input type="number" id="maxRows" value="0" min="0" />
+          </label>
+
+          <label class="inline">
+            Mostrar debug
+            <input type="checkbox" id="debugMode" />
+          </label>
+
+          <button class="btn btn-main" id="processBtn">
+            <span class="spinner" id="spin" style="display:none"></span>
+            Procesar y Comparar
+          </button>
+        </div>
+      </div>
     </div>
+
+    <div class="toolbar">
+      <button class="btn btn-ghost" id="exportPlanillaBtn">Exportar Planilla (CSV)</button>
+      <div class="tabs">
+        <button class="tab active" data-view="all">Vista: Todos</button>
+        <button class="tab" data-view="active">Vista: Activos</button>
+        <button class="tab" data-view="noactive">Vista: No Activos</button>
+      </div>
+      <div class="muted small" id="diag"></div>
+    </div>
+
+    <div class="statusline" id="statusBox">
+      Sin procesar. Subí ambos CSV y tocá <b>Procesar y Comparar</b>.
+    </div>
+
+    <div class="pills">
+      <div class="pill">
+        <div class="k">Contactos totales</div>
+        <div class="v accent" id="totalContacts">—</div>
+      </div>
+      <div class="pill">
+        <div class="k">Usuarios únicos activos (cargas)</div>
+        <div class="v accent" id="uniqueActiveOps">—</div>
+      </div>
+      <div class="pill">
+        <div class="k">Detectados ACTIVO (match)</div>
+        <div class="v good" id="matchedActive">—</div>
+      </div>
+      <div class="pill">
+        <div class="k">Detectados NO ACTIVO</div>
+        <div class="v bad" id="matchedNoActive">—</div>
+      </div>
+    </div>
+
+    <div id="tableWrap"></div>
   </div>
-
-  <button id="processBtn" class="btn-main">Procesar y Comparar</button>
-
-  <div class="btn-row">
-    <button class="btn-small btn-export" id="exportBtn">Exportar Planilla (CSV)</button>
-    <button class="btn-small active" id="viewAll">Vista: Todos</button>
-    <button class="btn-small" id="viewActive">Vista: Activos</button>
-    <button class="btn-small" id="viewInactive">Vista: No Activos</button>
-  </div>
-
-  <div class="summary">
-    <div><b id="sumTitle">Sin procesar</b></div>
-    <div id="sumSub">Subí ambos CSV y presioná “Procesar y Comparar”.</div>
-
-    <div class="kpis">
-      <div class="kpi">
-        <div class="label">Contactos totales</div>
-        <div class="val neu" id="kpiTotal">—</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Detectados ACTIVO (match)</div>
-        <div class="val ok" id="kpiActive">—</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Detectados NO ACTIVO</div>
-        <div class="val bad" id="kpiInactive">—</div>
-      </div>
-    </div>
-
-    <div class="note mono" id="diagLine">Diag: —</div>
-  </div>
-
-  <div id="results"></div>
 </div>
 
 <div id="toast" class="toast">
@@ -121,507 +315,622 @@
 </div>
 
 <script>
-/* ---------------- Toast ---------------- */
+/* =========================
+   Helpers UI
+========================= */
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
 let toastTimer = null;
-function showToast(text, duration=2200) {
+function showToast(text, duration=2200){
   if (toastTimer) { clearTimeout(toastTimer); toastTimer = null; }
   toastText.textContent = text;
   toast.classList.add('show');
   toastTimer = setTimeout(()=>{ toast.classList.remove('show'); toastTimer = null; }, duration);
 }
-
-/* ---------------- File info UI ---------------- */
-const opsInfo = document.getElementById('opsInfo');
-const contactsInfo = document.getElementById('contactsInfo');
-document.getElementById('fileOps').addEventListener('change', (e)=>{
-  const f = e.target.files[0];
-  opsInfo.textContent = f ? `Seleccionado: ${f.name} • ${(f.size/1024/1024).toFixed(2)} MB` : 'Esperando archivo…';
-});
-document.getElementById('fileContacts').addEventListener('change', (e)=>{
-  const f = e.target.files[0];
-  contactsInfo.textContent = f ? `Seleccionado: ${f.name} • ${(f.size/1024/1024).toFixed(2)} MB` : 'Esperando archivo…';
-});
-
-/* ---------------- Read file with fallback encodings ---------------- */
-async function readFileTextSmart(file){
-  const txtUtf8 = await readAsText(file, 'utf-8');
-  // Si hay muchos �, probamos ISO-8859-1
-  const bad = (txtUtf8.match(/\uFFFD/g) || []).length;
-  if (bad > 20) {
-    const txtLatin = await readAsText(file, 'iso-8859-1');
-    return txtLatin;
-  }
-  return txtUtf8;
-}
-function readAsText(file, encoding){
-  return new Promise((resolve, reject)=>{
-    const r = new FileReader();
-    r.onload = e => resolve(String(e.target.result || ''));
-    r.onerror = reject;
-    try { r.readAsText(file, encoding); }
-    catch { r.readAsText(file); }
-  });
+function setSpinning(on){
+  document.getElementById('spin').style.display = on ? 'inline-block' : 'none';
 }
 
-/* ---------------- Delimiter detect + CSV parse ---------------- */
-function detectDelimiter(sampleText){
-  const first = (String(sampleText||'').split(/\r?\n/).slice(0, 25)).join('\n');
-  const counts = {
-    ',': (first.match(/,/g) || []).length,
-    ';': (first.match(/;/g) || []).length,
-    '\t': (first.match(/\t/g) || []).length
-  };
-  // si viene "sep=;"
-  const sepLine = first.split('\n').find(l => /^sep\s*=/.test(l.trim().toLowerCase()));
-  if (sepLine){
-    const m = sepLine.match(/sep\s*=\s*(.)/i);
-    if (m && m[1]) return { delim: m[1], counts, from:'sep=' };
-  }
-  // el que más aparece
-  let best = ',', bestCount = counts[','];
-  for (const k of Object.keys(counts)){
-    if (counts[k] > bestCount){ best = k; bestCount = counts[k]; }
-  }
-  // fallback seguro
-  if (bestCount === 0) best = ',';
-  return { delim: best, counts, from:'auto' };
+/* =========================
+   Robust CSV parsing
+   - auto delimiter (',' or ';')
+   - supports quotes
+========================= */
+function detectDelimiter(text){
+  // ignore sep=;
+  const s = text.replace(/\uFEFF/g,'').split(/\r?\n/).slice(0, 10).join('\n');
+  const comma = (s.match(/,/g)||[]).length;
+  const semi  = (s.match(/;/g)||[]).length;
+  return semi > comma ? ';' : ',';
 }
+function parseCSV(text){
+  const cleaned = text.replace(/\uFEFF/g,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  const lines = cleaned.split('\n').filter(l => l.trim() !== '');
+  const filtered = lines.filter(l => !l.toLowerCase().startsWith('sep='));
+  if (!filtered.length) return { headers: [], rows: [], delimiter: ',' };
 
-function parseCSV(text, delim){
+  const delimiter = detectDelimiter(filtered.join('\n'));
+
   const rows = [];
   let row = [];
   let field = '';
   let inQuotes = false;
-  const s = String(text || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-  for (let i = 0; i < s.length; i++){
+  const pushField = () => { row.push(field); field = ''; };
+  const pushRow = () => {
+    // trim fields
+    const r = row.map(v => (v ?? '').trim());
+    if (r.some(v => v !== '')) rows.push(r);
+    row = [];
+  };
+
+  const s = filtered.join('\n') + '\n';
+  for (let i=0;i<s.length;i++){
     const ch = s[i];
-    const next = s[i+1];
+    const nx = s[i+1];
 
     if (ch === '"'){
-      if (inQuotes && next === '"'){ field += '"'; i++; }
+      if (inQuotes && nx === '"'){ field += '"'; i++; }
       else inQuotes = !inQuotes;
       continue;
     }
-    if (!inQuotes && ch === delim){
-      row.push(field);
-      field = '';
-      continue;
+    if (!inQuotes && ch === delimiter){
+      pushField(); continue;
     }
     if (!inQuotes && ch === '\n'){
-      row.push(field);
-      field = '';
-      // skip empty row
-      if (row.some(v => String(v||'').trim() !== '')) rows.push(row.map(v => String(v||'').trim()));
-      row = [];
-      continue;
+      pushField(); pushRow(); continue;
     }
     field += ch;
   }
-  row.push(field);
-  if (row.some(v => String(v||'').trim() !== '')) rows.push(row.map(v => String(v||'').trim()));
-  return rows;
+
+  const headers = (rows[0] || []).map(h => String(h||'').trim());
+  const body = rows.slice(1);
+
+  return { headers, rows: body, delimiter };
 }
-
-function stripSepLine(rows){
-  if (!rows.length) return rows;
-  const first = (rows[0]||[]).join('').toLowerCase().trim();
-  if (first.startsWith('sep=')) return rows.slice(1);
-  return rows;
+function lowerHeaders(headers){
+  return headers.map(h => String(h||'').trim().toLowerCase());
 }
-
-function normalizeKey(s){ return String(s||'').toLowerCase().trim(); }
-function escapeHtml(s){
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-/* ---------------- Phone normalize ---------------- */
-function normalizePhone(raw){
-  const s = String(raw||'').trim();
-  if (!s) return { digits:'', e164:'' };
-  let digits = s.replace(/\D/g,'');
-  if (!digits) return { digits:'', e164:'' };
-
-  if (s.startsWith('00')){
-    const intl = '+' + digits.slice(2);
-    return { digits: intl.replace(/\D/g,''), e164: intl };
-  }
-
-  let e164 = '';
-  if (digits.startsWith('54')) e164 = '+' + digits;
-  else{
-    if (digits.startsWith('0') && digits.length >= 10) digits = digits.slice(1);
-    digits = digits.replace(/^(\d{2,4})15/, '$1'); // quita 15
-    e164 = '+54' + digits;
-  }
-  return { digits: e164.replace(/\D/g,''), e164 };
-}
-
-/* ---------------- Contacts parse ---------------- */
-function findHeaderIndex(headers, candidates){
-  const hl = headers.map(h => normalizeKey(h));
-  for (let i = 0; i < hl.length; i++){
-    const h = hl[i];
-    if (candidates.some(c => h === c || h.includes(c))) return i;
+function findIdx(headersLower, candidates){
+  for (let i=0;i<headersLower.length;i++){
+    const h = headersLower[i];
+    for (const c of candidates){
+      if (h === c || h.includes(c)) return i;
+    }
   }
   return -1;
 }
 
-function parseContacts(rows){
-  rows = stripSepLine(rows);
-  if (!rows || rows.length < 2) return { contacts:[], headerOk:false, headers:[] };
+/* =========================
+   Normalization / matching keys
+========================= */
+function stripAccents(s){
+  return String(s||'')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+function normKey(s){
+  // normalize usernames (alias/titular) to comparable keys
+  const x = stripAccents(String(s||''))
+    .toLowerCase()
+    .trim();
+  // keep letters/digits/underscore only
+  return x.replace(/\s+/g,'').replace(/[^\p{L}\p{N}_]/gu,'');
+}
+function safeJSONParse(s){
+  try { return JSON.parse(s); } catch { return null; }
+}
+function extractKeysFromMetadata(meta){
+  const keys = [];
+  if (!meta) return keys;
 
-  const headers = rows[0] || [];
-  const idxNumber = findHeaderIndex(headers, ['number','telefono','tel','phone','celular','mobile']);
-  const idxName = findHeaderIndex(headers, ['name','nombre']);
-  const idxEmail = findHeaderIndex(headers, ['email','mail']);
-  const idxTags = findHeaderIndex(headers, ['tags','tag']);
-  const idxMeta = findHeaderIndex(headers, ['metadata','meta']);
+  // If JSON, traverse shallow
+  const obj = safeJSONParse(meta);
+  if (obj && typeof obj === 'object'){
+    const candidates = ['alias','usuario','user','username','titular','player','jugador','nickname','nick'];
+    for (const k of candidates){
+      if (obj[k]) keys.push(normKey(obj[k]));
+    }
+    // also scan any string values
+    for (const v of Object.values(obj)){
+      if (typeof v === 'string' && v.length <= 64) keys.push(normKey(v));
+    }
+    return keys.filter(Boolean);
+  }
 
-  const headerOk = (idxNumber !== -1 && idxName !== -1); // mínimo
+  // If plain text, try patterns
+  const t = String(meta);
+  const patterns = [
+    /alias\s*[:=]\s*([a-z0-9_\.]+)/i,
+    /usuario\s*[:=]\s*([a-z0-9_\.]+)/i,
+    /user(name)?\s*[:=]\s*([a-z0-9_\.]+)/i,
+    /titular\s*[:=]\s*([a-z0-9_\.]+)/i,
+  ];
+  for (const p of patterns){
+    const m = t.match(p);
+    if (m){
+      const val = m[m.length-1];
+      keys.push(normKey(val));
+    }
+  }
+  // fallback: if metadata is small, consider it a possible username
+  if (t.length <= 40) keys.push(normKey(t));
+  return keys.filter(Boolean);
+}
+
+/* =========================
+   State
+========================= */
+let VIEW = 'all';
+let RESULTS = []; // combined list
+let OPS_STATS = new Map(); // key -> {opsCount, sumAmount, lastDateStr, lastDateObj}
+let OPS_UNIQUE_ACTIVE = 0;
+let DIAG = {};
+
+/* =========================
+   Parse OPS (cargas) CSV
+   We auto-detect indices by header names when possible.
+   Expected typical columns (yours): Fecha | Estado | Cantidad | Tipo | Alias | Balance ...
+========================= */
+function parseOpsCSV(text){
+  const parsed = parseCSV(text);
+  const h = parsed.headers;
+  const hl = lowerHeaders(h);
+
+  // Try detect columns
+  const idxFecha = findIdx(hl, ['fecha','date','created','createdat','data']);
+  const idxCantidad = findIdx(hl, ['cantidad','monto','amount','value','importe','sum']);
+  const idxAlias = findIdx(hl, ['alias','usuario','user','username','jugador','player','nick']);
+  const idxTitular = findIdx(hl, ['titular','nombre','name']); // optional
+
+  // If no header, fallback based on your previous known formats:
+  // mastr: fecha=0, monto=3, usuario=6 (o 5)
+  // agente: fecha=0, monto=2, usuario=4 (o 3)
+  let mode = 'header';
+  let fallback = null;
+  if (h.length < 3 || (idxFecha === -1 && idxAlias === -1)){
+    // assume "agente" like
+    mode = 'fallback';
+    fallback = { fecha:0, monto:2, alias:4, alias2:3, titular:-1 };
+  }
+
+  const stats = new Map();
+
+  const addUser = (userKey, monto, fechaStr, fechaObj) => {
+    if (!userKey) return;
+    const k = normKey(userKey);
+    if (!k) return;
+
+    const cur = stats.get(k) || { opsCount:0, sumAmount:0, lastDateStr:'', lastDateObj:null };
+    cur.opsCount += 1;
+    cur.sumAmount += (monto || 0);
+
+    // last date
+    const t = (fechaObj && !isNaN(fechaObj.getTime())) ? fechaObj.getTime() : NaN;
+    const prevT = (cur.lastDateObj && !isNaN(cur.lastDateObj.getTime())) ? cur.lastDateObj.getTime() : NaN;
+    if (!isNaN(t) && (isNaN(prevT) || t > prevT)){
+      cur.lastDateObj = fechaObj;
+      cur.lastDateStr = fechaStr || cur.lastDateStr;
+    } else if (!cur.lastDateStr && fechaStr){
+      cur.lastDateStr = fechaStr;
+    }
+
+    stats.set(k, cur);
+  };
+
+  const parseDate = (s) => {
+    if (!s) return null;
+    const x = String(s).trim();
+    // try ISO-like
+    let d = new Date(x.replace(' ', 'T'));
+    if (!isNaN(d.getTime())) return d;
+    d = new Date(x);
+    if (!isNaN(d.getTime())) return d;
+    return null;
+  };
+  const parseMoney = (v) => {
+    const s = String(v ?? '').replace(/\s+/g,'');
+    const cleaned = s.replace(/[^0-9,.\-]/g,'');
+    // convert comma decimal if needed: if has ',' and no '.', treat ',' as decimal
+    let x = cleaned;
+    if (x.includes(',') && !x.includes('.')) x = x.replace(',', '.');
+    // remove thousand separators if both exist
+    if (x.includes(',') && x.includes('.')) x = x.replace(/,/g,'');
+    const n = parseFloat(x);
+    return isNaN(n) ? 0 : n;
+  };
+
+  let totalRows = 0;
+
+  for (const r of parsed.rows){
+    totalRows++;
+    let fechaStr = '';
+    let monto = 0;
+    let alias = '';
+    let titular = '';
+
+    if (mode === 'fallback'){
+      const f = fallback;
+      fechaStr = (r[f.fecha] ?? '').trim();
+      monto = parseMoney(r[f.monto]);
+      alias = (r[f.alias] ?? r[f.alias2] ?? '').trim();
+    } else {
+      fechaStr = idxFecha !== -1 ? (r[idxFecha] ?? '').trim() : (r[0] ?? '').trim();
+      monto = idxCantidad !== -1 ? parseMoney(r[idxCantidad]) : 0;
+      alias = idxAlias !== -1 ? (r[idxAlias] ?? '').trim() : '';
+      titular = idxTitular !== -1 ? (r[idxTitular] ?? '').trim() : '';
+    }
+
+    const fechaObj = parseDate(fechaStr);
+
+    if (alias) addUser(alias, monto, fechaStr, fechaObj);
+    if (titular) addUser(titular, monto, fechaStr, fechaObj);
+  }
+
+  return { stats, totalRows, mode, indices: { idxFecha, idxCantidad, idxAlias, idxTitular }, delimiter: parsed.delimiter, headers: parsed.headers };
+}
+
+/* =========================
+   Parse Contacts CSV (Whaticket):
+   number,name,email,tags,metadata
+========================= */
+function parseContactsCSV(text){
+  const parsed = parseCSV(text);
+  const h = parsed.headers;
+  const hl = lowerHeaders(h);
+
+  const idxNumber = findIdx(hl, ['number','telefono','tel','phone','cel']);
+  const idxName = findIdx(hl, ['name','nombre']);
+  const idxEmail = findIdx(hl, ['email','mail']);
+  const idxTags = findIdx(hl, ['tags','tag']);
+  const idxMeta = findIdx(hl, ['metadata','meta','dados','data']);
+
+  // fallback by position if needed
+  const get = (row, idx, fallbackIdx) => (idx !== -1 ? row[idx] : (fallbackIdx !== undefined ? row[fallbackIdx] : ''));
 
   const contacts = [];
-  for (let i = 1; i < rows.length; i++){
-    const r = rows[i];
-    if (!r || r.length === 0) continue;
+  for (const r of parsed.rows){
+    const number = String(get(r, idxNumber, 0) || '').trim();
+    const name = String(get(r, idxName, 1) || '').trim();
+    const email = String(get(r, idxEmail, 2) || '').trim();
+    const tags = String(get(r, idxTags, 3) || '').trim();
+    const metadata = String(get(r, idxMeta, 4) || '').trim();
 
-    const number = (idxNumber !== -1 ? (r[idxNumber] ?? '') : '').trim();
-    const name = (idxName !== -1 ? (r[idxName] ?? '') : '').trim();
-    const email = (idxEmail !== -1 ? (r[idxEmail] ?? '') : '').trim();
-    const tags = (idxTags !== -1 ? (r[idxTags] ?? '') : '').trim();
-    const metadata = (idxMeta !== -1 ? (r[idxMeta] ?? '') : '').trim();
+    // Build matching keys
+    const keys = new Set();
+    if (name) keys.add(normKey(name));
+    extractKeysFromMetadata(metadata).forEach(k => keys.add(k));
 
-    if (!number && !name && !email && !tags && !metadata) continue;
-
-    const phone = normalizePhone(number);
     contacts.push({
-      numberRaw: number,
-      numberE164: phone.e164 || '',
-      name, email, tags, metadata
+      number,
+      name,
+      email,
+      tags,
+      metadata,
+      keys: Array.from(keys).filter(Boolean)
     });
   }
-  return { contacts, headerOk, headers };
+
+  return { contacts, totalRows: parsed.rows.length, delimiter: parsed.delimiter, headers: parsed.headers, headerOk: (idxNumber !== -1 && idxName !== -1) };
 }
 
-/* ---------------- Ops parse (cargas) ---------------- */
-function parseDateFlexible(fecha){
-  const f = String(fecha||'').trim();
-  if (!f) return null;
-  let d = new Date(f.replace(' ', 'T'));
-  if (!isNaN(d.getTime())) return d;
-  d = new Date(f);
-  if (!isNaN(d.getTime())) return d;
-  return null;
-}
+/* =========================
+   Compare & build results
+========================= */
+function buildResults(contacts, opsStats){
+  const out = [];
+  let activeCount = 0;
 
-function detectOpsSchema(rows){
-  rows = stripSepLine(rows);
-  const headers = (rows[0] || []).map(h => normalizeKey(h));
-  const hasHeader = headers.some(h => h.includes('fecha') || h === 'date' || h.includes('alias') || h.includes('cantidad'));
-  if (!hasHeader) return { header:false, fecha:0, monto:2, usuario:4, headers:[] };
+  for (const c of contacts){
+    let matchKey = '';
+    let stat = null;
 
-  const findIdx = (cands) => headers.findIndex(h => cands.some(c => h === c || h.includes(c)));
-
-  const idxFecha = findIdx(['fecha','date','datetime']);
-  const idxMonto = findIdx(['cantidad','monto','importe','amount','total']);
-  let idxUser = findIdx(['alias jugador','alias','usuario','user','nick','nickname','player']);
-  if (idxUser === -1) idxUser = 4;
-
-  return {
-    header:true,
-    fecha: idxFecha !== -1 ? idxFecha : 0,
-    monto: idxMonto !== -1 ? idxMonto : 2,
-    usuario: idxUser,
-    headers: rows[0] || []
-  };
-}
-
-function parseOps(rows){
-  rows = stripSepLine(rows);
-  if (!rows || rows.length < 2) return { uniques:0, totalRows:0, activeAliasSet:new Set(), statsByAlias:new Map(), schema:null };
-
-  const schema = detectOpsSchema(rows);
-  const start = schema.header ? 1 : 0;
-
-  const statsByAlias = new Map();
-  for (let i = start; i < rows.length; i++){
-    const r = rows[i];
-    if (!r || r.length === 0) continue;
-
-    const fechaStr = (r[schema.fecha] ?? '').trim();
-    const usuarioRaw = (r[schema.usuario] ?? '').trim();
-    if (!usuarioRaw) continue;
-
-    const usuario = normalizeKey(usuarioRaw);
-    if (!usuario) continue;
-
-    let mRaw = (r[schema.monto] ?? '').toString();
-    mRaw = mRaw.replace(/\s+/g,'').replace(/[^0-9\.\-]/g,'');
-    const monto = parseFloat(mRaw) || 0;
-
-    const d = parseDateFlexible(fechaStr);
-    const prev = statsByAlias.get(usuario) || { usuario, ops:0, monto:0, lastDate:null, lastFecha:'' };
-    prev.ops += 1;
-    prev.monto += monto;
-
-    if (d && (!prev.lastDate || d.getTime() > prev.lastDate.getTime())){
-      prev.lastDate = d;
-      prev.lastFecha = fechaStr;
-    } else if (!prev.lastFecha && fechaStr){
-      prev.lastFecha = fechaStr;
+    for (const k of c.keys){
+      if (opsStats.has(k)){
+        matchKey = k;
+        stat = opsStats.get(k);
+        break;
+      }
     }
 
-    statsByAlias.set(usuario, prev);
+    const isActive = !!stat;
+    if (isActive) activeCount++;
+
+    out.push({
+      usuario: c.name || '(sin nombre)',
+      telefono: c.number || '',
+      estado: isActive ? 'ACTIVO' : 'NO ACTIVO',
+      opsCount: stat ? stat.opsCount : 0,
+      montoMes: stat ? stat.sumAmount : 0,
+      ultimaFecha: stat ? (stat.lastDateStr || '') : '',
+      ultimaFechaObj: stat ? stat.lastDateObj : null,
+      tags: c.tags || '',
+      email: c.email || '',
+      metadata: c.metadata || '',
+      matchKey
+    });
   }
 
-  const activeAliasSet = new Set(statsByAlias.keys());
-  return { uniques: activeAliasSet.size, totalRows: (schema.header ? rows.length-1 : rows.length), activeAliasSet, statsByAlias, schema };
+  return { out, activeCount, noActiveCount: out.length - activeCount };
 }
 
-/* ---------------- Matching alias contacto vs ops ---------------- */
-function tokensFromText(txt){
-  const raw = normalizeKey(txt);
-  if (!raw) return [];
-  return raw.split(/[^a-z0-9_]+/g).filter(Boolean);
+/* =========================
+   Render table
+========================= */
+function money(v){
+  try { return '$' + Number(v||0).toLocaleString('es-AR', { maximumFractionDigits: 2 }); }
+  catch { return '$' + (v||0); }
 }
-function extractAliasFromContact(contact, activeAliasSet){
-  const name = normalizeKey(contact.name);
-
-  // patrón alias//titular
-  if (name && name.includes('//')){
-    const first = name.split('//')[0].trim();
-    const t = tokensFromText(first)[0];
-    if (t && activeAliasSet.has(t)) return t;
-  }
-
-  // patrón titular (alias)
-  if (name){
-    const par = name.match(/\(([^)]+)\)/);
-    if (par){
-      const tks = tokensFromText(par[1]);
-      for (const t of tks) if (activeAliasSet.has(t)) return t;
-    }
-  }
-
-  // tokens de name + metadata + email
-  const pool = []
-    .concat(tokensFromText(contact.name))
-    .concat(tokensFromText(contact.metadata))
-    .concat(tokensFromText(contact.email));
-
-  for (const t of pool){
-    if (activeAliasSet.has(t)) return t;
-  }
-
-  return tokensFromText(contact.name)[0] || '';
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
 }
+function render(){
+  const statusBox = document.getElementById('statusBox');
+  const tableWrap = document.getElementById('tableWrap');
 
-/* ---------------- App State + Render ---------------- */
-let state = { view:'inactive', rowsAll:[], ops:null, contacts:[] };
+  let rows = RESULTS.slice();
 
-function setView(v){
-  state.view = v;
-  document.getElementById('viewAll').classList.toggle('active', v === 'all');
-  document.getElementById('viewActive').classList.toggle('active', v === 'active');
-  document.getElementById('viewInactive').classList.toggle('active', v === 'inactive');
-  renderTable();
-}
-document.getElementById('viewAll').addEventListener('click', ()=>setView('all'));
-document.getElementById('viewActive').addEventListener('click', ()=>setView('active'));
-document.getElementById('viewInactive').addEventListener('click', ()=>setView('inactive'));
+  if (VIEW === 'active') rows = rows.filter(r => r.estado === 'ACTIVO');
+  if (VIEW === 'noactive') rows = rows.filter(r => r.estado !== 'ACTIVO');
 
-function renderKPIs(){
-  const total = state.rowsAll.length;
-  const active = state.rowsAll.filter(r => r.estado === 'ACTIVO').length;
-  const inactive = total - active;
-
-  document.getElementById('kpiTotal').textContent = total.toLocaleString('es-AR');
-  document.getElementById('kpiActive').textContent = active.toLocaleString('es-AR');
-  document.getElementById('kpiInactive').textContent = inactive.toLocaleString('es-AR');
-
-  document.getElementById('sumTitle').textContent = 'Procesado';
-  document.getElementById('sumSub').textContent =
-    `Ops: ${state.ops.totalRows.toLocaleString('es-AR')} registros • ${state.ops.uniques.toLocaleString('es-AR')} usuarios únicos activos. ` +
-    `Contacts: ${state.contacts.length.toLocaleString('es-AR')} filas.`;
-
-  const hdr = state.ops.schema?.headers ? state.ops.schema.headers.join(' | ') : '(sin header detectado)';
-  document.getElementById('diagLine').textContent =
-    `Diag: ops_delim="${state._opsDelim}" • contacts_delim="${state._contactsDelim}" • header_contacts_ok=${state._contactsHeaderOk} • ops_header="${hdr.slice(0, 180)}"`;
-}
-
-function renderTable(){
   const maxRows = parseInt(document.getElementById('maxRows').value, 10) || 0;
-  const showDebug = document.getElementById('showDebug').checked;
-
-  let rows = state.rowsAll.slice();
-  if (state.view === 'active') rows = rows.filter(r => r.estado === 'ACTIVO');
-  if (state.view === 'inactive') rows = rows.filter(r => r.estado === 'NO ACTIVO');
-
   if (maxRows > 0) rows = rows.slice(0, maxRows);
 
-  if (!rows.length){
-    document.getElementById('results').innerHTML = `<div style="margin-top:14px;color:var(--muted)">Sin filas para mostrar.</div>`;
+  statusBox.innerHTML = `
+    <b>Procesado</b><br>
+    Ops: <b>${DIAG.opsTotalRows.toLocaleString()}</b> registros ·
+    <b>${OPS_UNIQUE_ACTIVE.toLocaleString()}</b> usuarios únicos activos.
+    Contacts: <b>${DIAG.contactsTotalRows.toLocaleString()}</b> filas.
+    <div class="muted small" style="margin-top:6px">
+      Matching por <b>name/metadata</b> (contacts) vs <b>alias/titular</b> (cargas), normalizado (lowercase + sin tildes + sin símbolos).
+    </div>
+  `;
+
+  const html = `
+    <table>
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Operaciones mes</th>
+          <th>Monto mes</th>
+          <th>Última fecha</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${escapeHtml(r.usuario)}</td>
+            <td>${escapeHtml(r.telefono)}</td>
+            <td>${r.estado === 'ACTIVO'
+                ? `<span class="badge good">ACTIVO</span>`
+                : `<span class="badge bad">NO ACTIVO</span>`}
+            </td>
+            <td>${(r.opsCount||0).toLocaleString()}</td>
+            <td>${escapeHtml(money(r.montoMes||0))}</td>
+            <td>${escapeHtml(r.ultimaFecha || '')}</td>
+            <td>${escapeHtml(r.tags || '')}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    <div class="muted small" style="margin-top:8px">
+      Mostrando <b>${rows.length.toLocaleString()}</b> filas (${VIEW === 'all' ? 'todos' : VIEW}).
+    </div>
+  `;
+  tableWrap.innerHTML = html;
+
+  // Stats pills
+  document.getElementById('totalContacts').textContent = (DIAG.contactsTotalRows ?? '—').toLocaleString?.() ?? '—';
+  document.getElementById('uniqueActiveOps').textContent = OPS_UNIQUE_ACTIVE.toLocaleString();
+  document.getElementById('matchedActive').textContent = DIAG.activeCount.toLocaleString();
+  document.getElementById('matchedNoActive').textContent = DIAG.noActiveCount.toLocaleString();
+
+  // diag debug
+  const dbg = document.getElementById('debugMode').checked;
+  const diag = document.getElementById('diag');
+  if (!dbg){ diag.textContent = ''; return; }
+
+  diag.textContent =
+    `diag: ops_delim="${DIAG.opsDelimiter}", contacts_delim="${DIAG.contactsDelimiter}", ` +
+    `ops_mode="${DIAG.opsMode}", ops_headers="${(DIAG.opsHeadersPreview||'')}", contacts_headers_ok=${DIAG.contactsHeaderOk}`;
+}
+
+/* =========================
+   Export: PLANILLA formato inicial
+   Header EXACTO como tu planilla_exportada_2026-01-28.csv
+========================= */
+function exportPlanillaCSV(){
+  if (!RESULTS.length){
+    showToast('Primero procesá los archivos', 1800);
     return;
   }
 
-  let html = `<table><thead><tr>
-    <th>Usuario (alias detectado)</th>
-    <th>Teléfono</th>
-    <th>Estado</th>
-    <th>Operaciones mes</th>
-    <th>Monto mes</th>
-    <th>Última fecha</th>
-    <th>Tags</th>
-    ${showDebug ? `<th>Debug</th>` : ``}
-  </tr></thead><tbody>`;
-
-  for (const r of rows){
-    const pill = r.estado === 'ACTIVO'
-      ? `<span class="pill ok">ACTIVO</span>`
-      : `<span class="pill bad">NO ACTIVO</span>`;
-    html += `<tr>
-      <td>${escapeHtml(r.usuario)}</td>
-      <td>${escapeHtml(r.telefono)}</td>
-      <td>${pill}</td>
-      <td>${(r.ops||0).toLocaleString('es-AR')}</td>
-      <td>$${(r.monto||0).toLocaleString('es-AR')}</td>
-      <td>${escapeHtml(r.ultimaFecha||'')}</td>
-      <td>${escapeHtml(r.tags||'')}</td>
-      ${showDebug ? `<td class="mono">${escapeHtml(r.debug||'')}</td>` : ``}
-    </tr>`;
-  }
-
-  html += `</tbody></table>`;
-  document.getElementById('results').innerHTML = html;
-}
-
-function csvEscape(v){
-  const s = String(v ?? '');
-  if (s.includes('"') || s.includes(',') || s.includes(';') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
-  return '"' + s + '"';
-}
-
-function exportCSV(){
-  if (!state.rowsAll.length) return showToast('No hay datos para exportar', 1800);
-  const onlyInactive = document.getElementById('exportOnlyInactive').checked;
-
-  let rows = state.rowsAll.slice();
-  if (onlyInactive) rows = rows.filter(r => r.estado === 'NO ACTIVO');
+  const onlyNo = document.getElementById('onlyNoActive').checked;
+  let rows = RESULTS.slice();
+  if (onlyNo) rows = rows.filter(r => r.estado !== 'ACTIVO');
 
   const maxRows = parseInt(document.getElementById('maxRows').value, 10) || 0;
   if (maxRows > 0) rows = rows.slice(0, maxRows);
 
-  const header = ['usuario','telefono','estado','operaciones_mes','monto_mes','ultima_fecha','tags','email','metadata'].join(',');
-  let csv = header + '\n';
-  for (const r of rows){
-    csv += [
-      csvEscape(r.usuario||''),
-      csvEscape(r.telefono||''),
-      csvEscape(r.estado||''),
-      csvEscape(r.ops||0),
-      csvEscape(r.monto||0),
-      csvEscape(r.ultimaFecha||''),
-      csvEscape(r.tags||''),
-      csvEscape(r.email||''),
-      csvEscape(r.metadata||'')
-    ].join(',') + '\n';
+  // Build helper lists for side-columns (como tu export inicial)
+  // - ya contactados: vacío (porque eso lo resolvés en el proceso siguiente)
+  // - recuperados!: vacío
+  // - actualmente cargando: lista de ACTIVOS
+  // - turno mañana/tarde/noche: ACTIVOS según hora de ultimaFecha
+  const activos = RESULTS.filter(r => r.estado === 'ACTIVO');
+
+  const turno = { TM: [], TT: [], TN: [] };
+  for (const r of activos){
+    let h = NaN;
+    if (r.ultimaFechaObj && !isNaN(r.ultimaFechaObj.getTime())) h = r.ultimaFechaObj.getHours();
+    if (isNaN(h) && r.ultimaFecha){
+      const m = String(r.ultimaFecha).match(/(\d{2}):(\d{2})(?::(\d{2}))?$/);
+      if (m) h = parseInt(m[1], 10);
+    }
+    if (isNaN(h)) turno.TN.push(r.usuario);
+    else if (h >= 6 && h < 14) turno.TM.push(r.usuario);
+    else if (h >= 14 && h < 22) turno.TT.push(r.usuario);
+    else turno.TN.push(r.usuario);
   }
 
-  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `recuperacion_${onlyInactive ? 'NO_ACTIVOS' : 'COMPLETO'}_${new Date().toISOString().slice(0,10)}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  showToast('CSV exportado', 1500);
+  const actualmenteCargando = activos.map(r => r.usuario);
+
+  // Header EXACTO (lo mismo que tu archivo)
+  const header =
+`usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
+
+  // Mapeo de estados a planilla (como tu sistema)
+  const statusToSheet = (estado) => {
+    // Querés que los detectados como activos queden "ACTIVOS"
+    // pero el header de tu planilla usa el lenguaje anterior:
+    // EN CONTACTO / A CONTACTAR, etc.
+    return (estado === 'ACTIVO') ? 'EN CONTACTO' : 'A CONTACTAR';
+  };
+
+  const csvEscape = (v) => {
+    const s = String(v ?? '');
+    if (s.includes('"') || s.includes(',') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
+    return '"' + s + '"';
+  };
+
+  // La planilla original armaba columnas laterales por listas.
+  // Para mantener el mismo comportamiento: calculamos un maxLength
+  // entre main list y las listas laterales.
+  const maxLength = Math.max(
+    rows.length,
+    actualmenteCargando.length,
+    turno.TM.length,
+    turno.TT.length,
+    turno.TN.length
+  );
+
+  let csv = header;
+
+  for (let i=0;i<maxLength;i++){
+    const main = rows[i];
+
+    const usuario = main ? main.usuario : '';
+    const estadoRev = main ? statusToSheet(main.estado) : '';
+    const estadoAct = main ? statusToSheet(main.estado) : '';
+
+    const row = [
+      main ? csvEscape(usuario) : '',
+      main ? csvEscape(estadoRev) : '',
+      '', // columna vacía (como tu header)
+      main ? csvEscape(estadoAct) : '',
+      csvEscape('NO'),
+      csvEscape('NO'),
+      '', // TURNO DE LAS CARGAS (lo dejás para después)
+      csvEscape('NO'),
+      csvEscape(''), // ya contactados
+      csvEscape(''), // recuperados!
+      csvEscape(actualmenteCargando[i] || ''),
+      csvEscape(turno.TM[i] || ''),
+      csvEscape(turno.TT[i] || ''),
+      csvEscape(turno.TN[i] || ''),
+      csvEscape('') // contactos a borrar
+    ];
+
+    csv += row.join(',') + '\n';
+  }
+
+  downloadFile(csv, `planilla_exportada_${new Date().toISOString().slice(0,10)}.csv`, 'text/csv;charset=utf-8;');
+  showToast('Planilla exportada (formato inicial)', 1600);
 }
-document.getElementById('exportBtn').addEventListener('click', exportCSV);
 
-/* ---------------- Main process ---------------- */
-document.getElementById('processBtn').addEventListener('click', async ()=>{
-  const opsFile = document.getElementById('fileOps').files[0];
-  const contactsFile = document.getElementById('fileContacts').files[0];
-  if (!opsFile || !contactsFile) return showToast('Cargá ambos CSV primero', 2400);
+/* =========================
+   Download helper
+========================= */
+function downloadFile(content, fileName, mimeType){
+  const bom = mimeType.includes('csv') ? '\uFEFF' : '';
+  const blob = new Blob([bom + content], { type: mimeType });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
-  showToast('Leyendo archivos…', 9000);
+/* =========================
+   Main flow
+========================= */
+async function readFileText(file){
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = e => resolve(String(e.target.result || ''));
+    fr.onerror = reject;
+    fr.readAsText(file, 'utf-8');
+  });
+}
+
+document.getElementById('processBtn').addEventListener('click', async () => {
+  const fOps = document.getElementById('fileOps').files[0];
+  const fContacts = document.getElementById('fileContacts').files[0];
+  if (!fOps || !fContacts){
+    showToast('Cargá ambos archivos CSV primero', 2600);
+    return;
+  }
+
+  setSpinning(true);
+  showToast('Procesando…', 8000);
 
   try{
-    const [opsText, contactsText] = await Promise.all([readFileTextSmart(opsFile), readFileTextSmart(contactsFile)]);
+    const [opsText, contactsText] = await Promise.all([readFileText(fOps), readFileText(fContacts)]);
 
-    const dOps = detectDelimiter(opsText);
-    const dC = detectDelimiter(contactsText);
-    document.getElementById('detectedDelims').textContent =
-      `Separadores detectados: ops="${dOps.delim}" (${dOps.from}) • contacts="${dC.delim}" (${dC.from})`;
+    // Parse ops
+    const opsParsed = parseOpsCSV(opsText);
+    OPS_STATS = opsParsed.stats;
+    OPS_UNIQUE_ACTIVE = OPS_STATS.size;
 
-    const opsRows = parseCSV(opsText, dOps.delim);
-    const contactsRows = parseCSV(contactsText, dC.delim);
+    // Parse contacts
+    const contactsParsed = parseContactsCSV(contactsText);
 
-    if (!opsRows.length) { showToast('Ops: 0 filas leídas', 3000); return; }
-    if (!contactsRows.length) { showToast('Contacts: 0 filas leídas', 3000); return; }
+    // Compare
+    const built = buildResults(contactsParsed.contacts, OPS_STATS);
+    RESULTS = built.out;
 
-    const ops = parseOps(opsRows);
-    const pc = parseContacts(contactsRows);
+    DIAG = {
+      opsTotalRows: opsParsed.totalRows,
+      contactsTotalRows: contactsParsed.totalRows,
+      activeCount: built.activeCount,
+      noActiveCount: built.noActiveCount,
+      opsDelimiter: opsParsed.delimiter,
+      contactsDelimiter: contactsParsed.delimiter,
+      opsMode: opsParsed.mode,
+      opsHeadersPreview: (opsParsed.headers || []).slice(0, 8).join(' | '),
+      contactsHeaderOk: contactsParsed.headerOk,
+      contactsDelimiter: contactsParsed.delimiter,
+      contactsHeaders: contactsParsed.headers
+    };
 
-    state.ops = ops;
-    state.contacts = pc.contacts;
-    state._opsDelim = dOps.delim;
-    state._contactsDelim = dC.delim;
-    state._contactsHeaderOk = pc.headerOk;
+    render();
+    showToast('Listo — resultados actualizados', 1700);
 
-    // si header no OK, avisamos fuerte
-    if (!pc.headerOk){
-      showToast('CONTACTS: No detecté header number/name. Revisá separador o columnas.', 4500);
-    }
-
-    // construir planilla completa
-    const out = [];
-    let matched = 0;
-
-    for (const c of pc.contacts){
-      const alias = extractAliasFromContact(
-        { name:c.name, metadata:c.metadata, email:c.email },
-        ops.activeAliasSet
-      );
-      const isActive = alias && ops.activeAliasSet.has(alias);
-      const stats = isActive ? ops.statsByAlias.get(alias) : null;
-      if (isActive) matched++;
-
-      out.push({
-        usuario: alias || (normalizeKey(c.name) || ''),
-        telefono: c.numberE164 || c.numberRaw || '',
-        estado: isActive ? 'ACTIVO' : 'NO ACTIVO',
-        ops: stats ? stats.ops : 0,
-        monto: stats ? Math.round(stats.monto) : 0,
-        ultimaFecha: stats ? (stats.lastFecha || '') : '',
-        tags: c.tags || '',
-        email: c.email || '',
-        metadata: c.metadata || '',
-        debug: `name="${c.name}" | alias="${alias}" | num="${c.numberRaw}"`
-      });
-    }
-
-    // ordenar: NO ACTIVOS arriba
-    out.sort((a,b)=>{
-      if (a.estado !== b.estado) return a.estado === 'NO ACTIVO' ? -1 : 1;
-      return String(a.usuario||'').localeCompare(String(b.usuario||''), 'es');
-    });
-
-    state.rowsAll = out;
-
-    renderKPIs();
-    setView('inactive');
-
-    showToast(`Listo. Ops únicos=${ops.uniques} • Activos match=${matched}`, 2600);
-
-  }catch(err){
-    console.error(err);
-    showToast('Error procesando', 3200);
-    alert('Error: ' + (err && err.message ? err.message : err));
+  } catch (e){
+    console.error(e);
+    showToast('Error procesando archivos', 3200);
+    alert('Error procesando archivos: ' + (e?.message || e));
+  } finally {
+    setSpinning(false);
   }
+});
+
+document.getElementById('exportPlanillaBtn').addEventListener('click', exportPlanillaCSV);
+
+// Tabs
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    VIEW = btn.dataset.view;
+    render();
+  });
 });
 </script>
 </body>
