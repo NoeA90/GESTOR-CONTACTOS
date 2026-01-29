@@ -6,58 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0f17;
-      --card:#131a24;
-      --accent:#9aff5c;
-      --accent-soft:#c8ff9b;
-      --muted:#9aa5b7;
-      --border:#1c2533;
-      --danger:#ff4d4d;
-      --ok:#31ff8a;
-      --warn:#ffd35a;
-      --row:#0d131d;
-      --row2:#0f1722;
+      --bg:#0b0f17; --card:#131a24; --accent:#9aff5c; --accent-soft:#c8ff9b;
+      --muted:#9aa5b7; --border:#1c2533; --danger:#ff4d4d; --ok:#31ff8a;
+      --row:#0d131d; --row2:#0f1722;
     }
     *{box-sizing:border-box;font-family:Inter,Roboto,Arial}
     body{margin:0;padding:26px;min-height:100vh;background:var(--bg);color:white;}
-    h1{margin:0 0 14px 0;font-size:22px;font-weight:700;}
+    h1{margin:0 0 14px 0;font-size:22px;font-weight:800;}
     .card{background:var(--card);padding:22px;border-radius:14px;border:1px solid var(--border);box-shadow:0 0 20px #0004;}
     .grid{display:flex;gap:18px;flex-wrap:wrap;}
     .box{flex:1;min-width:300px;background:#0f141d;padding:14px;border-radius:12px;border:1px solid #1b2230;}
-    .section-title{font-size:13px;font-weight:800;margin-bottom:10px;color:var(--accent-soft);}
+    .section-title{font-size:13px;font-weight:900;margin-bottom:10px;color:var(--accent-soft);}
     input[type=file]{width:100%;padding:12px;background:#0d131d;border:1px dashed #2a3647;border-radius:10px;color:var(--muted);cursor:pointer;}
     .btn-main{width:100%;padding:14px;font-size:16px;font-weight:900;background:var(--accent);border:none;border-radius:10px;margin-top:16px;cursor:pointer;color:#121715;}
     .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
     .btn-small{padding:10px 14px;font-size:13px;font-weight:900;background:#101a27;color:white;border:1px solid #1c2533;border-radius:10px;cursor:pointer;}
     .btn-small.active{border-color:var(--accent);box-shadow:0 0 0 2px #9aff5c22 inset;}
     .btn-export{background:#c7ffe6;color:#021d16;border:none;}
-    .summary{margin-top:14px;padding:12px;border-radius:10px;background:#0d131d;border:1px solid #1c2533;color:var(--muted);font-size:14px;display:grid;gap:8px;}
+    .summary{margin-top:14px;padding:12px;border-radius:10px;background:#0d131d;border:1px solid #1c2533;color:var(--muted);font-size:14px;display:grid;gap:10px;}
     .kpis{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;}
     .kpi{background:#0d131d;border:1px solid #1c2533;border-radius:12px;padding:12px;}
-    .kpi .label{color:var(--muted);font-size:12px;font-weight:700;}
+    .kpi .label{color:var(--muted);font-size:12px;font-weight:800;}
     .kpi .val{font-size:22px;font-weight:900;margin-top:4px;}
-    .val.ok{color:var(--ok);}
-    .val.bad{color:var(--danger);}
-    .val.neu{color:var(--accent-soft);}
+    .val.ok{color:var(--ok);} .val.bad{color:var(--danger);} .val.neu{color:var(--accent-soft);}
     .options{display:flex;flex-direction:column;gap:10px;}
     label.inline{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;}
-    input[type=number]{width:140px;padding:8px;background:#0d131d;border-radius:8px;border:1px solid #1c2533;color:white;}
+    input[type=number]{width:160px;padding:8px;background:#0d131d;border-radius:8px;border:1px solid #1c2533;color:white;}
     table{width:100%;margin-top:14px;border-collapse:collapse;background:#0d131d;border-radius:12px;overflow:hidden;border:1px solid #1c2533;}
     th,td{padding:10px;border-bottom:1px solid #1c2533;font-size:13px;}
     th{background:#16202c;font-weight:900;color:var(--accent-soft);text-align:left;}
     tr:nth-child(odd) td{background:var(--row);}
     tr:nth-child(even) td{background:var(--row2);}
     tr:hover td{background:#141c27;}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid #0000;}
+    .pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid #0000;}
     .pill.ok{background:#0c2a1b;color:var(--ok);border-color:#1a5c3c;}
     .pill.bad{background:#2a1010;color:var(--danger);border-color:#5c1a1a;}
-    .muted{color:var(--muted);}
     .toast{position:fixed;right:20px;bottom:20px;background:#16202c;padding:12px 16px;border-radius:10px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s;display:flex;gap:10px;align-items:center;border:1px solid #2a3647;}
     .toast.show{opacity:1;transform:translateY(0);pointer-events:auto;}
     .spinner{width:16px;height:16px;border-radius:50%;border:2px solid #44546a;border-top-color:var(--accent);animation:spin 1s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .note{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.35;}
-    .small{font-size:12px;color:var(--muted);}
+    .note{font-size:12px;color:var(--muted);line-height:1.35;}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;}
     @media(max-width: 900px){.kpis{grid-template-columns:1fr;}}
   </style>
 </head>
@@ -69,25 +58,26 @@
   <div class="grid">
     <div class="box">
       <div class="section-title">Cargas del mes (CSV)</div>
-      <input type="file" id="fileOps" accept=".csv">
-      <div class="note">Este CSV es el de ventas/cargas. Detecto el alias y armo los <b>usuarios únicos activos</b>.</div>
+      <input type="file" id="fileOps" accept=".csv,text/csv" />
+      <div class="note" id="opsInfo">Esperando archivo…</div>
     </div>
 
     <div class="box">
       <div class="section-title">Contactos Whaticket (CSV)</div>
-      <input type="file" id="fileContacts" accept=".csv">
-      <div class="note">Debe tener header tipo: <code>number,name,email,tags,metadata</code> (puede tener más columnas, no pasa nada).</div>
+      <input type="file" id="fileContacts" accept=".csv,text/csv" />
+      <div class="note" id="contactsInfo">Esperando archivo…</div>
+      <div class="note mono">Header esperado: number,name,email,tags,metadata</div>
     </div>
 
-    <div class="box" style="max-width:320px;">
+    <div class="box" style="max-width:340px;">
       <div class="section-title">Opciones</div>
       <div class="options">
-        <label class="inline"><input type="checkbox" id="exportOnlyInactive"> Exportar SOLO NO ACTIVOS</label>
+        <label class="inline"><input type="checkbox" id="exportOnlyInactive" /> Exportar SOLO NO ACTIVOS</label>
         <label class="inline">Límite filas (0 = sin límite)</label>
-        <input type="number" id="maxRows" value="0" min="0">
-        <label class="inline"><input type="checkbox" id="showDebug"> Mostrar debug de matching</label>
+        <input type="number" id="maxRows" value="0" min="0" />
+        <label class="inline"><input type="checkbox" id="showDebug" /> Mostrar debug</label>
       </div>
-      <div class="note">Matching inteligente: busca el alias dentro de <b>name / metadata / email</b> (ej: <code>matiti993//Matias</code> o <code>Matias (matiti993)</code>).</div>
+      <div class="note" id="detectedDelims">Separadores detectados: —</div>
     </div>
   </div>
 
@@ -95,14 +85,15 @@
 
   <div class="btn-row">
     <button class="btn-small btn-export" id="exportBtn">Exportar Planilla (CSV)</button>
-    <button class="btn-small active" data-view="all" id="viewAll">Vista: Todos</button>
-    <button class="btn-small" data-view="active" id="viewActive">Vista: Activos</button>
-    <button class="btn-small" data-view="inactive" id="viewInactive">Vista: No Activos</button>
+    <button class="btn-small active" id="viewAll">Vista: Todos</button>
+    <button class="btn-small" id="viewActive">Vista: Activos</button>
+    <button class="btn-small" id="viewInactive">Vista: No Activos</button>
   </div>
 
-  <div class="summary" id="summary">
+  <div class="summary">
     <div><b id="sumTitle">Sin procesar</b></div>
-    <div class="small" id="sumSub">Subí ambos CSV y presioná “Procesar y Comparar”.</div>
+    <div id="sumSub">Subí ambos CSV y presioná “Procesar y Comparar”.</div>
+
     <div class="kpis">
       <div class="kpi">
         <div class="label">Contactos totales</div>
@@ -117,7 +108,8 @@
         <div class="val bad" id="kpiInactive">—</div>
       </div>
     </div>
-    <div class="small" id="kpiExtra"></div>
+
+    <div class="note mono" id="diagLine">Diag: —</div>
   </div>
 
   <div id="results"></div>
@@ -129,9 +121,7 @@
 </div>
 
 <script>
-/* -----------------------------
-   Toast
------------------------------ */
+/* ---------------- Toast ---------------- */
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
 let toastTimer = null;
@@ -142,10 +132,64 @@ function showToast(text, duration=2200) {
   toastTimer = setTimeout(()=>{ toast.classList.remove('show'); toastTimer = null; }, duration);
 }
 
-/* -----------------------------
-   CSV helpers (robusto)
------------------------------ */
-function parseCSV(text){
+/* ---------------- File info UI ---------------- */
+const opsInfo = document.getElementById('opsInfo');
+const contactsInfo = document.getElementById('contactsInfo');
+document.getElementById('fileOps').addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  opsInfo.textContent = f ? `Seleccionado: ${f.name} • ${(f.size/1024/1024).toFixed(2)} MB` : 'Esperando archivo…';
+});
+document.getElementById('fileContacts').addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  contactsInfo.textContent = f ? `Seleccionado: ${f.name} • ${(f.size/1024/1024).toFixed(2)} MB` : 'Esperando archivo…';
+});
+
+/* ---------------- Read file with fallback encodings ---------------- */
+async function readFileTextSmart(file){
+  const txtUtf8 = await readAsText(file, 'utf-8');
+  // Si hay muchos �, probamos ISO-8859-1
+  const bad = (txtUtf8.match(/\uFFFD/g) || []).length;
+  if (bad > 20) {
+    const txtLatin = await readAsText(file, 'iso-8859-1');
+    return txtLatin;
+  }
+  return txtUtf8;
+}
+function readAsText(file, encoding){
+  return new Promise((resolve, reject)=>{
+    const r = new FileReader();
+    r.onload = e => resolve(String(e.target.result || ''));
+    r.onerror = reject;
+    try { r.readAsText(file, encoding); }
+    catch { r.readAsText(file); }
+  });
+}
+
+/* ---------------- Delimiter detect + CSV parse ---------------- */
+function detectDelimiter(sampleText){
+  const first = (String(sampleText||'').split(/\r?\n/).slice(0, 25)).join('\n');
+  const counts = {
+    ',': (first.match(/,/g) || []).length,
+    ';': (first.match(/;/g) || []).length,
+    '\t': (first.match(/\t/g) || []).length
+  };
+  // si viene "sep=;"
+  const sepLine = first.split('\n').find(l => /^sep\s*=/.test(l.trim().toLowerCase()));
+  if (sepLine){
+    const m = sepLine.match(/sep\s*=\s*(.)/i);
+    if (m && m[1]) return { delim: m[1], counts, from:'sep=' };
+  }
+  // el que más aparece
+  let best = ',', bestCount = counts[','];
+  for (const k of Object.keys(counts)){
+    if (counts[k] > bestCount){ best = k; bestCount = counts[k]; }
+  }
+  // fallback seguro
+  if (bestCount === 0) best = ',';
+  return { delim: best, counts, from:'auto' };
+}
+
+function parseCSV(text, delim){
   const rows = [];
   let row = [];
   let field = '';
@@ -161,7 +205,7 @@ function parseCSV(text){
       else inQuotes = !inQuotes;
       continue;
     }
-    if (!inQuotes && ch === ','){
+    if (!inQuotes && ch === delim){
       row.push(field);
       field = '';
       continue;
@@ -169,6 +213,7 @@ function parseCSV(text){
     if (!inQuotes && ch === '\n'){
       row.push(field);
       field = '';
+      // skip empty row
       if (row.some(v => String(v||'').trim() !== '')) rows.push(row.map(v => String(v||'').trim()));
       row = [];
       continue;
@@ -180,37 +225,26 @@ function parseCSV(text){
   return rows;
 }
 
-function normalizeKey(s){
-  return String(s||'').toLowerCase().trim();
+function stripSepLine(rows){
+  if (!rows.length) return rows;
+  const first = (rows[0]||[]).join('').toLowerCase().trim();
+  if (first.startsWith('sep=')) return rows.slice(1);
+  return rows;
 }
 
-function csvEscape(v){
-  const s = String(v ?? '');
-  if (s.includes('"') || s.includes(',') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
-  return '"' + s + '"';
+function normalizeKey(s){ return String(s||'').toLowerCase().trim(); }
+function escapeHtml(s){
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-function parseDateFlexible(fecha){
-  const f = String(fecha||'').trim();
-  if (!f) return null;
-  // intenta ISO-like
-  let d = new Date(f.replace(' ', 'T'));
-  if (!isNaN(d.getTime())) return d;
-  d = new Date(f);
-  if (!isNaN(d.getTime())) return d;
-  return null;
-}
-
-/* -----------------------------
-   Phone normalization (para export + display)
------------------------------ */
+/* ---------------- Phone normalize ---------------- */
 function normalizePhone(raw){
   const s = String(raw||'').trim();
   if (!s) return { digits:'', e164:'' };
   let digits = s.replace(/\D/g,'');
   if (!digits) return { digits:'', e164:'' };
 
-  // internacional 00...
   if (s.startsWith('00')){
     const intl = '+' + digits.slice(2);
     return { digits: intl.replace(/\D/g,''), e164: intl };
@@ -220,92 +254,99 @@ function normalizePhone(raw){
   if (digits.startsWith('54')) e164 = '+' + digits;
   else{
     if (digits.startsWith('0') && digits.length >= 10) digits = digits.slice(1);
-    digits = digits.replace(/^(\d{2,4})15/, '$1');
+    digits = digits.replace(/^(\d{2,4})15/, '$1'); // quita 15
     e164 = '+54' + digits;
   }
   return { digits: e164.replace(/\D/g,''), e164 };
 }
 
-/* -----------------------------
-   Matching inteligente: extraer alias del contacto
-   - Busca tokens dentro de name/metadata/email
-   - Soporta: "alias//Titular", "Titular (alias)", "Titular - alias", etc.
------------------------------ */
-function tokensFromText(txt){
-  const raw = normalizeKey(txt);
-  if (!raw) return [];
-  // separa por cualquier no alfanumérico y guión bajo
-  return raw.split(/[^a-z0-9_]+/g).filter(Boolean);
+/* ---------------- Contacts parse ---------------- */
+function findHeaderIndex(headers, candidates){
+  const hl = headers.map(h => normalizeKey(h));
+  for (let i = 0; i < hl.length; i++){
+    const h = hl[i];
+    if (candidates.some(c => h === c || h.includes(c))) return i;
+  }
+  return -1;
 }
 
-function extractAliasFromContact(contact, activeAliasSet){
-  // 1) intentos rápidos por patrones típicos
-  const name = normalizeKey(contact.name);
-  if (name){
-    // alias//...
-    const parts = name.split('//').map(s => s.trim()).filter(Boolean);
-    if (parts.length > 1){
-      // si el primer tramo coincide con alias, lo usamos
-      const a = tokensFromText(parts[0])[0];
-      if (a && activeAliasSet.has(a)) return a;
-    }
-    // (alias)
-    const paren = name.match(/\(([^)]+)\)/);
-    if (paren){
-      const tks = tokensFromText(paren[1]);
-      for (const t of tks) if (activeAliasSet.has(t)) return t;
-    }
+function parseContacts(rows){
+  rows = stripSepLine(rows);
+  if (!rows || rows.length < 2) return { contacts:[], headerOk:false, headers:[] };
+
+  const headers = rows[0] || [];
+  const idxNumber = findHeaderIndex(headers, ['number','telefono','tel','phone','celular','mobile']);
+  const idxName = findHeaderIndex(headers, ['name','nombre']);
+  const idxEmail = findHeaderIndex(headers, ['email','mail']);
+  const idxTags = findHeaderIndex(headers, ['tags','tag']);
+  const idxMeta = findHeaderIndex(headers, ['metadata','meta']);
+
+  const headerOk = (idxNumber !== -1 && idxName !== -1); // mínimo
+
+  const contacts = [];
+  for (let i = 1; i < rows.length; i++){
+    const r = rows[i];
+    if (!r || r.length === 0) continue;
+
+    const number = (idxNumber !== -1 ? (r[idxNumber] ?? '') : '').trim();
+    const name = (idxName !== -1 ? (r[idxName] ?? '') : '').trim();
+    const email = (idxEmail !== -1 ? (r[idxEmail] ?? '') : '').trim();
+    const tags = (idxTags !== -1 ? (r[idxTags] ?? '') : '').trim();
+    const metadata = (idxMeta !== -1 ? (r[idxMeta] ?? '') : '').trim();
+
+    if (!number && !name && !email && !tags && !metadata) continue;
+
+    const phone = normalizePhone(number);
+    contacts.push({
+      numberRaw: number,
+      numberE164: phone.e164 || '',
+      name, email, tags, metadata
+    });
   }
-
-  // 2) tokens de name + metadata + email (orden importa)
-  const pool = []
-    .concat(tokensFromText(contact.name))
-    .concat(tokensFromText(contact.metadata))
-    .concat(tokensFromText(contact.email));
-
-  for (const t of pool){
-    if (activeAliasSet.has(t)) return t;
-  }
-
-  // 3) fallback: primer token del name (para mostrar algo)
-  const fallback = tokensFromText(contact.name)[0] || '';
-  return fallback;
+  return { contacts, headerOk, headers };
 }
 
-/* -----------------------------
-   Parse CARGAS: arma un mapa por alias (usuario)
-   Esperado: agent_operations (60).csv o similar
-   - Detecto columnas por header si existe; si no, intento por posiciones
------------------------------ */
+/* ---------------- Ops parse (cargas) ---------------- */
+function parseDateFlexible(fecha){
+  const f = String(fecha||'').trim();
+  if (!f) return null;
+  let d = new Date(f.replace(' ', 'T'));
+  if (!isNaN(d.getTime())) return d;
+  d = new Date(f);
+  if (!isNaN(d.getTime())) return d;
+  return null;
+}
+
 function detectOpsSchema(rows){
-  // devuelve índices aproximados: fecha, monto, usuario
+  rows = stripSepLine(rows);
   const headers = (rows[0] || []).map(h => normalizeKey(h));
-  const hasHeader = headers.some(h => ['fecha','date'].includes(h) || h.includes('fecha'));
-  if (!hasHeader) return { header:false, fecha:0, monto:2, usuario:4 };
+  const hasHeader = headers.some(h => h.includes('fecha') || h === 'date' || h.includes('alias') || h.includes('cantidad'));
+  if (!hasHeader) return { header:false, fecha:0, monto:2, usuario:4, headers:[] };
 
   const findIdx = (cands) => headers.findIndex(h => cands.some(c => h === c || h.includes(c)));
 
   const idxFecha = findIdx(['fecha','date','datetime']);
   const idxMonto = findIdx(['cantidad','monto','importe','amount','total']);
-  // alias/usuario: en tus ejemplos puede ser alias jugador / alias
-  let idxUser = findIdx(['alias jugador','alias','usuario','user','nick','nickname']);
+  let idxUser = findIdx(['alias jugador','alias','usuario','user','nick','nickname','player']);
   if (idxUser === -1) idxUser = 4;
 
   return {
     header:true,
     fecha: idxFecha !== -1 ? idxFecha : 0,
     monto: idxMonto !== -1 ? idxMonto : 2,
-    usuario: idxUser
+    usuario: idxUser,
+    headers: rows[0] || []
   };
 }
 
 function parseOps(rows){
-  if (!rows || rows.length < 2) return { activeAliasSet:new Set(), statsByAlias:new Map(), uniques:0, totalRows:0 };
+  rows = stripSepLine(rows);
+  if (!rows || rows.length < 2) return { uniques:0, totalRows:0, activeAliasSet:new Set(), statsByAlias:new Map(), schema:null };
 
   const schema = detectOpsSchema(rows);
   const start = schema.header ? 1 : 0;
-  const statsByAlias = new Map();
 
+  const statsByAlias = new Map();
   for (let i = start; i < rows.length; i++){
     const r = rows[i];
     if (!r || r.length === 0) continue;
@@ -314,11 +355,9 @@ function parseOps(rows){
     const usuarioRaw = (r[schema.usuario] ?? '').trim();
     if (!usuarioRaw) continue;
 
-    // Limpieza alias (lower + trim)
     const usuario = normalizeKey(usuarioRaw);
     if (!usuario) continue;
 
-    // monto
     let mRaw = (r[schema.monto] ?? '').toString();
     mRaw = mRaw.replace(/\s+/g,'').replace(/[^0-9\.\-]/g,'');
     const monto = parseFloat(mRaw) || 0;
@@ -339,69 +378,49 @@ function parseOps(rows){
   }
 
   const activeAliasSet = new Set(statsByAlias.keys());
-  return { activeAliasSet, statsByAlias, uniques: activeAliasSet.size, totalRows: (schema.header ? rows.length-1 : rows.length) };
+  return { uniques: activeAliasSet.size, totalRows: (schema.header ? rows.length-1 : rows.length), activeAliasSet, statsByAlias, schema };
 }
 
-/* -----------------------------
-   Parse CONTACTOS Whaticket:
-   header esperado: number,name,email,tags,metadata (puede venir con extras)
------------------------------ */
-function findHeaderIndex(headers, candidates){
-  const hl = headers.map(h => normalizeKey(h));
-  for (let i = 0; i < hl.length; i++){
-    const h = hl[i];
-    if (candidates.some(c => h === c || h.includes(c))) return i;
+/* ---------------- Matching alias contacto vs ops ---------------- */
+function tokensFromText(txt){
+  const raw = normalizeKey(txt);
+  if (!raw) return [];
+  return raw.split(/[^a-z0-9_]+/g).filter(Boolean);
+}
+function extractAliasFromContact(contact, activeAliasSet){
+  const name = normalizeKey(contact.name);
+
+  // patrón alias//titular
+  if (name && name.includes('//')){
+    const first = name.split('//')[0].trim();
+    const t = tokensFromText(first)[0];
+    if (t && activeAliasSet.has(t)) return t;
   }
-  return -1;
-}
 
-function parseContacts(rows){
-  if (!rows || rows.length < 2) return [];
-  const headers = rows[0] || [];
-  const idxNumber = findHeaderIndex(headers, ['number','telefono','tel','phone','celular','mobile']);
-  const idxName = findHeaderIndex(headers, ['name','nombre']);
-  const idxEmail = findHeaderIndex(headers, ['email','mail']);
-  const idxTags = findHeaderIndex(headers, ['tags','tag']);
-  const idxMeta = findHeaderIndex(headers, ['metadata','meta']);
-
-  const contacts = [];
-  for (let i = 1; i < rows.length; i++){
-    const r = rows[i];
-    if (!r || r.length === 0) continue;
-
-    const number = (idxNumber !== -1 ? (r[idxNumber] ?? '') : '').trim();
-    const name = (idxName !== -1 ? (r[idxName] ?? '') : '').trim();
-    const email = (idxEmail !== -1 ? (r[idxEmail] ?? '') : '').trim();
-    const tags = (idxTags !== -1 ? (r[idxTags] ?? '') : '').trim();
-    const metadata = (idxMeta !== -1 ? (r[idxMeta] ?? '') : '').trim();
-
-    // descartar filas totalmente vacías
-    if (!number && !name && !email && !tags && !metadata) continue;
-
-    const phone = normalizePhone(number);
-    contacts.push({
-      numberRaw: number,
-      numberE164: phone.e164 || '',
-      numberDigits: phone.digits || '',
-      name,
-      email,
-      tags,
-      metadata
-    });
+  // patrón titular (alias)
+  if (name){
+    const par = name.match(/\(([^)]+)\)/);
+    if (par){
+      const tks = tokensFromText(par[1]);
+      for (const t of tks) if (activeAliasSet.has(t)) return t;
+    }
   }
-  return contacts;
+
+  // tokens de name + metadata + email
+  const pool = []
+    .concat(tokensFromText(contact.name))
+    .concat(tokensFromText(contact.metadata))
+    .concat(tokensFromText(contact.email));
+
+  for (const t of pool){
+    if (activeAliasSet.has(t)) return t;
+  }
+
+  return tokensFromText(contact.name)[0] || '';
 }
 
-/* -----------------------------
-   App State + Render
------------------------------ */
-let state = {
-  ops: null,             // { activeAliasSet, statsByAlias, uniques, totalRows }
-  contacts: [],
-  rowsAll: [],
-  view: 'all',           // all | active | inactive
-  lastExportRows: []
-};
+/* ---------------- App State + Render ---------------- */
+let state = { view:'inactive', rowsAll:[], ops:null, contacts:[] };
 
 function setView(v){
   state.view = v;
@@ -410,7 +429,6 @@ function setView(v){
   document.getElementById('viewInactive').classList.toggle('active', v === 'inactive');
   renderTable();
 }
-
 document.getElementById('viewAll').addEventListener('click', ()=>setView('all'));
 document.getElementById('viewActive').addEventListener('click', ()=>setView('active'));
 document.getElementById('viewInactive').addEventListener('click', ()=>setView('inactive'));
@@ -424,21 +442,14 @@ function renderKPIs(){
   document.getElementById('kpiActive').textContent = active.toLocaleString('es-AR');
   document.getElementById('kpiInactive').textContent = inactive.toLocaleString('es-AR');
 
-  const opsUniques = state.ops ? state.ops.uniques : 0;
-  const opsRows = state.ops ? state.ops.totalRows : 0;
-
   document.getElementById('sumTitle').textContent = 'Procesado';
   document.getElementById('sumSub').textContent =
-    `Ops: ${opsRows.toLocaleString('es-AR')} registros • ${opsUniques.toLocaleString('es-AR')} usuarios únicos activos (alias únicos). ` +
+    `Ops: ${state.ops.totalRows.toLocaleString('es-AR')} registros • ${state.ops.uniques.toLocaleString('es-AR')} usuarios únicos activos. ` +
     `Contacts: ${state.contacts.length.toLocaleString('es-AR')} filas.`;
 
-  document.getElementById('kpiExtra').textContent =
-    `Matching: busco alias dentro de name/metadata/email (soporta alias primero o titular primero).`;
-}
-
-function escapeHtml(s){
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const hdr = state.ops.schema?.headers ? state.ops.schema.headers.join(' | ') : '(sin header detectado)';
+  document.getElementById('diagLine').textContent =
+    `Diag: ops_delim="${state._opsDelim}" • contacts_delim="${state._contactsDelim}" • header_contacts_ok=${state._contactsHeaderOk} • ops_header="${hdr.slice(0, 180)}"`;
 }
 
 function renderTable(){
@@ -449,18 +460,14 @@ function renderTable(){
   if (state.view === 'active') rows = rows.filter(r => r.estado === 'ACTIVO');
   if (state.view === 'inactive') rows = rows.filter(r => r.estado === 'NO ACTIVO');
 
-  // export respects "export only inactive"
-  state.lastExportRows = rows;
-
   if (maxRows > 0) rows = rows.slice(0, maxRows);
 
   if (!rows.length){
-    document.getElementById('results').innerHTML = `<div class="muted" style="margin-top:14px;">Sin filas para mostrar.</div>`;
+    document.getElementById('results').innerHTML = `<div style="margin-top:14px;color:var(--muted)">Sin filas para mostrar.</div>`;
     return;
   }
 
-  let html = '';
-  html += `<table><thead><tr>
+  let html = `<table><thead><tr>
     <th>Usuario (alias detectado)</th>
     <th>Teléfono</th>
     <th>Estado</th>
@@ -468,23 +475,22 @@ function renderTable(){
     <th>Monto mes</th>
     <th>Última fecha</th>
     <th>Tags</th>
-    ${showDebug ? `<th class="muted">Debug match</th>` : ``}
+    ${showDebug ? `<th>Debug</th>` : ``}
   </tr></thead><tbody>`;
 
   for (const r of rows){
     const pill = r.estado === 'ACTIVO'
       ? `<span class="pill ok">ACTIVO</span>`
       : `<span class="pill bad">NO ACTIVO</span>`;
-
     html += `<tr>
-      <td>${escapeHtml(r.usuario || '')}</td>
-      <td>${escapeHtml(r.telefono || '')}</td>
+      <td>${escapeHtml(r.usuario)}</td>
+      <td>${escapeHtml(r.telefono)}</td>
       <td>${pill}</td>
-      <td>${(r.ops || 0).toLocaleString('es-AR')}</td>
-      <td>$${(r.monto || 0).toLocaleString('es-AR')}</td>
-      <td>${escapeHtml(r.ultimaFecha || '')}</td>
-      <td>${escapeHtml(r.tags || '')}</td>
-      ${showDebug ? `<td class="muted">${escapeHtml(r.debug || '')}</td>` : ``}
+      <td>${(r.ops||0).toLocaleString('es-AR')}</td>
+      <td>$${(r.monto||0).toLocaleString('es-AR')}</td>
+      <td>${escapeHtml(r.ultimaFecha||'')}</td>
+      <td>${escapeHtml(r.tags||'')}</td>
+      ${showDebug ? `<td class="mono">${escapeHtml(r.debug||'')}</td>` : ``}
     </tr>`;
   }
 
@@ -492,46 +498,35 @@ function renderTable(){
   document.getElementById('results').innerHTML = html;
 }
 
-/* -----------------------------
-   Export CSV (planilla simple para tu “otro proceso”)
-   Te dejo columnas "whaticket-like" + estado activo
------------------------------ */
+function csvEscape(v){
+  const s = String(v ?? '');
+  if (s.includes('"') || s.includes(',') || s.includes(';') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
+  return '"' + s + '"';
+}
+
 function exportCSV(){
   if (!state.rowsAll.length) return showToast('No hay datos para exportar', 1800);
-
   const onlyInactive = document.getElementById('exportOnlyInactive').checked;
+
   let rows = state.rowsAll.slice();
   if (onlyInactive) rows = rows.filter(r => r.estado === 'NO ACTIVO');
 
   const maxRows = parseInt(document.getElementById('maxRows').value, 10) || 0;
   if (maxRows > 0) rows = rows.slice(0, maxRows);
 
-  // Cabecera final (simple y limpia)
-  // Si querés EXACTO al formato de tu planilla vieja, decímelo y lo adapto a ese header.
-  const header = [
-    'usuario',
-    'telefono',
-    'estado',
-    'operaciones_mes',
-    'monto_mes',
-    'ultima_fecha',
-    'tags',
-    'email',
-    'metadata'
-  ].join(',');
-
+  const header = ['usuario','telefono','estado','operaciones_mes','monto_mes','ultima_fecha','tags','email','metadata'].join(',');
   let csv = header + '\n';
   for (const r of rows){
     csv += [
-      csvEscape(r.usuario || ''),
-      csvEscape(r.telefono || ''),
-      csvEscape(r.estado || ''),
-      csvEscape(r.ops || 0),
-      csvEscape(r.monto || 0),
-      csvEscape(r.ultimaFecha || ''),
-      csvEscape(r.tags || ''),
-      csvEscape(r.email || ''),
-      csvEscape(r.metadata || '')
+      csvEscape(r.usuario||''),
+      csvEscape(r.telefono||''),
+      csvEscape(r.estado||''),
+      csvEscape(r.ops||0),
+      csvEscape(r.monto||0),
+      csvEscape(r.ultimaFecha||''),
+      csvEscape(r.tags||''),
+      csvEscape(r.email||''),
+      csvEscape(r.metadata||'')
     ].join(',') + '\n';
   }
 
@@ -544,52 +539,90 @@ function exportCSV(){
   document.body.removeChild(a);
   showToast('CSV exportado', 1500);
 }
-
 document.getElementById('exportBtn').addEventListener('click', exportCSV);
 
-/* -----------------------------
-   Main: procesar y comparar
------------------------------ */
-async function readFileText(file){
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = e => resolve(String(e.target.result || ''));
-    r.onerror = reject;
-    r.readAsText(file, 'utf-8');
-  });
-}
-
-document.getElementById('processBtn').addEventListener('click', async () => {
+/* ---------------- Main process ---------------- */
+document.getElementById('processBtn').addEventListener('click', async ()=>{
   const opsFile = document.getElementById('fileOps').files[0];
   const contactsFile = document.getElementById('fileContacts').files[0];
   if (!opsFile || !contactsFile) return showToast('Cargá ambos CSV primero', 2400);
 
-  showToast('Procesando…', 9000);
+  showToast('Leyendo archivos…', 9000);
 
   try{
-    const [opsText, contactsText] = await Promise.all([readFileText(opsFile), readFileText(contactsFile)]);
-    const opsRows = parseCSV(opsText);
-    const contactsRows = parseCSV(contactsText);
+    const [opsText, contactsText] = await Promise.all([readFileTextSmart(opsFile), readFileTextSmart(contactsFile)]);
 
-    const ops = parseOps(opsRows);             // {activeAliasSet, statsByAlias, uniques, totalRows}
-    const contacts = parseContacts(contactsRows);
+    const dOps = detectDelimiter(opsText);
+    const dC = detectDelimiter(contactsText);
+    document.getElementById('detectedDelims').textContent =
+      `Separadores detectados: ops="${dOps.delim}" (${dOps.from}) • contacts="${dC.delim}" (${dC.from})`;
+
+    const opsRows = parseCSV(opsText, dOps.delim);
+    const contactsRows = parseCSV(contactsText, dC.delim);
+
+    if (!opsRows.length) { showToast('Ops: 0 filas leídas', 3000); return; }
+    if (!contactsRows.length) { showToast('Contacts: 0 filas leídas', 3000); return; }
+
+    const ops = parseOps(opsRows);
+    const pc = parseContacts(contactsRows);
 
     state.ops = ops;
-    state.contacts = contacts;
+    state.contacts = pc.contacts;
+    state._opsDelim = dOps.delim;
+    state._contactsDelim = dC.delim;
+    state._contactsHeaderOk = pc.headerOk;
 
-    // Construir planilla completa: TODOS los contactos marcados ACTIVO/NO ACTIVO
+    // si header no OK, avisamos fuerte
+    if (!pc.headerOk){
+      showToast('CONTACTS: No detecté header number/name. Revisá separador o columnas.', 4500);
+    }
+
+    // construir planilla completa
     const out = [];
     let matched = 0;
 
-    for (const c of contacts){
-      const alias = extractAliasFromContact(c, ops.activeAliasSet);
+    for (const c of pc.contacts){
+      const alias = extractAliasFromContact(
+        { name:c.name, metadata:c.metadata, email:c.email },
+        ops.activeAliasSet
+      );
       const isActive = alias && ops.activeAliasSet.has(alias);
-
       const stats = isActive ? ops.statsByAlias.get(alias) : null;
       if (isActive) matched++;
 
       out.push({
-        usuario: alias || (normalizeKey(c.name) || ''),  // lo que usaremos como “usuario”
+        usuario: alias || (normalizeKey(c.name) || ''),
         telefono: c.numberE164 || c.numberRaw || '',
         estado: isActive ? 'ACTIVO' : 'NO ACTIVO',
         ops: stats ? stats.ops : 0,
+        monto: stats ? Math.round(stats.monto) : 0,
+        ultimaFecha: stats ? (stats.lastFecha || '') : '',
+        tags: c.tags || '',
+        email: c.email || '',
+        metadata: c.metadata || '',
+        debug: `name="${c.name}" | alias="${alias}" | num="${c.numberRaw}"`
+      });
+    }
+
+    // ordenar: NO ACTIVOS arriba
+    out.sort((a,b)=>{
+      if (a.estado !== b.estado) return a.estado === 'NO ACTIVO' ? -1 : 1;
+      return String(a.usuario||'').localeCompare(String(b.usuario||''), 'es');
+    });
+
+    state.rowsAll = out;
+
+    renderKPIs();
+    setView('inactive');
+
+    showToast(`Listo. Ops únicos=${ops.uniques} • Activos match=${matched}`, 2600);
+
+  }catch(err){
+    console.error(err);
+    showToast('Error procesando', 3200);
+    alert('Error: ' + (err && err.message ? err.message : err));
+  }
+});
+</script>
+</body>
+</html>
