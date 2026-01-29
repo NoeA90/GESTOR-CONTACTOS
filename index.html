@@ -7,166 +7,122 @@
   <style>
     :root{
       --bg:#0b0f17;
-      --panel:#0f141d;
       --card:#131a24;
-      --border:#1c2533;
-      --text:#eef3ff;
-      --muted:#9aa5b7;
-
       --accent:#9aff5c;
-      --accent-soft:#c8ff9b;
-
-      --good:#22c55e;
-      --bad:#ef4444;
-      --warn:#f59e0b;
-
-      --shadow: 0 0 20px #0006;
+      --accent2:#5cf6ff;
+      --danger:#ff5c5c;
+      --muted:#9aa5b7;
+      --border:#1c2533;
+      --chip:#0d131d;
     }
-    *{box-sizing:border-box;font-family:Inter,Roboto,Arial,sans-serif}
+    *{box-sizing:border-box;font-family:Inter,Roboto,Arial}
     body{
       margin:0;
       padding:22px;
       min-height:100vh;
-      background:linear-gradient(180deg,#070a10, var(--bg));
-      color:var(--text);
+      background:var(--bg);
+      color:white;
     }
-    h1{margin:0 0 14px 0;font-size:20px;font-weight:700}
-    .wrap{max-width:1400px;margin:0 auto}
+    h1{margin:0 0 14px 0;font-size:22px;font-weight:700}
     .card{
       background:var(--card);
-      border:1px solid var(--border);
+      padding:18px;
       border-radius:14px;
-      padding:16px;
-      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      box-shadow:0 0 20px #0004;
+      margin-bottom:16px;
     }
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr 1.2fr .8fr;
-      gap:14px;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr; }
-    }
+    .row{display:flex;gap:16px;flex-wrap:wrap}
     .box{
-      background:var(--panel);
-      border:1px solid #1b2230;
-      border-radius:12px;
+      flex:1;
+      background:#0f141d;
       padding:14px;
-      min-height:120px;
+      border-radius:12px;
+      border:1px solid #1b2230;
+      min-width:280px;
     }
-    .title{
+    .section-title{
       font-size:13px;
       font-weight:800;
-      color:var(--accent-soft);
-      margin-bottom:10px;
+      margin:0 0 10px 0;
+      color:#c8ff9b;
     }
     input[type=file]{
       width:100%;
-      padding:10px;
+      padding:12px;
       background:#0d131d;
       border:1px dashed #2a3647;
       border-radius:10px;
       color:var(--muted);
       cursor:pointer;
     }
-    .hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
-    .btn{
-      border:none;
-      border-radius:10px;
-      padding:12px 14px;
-      font-weight:800;
-      cursor:pointer;
-      transition:.15s;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
-    .btn:active{transform:translateY(1px)}
+    .hint{margin-top:8px;font-size:12px;color:var(--muted);line-height:1.35}
     .btn-main{
       width:100%;
-      justify-content:center;
-      background:var(--accent);
-      color:#0b120a;
+      padding:14px;
       font-size:15px;
-      margin-top:12px;
-    }
-    .btn-ghost{
-      background:#0d131d;
-      color:var(--text);
-      border:1px solid #233044;
-    }
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .options{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    label.inline{display:flex;gap:8px;align-items:center}
-    input[type=number]{
-      width:120px;
-      padding:8px;
-      background:#0d131d;
-      border-radius:8px;
-      border:1px solid #233044;
-      color:var(--text);
-    }
-
-    .statusline{
-      margin-top:12px;
-      background:#0d131d;
-      border:1px solid #233044;
-      border-radius:12px;
-      padding:12px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .pill{
-      flex:1;
-      min-width:200px;
-      background:#0d131d;
-      border:1px solid #233044;
-      border-radius:12px;
-      padding:12px;
-    }
-    .pill .k{color:var(--muted);font-size:12px}
-    .pill .v{font-size:22px;font-weight:900;margin-top:4px}
-    .v.good{color:var(--good)}
-    .v.bad{color:var(--bad)}
-    .v.accent{color:var(--accent)}
-    .toolbar{
+      font-weight:900;
+      background:var(--accent);
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      color:#121715;
       margin-top:14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
     }
-    .tabs{display:flex;gap:8px;flex-wrap:wrap}
-    .tab{
+    .btn{
       padding:10px 12px;
       border-radius:10px;
-      border:1px solid #233044;
+      border:1px solid #273347;
       background:#0d131d;
-      color:var(--text);
+      color:white;
       cursor:pointer;
       font-weight:800;
       font-size:13px;
     }
-    .tab.active{
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(154,255,92,.12) inset;
+    .btn:hover{filter:brightness(1.08)}
+    .btn-green{border-color:#2c6b2c}
+    .btn-red{border-color:#6b2c2c}
+    .btn-cyan{border-color:#2c6b6b}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background:var(--chip);
+      border:1px solid #1c2533;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+    }
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px;margin-top:14px}
+    .stat{
+      background:#0d131d;
+      border:1px solid #1c2533;
+      border-radius:14px;
+      padding:12px;
+    }
+    .stat .label{font-size:12px;color:var(--muted);font-weight:800}
+    .stat .value{font-size:28px;font-weight:1000;margin-top:6px}
+    .green{color:var(--accent)}
+    .red{color:var(--danger)}
+    .cyan{color:var(--accent2)}
+    .summary{
+      margin-top:12px;
+      padding:12px;
+      border-radius:12px;
+      background:#0d131d;
+      border:1px solid #1c2533;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
     }
     table{
       width:100%;
-      margin-top:12px;
+      margin-top:14px;
       border-collapse:collapse;
       background:#0d131d;
-      border:1px solid #233044;
       border-radius:12px;
       overflow:hidden;
+      border:1px solid #1c2533;
     }
     th,td{
       padding:10px;
@@ -177,23 +133,22 @@
     th{
       background:#16202c;
       font-weight:900;
-      color:var(--accent-soft);
-      text-align:left;
-      white-space:nowrap;
+      color:#c8ff9b;
+      position:sticky; top:0;
+      z-index:1;
     }
     tr:hover td{background:#141c27}
     .badge{
-      display:inline-flex;
-      align-items:center;
+      display:inline-block;
       padding:4px 10px;
       border-radius:999px;
-      font-weight:900;
+      font-weight:1000;
       font-size:12px;
       border:1px solid;
+      white-space:nowrap;
     }
-    .badge.good{color:#baffd0;border-color:#1e7a44;background:rgba(34,197,94,.12)}
-    .badge.bad{color:#ffd1d1;border-color:#8c1d1d;background:rgba(239,68,68,.12)}
-
+    .b-active{color:var(--accent);border-color:#2c6b2c;background:#0c1b12}
+    .b-inactive{color:var(--danger);border-color:#6b2c2c;background:#1b0c0c}
     .toast{
       position:fixed;
       right:18px;
@@ -204,13 +159,12 @@
       opacity:0;
       transform:translateY(16px);
       pointer-events:none;
-      transition:.22s;
+      transition:.25s;
       display:flex;
       gap:10px;
       align-items:center;
       border:1px solid #2a3647;
-      box-shadow: var(--shadow);
-      max-width: 420px;
+      max-width:420px;
     }
     .toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
     .spinner{
@@ -219,94 +173,113 @@
       animation:spin 1s linear infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-    .muted{color:var(--muted)}
-    .small{font-size:12px}
+    .optline{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px}
+    input[type=number]{
+      width:140px;
+      padding:8px;
+      background:#0d131d;
+      border-radius:10px;
+      border:1px solid #1c2533;
+      color:white;
+      font-weight:800;
+    }
+    label.inline{
+      font-size:12px;
+      color:var(--muted);
+      display:flex;
+      gap:8px;
+      align-items:center;
+      font-weight:800;
+    }
+    .smallnote{font-size:12px;color:var(--muted);margin-top:8px}
+    @media (max-width:900px){
+      .stats{grid-template-columns:repeat(2,minmax(180px,1fr));}
+    }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Recuperación • Activos vs No Activos</h1>
 
-  <div class="card">
-    <div class="grid">
-      <div class="box">
-        <div class="title">Cargas del mes (CSV)</div>
-        <input type="file" id="fileOps" accept=".csv" />
-        <div class="hint">
-          Este CSV es el de operaciones/cargas del período (como venías usando).<br>
-          Se detecta header automáticamente (Alias/Titular/Cantidad/Fecha).
-        </div>
-      </div>
+<h1>Recuperación • Activos vs No Activos</h1>
 
-      <div class="box">
-        <div class="title">Contactos Whaticket (CSV)</div>
-        <input type="file" id="fileContacts" accept=".csv" />
-        <div class="hint">
-          Debe exportar columnas: <b>number,name,email,tags,metadata</b>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="title">Opciones</div>
-        <div class="options">
-          <label class="inline">
-            <input type="checkbox" id="onlyNoActive" />
-            Exportar SOLO NO ACTIVOS
-          </label>
-
-          <label class="inline">
-            Límite filas export (0 = sin límite)
-            <input type="number" id="maxRows" value="0" min="0" />
-          </label>
-
-          <label class="inline">
-            Mostrar debug
-            <input type="checkbox" id="debugMode" />
-          </label>
-
-          <button class="btn btn-main" id="processBtn">
-            <span class="spinner" id="spin" style="display:none"></span>
-            Procesar y Comparar
-          </button>
-        </div>
+<div class="card">
+  <div class="row">
+    <div class="box">
+      <div class="section-title">Cargas del mes (CSV)</div>
+      <input type="file" id="fileOps" accept=".csv" />
+      <div class="hint">
+        Este CSV es el de operaciones/cargas del período. Soporta separador automático <b>,</b> o <b>;</b>.
       </div>
     </div>
 
-    <div class="toolbar">
-      <button class="btn btn-ghost" id="exportPlanillaBtn">Exportar Planilla (CSV)</button>
-      <div class="tabs">
-        <button class="tab active" data-view="all">Vista: Todos</button>
-        <button class="tab" data-view="active">Vista: Activos</button>
-        <button class="tab" data-view="noactive">Vista: No Activos</button>
-      </div>
-      <div class="muted small" id="diag"></div>
-    </div>
-
-    <div class="statusline" id="statusBox">
-      Sin procesar. Subí ambos CSV y tocá <b>Procesar y Comparar</b>.
-    </div>
-
-    <div class="pills">
-      <div class="pill">
-        <div class="k">Contactos totales</div>
-        <div class="v accent" id="totalContacts">—</div>
-      </div>
-      <div class="pill">
-        <div class="k">Usuarios únicos activos (cargas)</div>
-        <div class="v accent" id="uniqueActiveOps">—</div>
-      </div>
-      <div class="pill">
-        <div class="k">Detectados ACTIVO (match)</div>
-        <div class="v good" id="matchedActive">—</div>
-      </div>
-      <div class="pill">
-        <div class="k">Detectados NO ACTIVO</div>
-        <div class="v bad" id="matchedNoActive">—</div>
+    <div class="box">
+      <div class="section-title">Contactos Whaticket (CSV)</div>
+      <input type="file" id="fileContacts" accept=".csv" />
+      <div class="hint">
+        Debe exportar columnas: <b>number,name,email,tags,metadata</b><br/>
+        El alias suele venir en <b>name</b> como: <b>0011mar//Nombre Apellido</b>
       </div>
     </div>
 
-    <div id="tableWrap"></div>
+    <div class="box" style="max-width:420px">
+      <div class="section-title">Opciones</div>
+
+      <div class="optline">
+        <label class="inline">
+          <input type="checkbox" id="exportOnlyNoActivos">
+          Exportar SOLO NO ACTIVOS
+        </label>
+
+        <label class="inline">
+          <input type="checkbox" id="showDebug">
+          Mostrar debug
+        </label>
+      </div>
+
+      <div class="optline">
+        <div class="pill">Límite filas export (0 = sin límite)</div>
+        <input type="number" id="limitRows" value="0" min="0" />
+      </div>
+
+      <div class="smallnote">
+        - Los que aparecen en cargas ⇒ <span class="badge b-active">ACTIVO</span><br/>
+        - Los que NO aparecen ⇒ <span class="badge b-inactive">NO ACTIVO</span> (para recontactar)
+      </div>
+    </div>
   </div>
+
+  <button id="processBtn" class="btn-main">Procesar y Comparar</button>
+
+  <div class="toolbar">
+    <button class="btn btn-cyan" id="exportPlanillaBtn">Exportar Planilla (CSV)</button>
+    <button class="btn" id="viewAllBtn">Vista: Todos</button>
+    <button class="btn btn-green" id="viewActivosBtn">Vista: Activos</button>
+    <button class="btn btn-red" id="viewNoActivosBtn">Vista: No Activos</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Contactos totales</div>
+      <div class="value green" id="statContacts">0</div>
+    </div>
+    <div class="stat">
+      <div class="label">Usuarios únicos activos (cargas)</div>
+      <div class="value cyan" id="statOpsActivos">0</div>
+    </div>
+    <div class="stat">
+      <div class="label">Detectados ACTIVO (match)</div>
+      <div class="value green" id="statMatchActivos">0</div>
+    </div>
+    <div class="stat">
+      <div class="label">Detectados NO ACTIVO</div>
+      <div class="value red" id="statNoActivos">0</div>
+    </div>
+  </div>
+
+  <div id="summary" class="summary">
+    Sin procesar.
+  </div>
+
+  <div id="results"></div>
 </div>
 
 <div id="toast" class="toast">
@@ -316,383 +289,322 @@
 
 <script>
 /* =========================
-   Helpers UI
+   UI helpers
 ========================= */
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
 let toastTimer = null;
-function showToast(text, duration=2200){
+function showToast(text, duration=2200) {
   if (toastTimer) { clearTimeout(toastTimer); toastTimer = null; }
   toastText.textContent = text;
   toast.classList.add('show');
   toastTimer = setTimeout(()=>{ toast.classList.remove('show'); toastTimer = null; }, duration);
 }
-function setSpinning(on){
-  document.getElementById('spin').style.display = on ? 'inline-block' : 'none';
+
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
 
 /* =========================
-   Robust CSV parsing
-   - auto delimiter (',' or ';')
-   - supports quotes
+   CSV parsing (robusto + separador auto)
 ========================= */
-function detectDelimiter(text){
-  // ignore sep=;
-  const s = text.replace(/\uFEFF/g,'').split(/\r?\n/).slice(0, 10).join('\n');
-  const comma = (s.match(/,/g)||[]).length;
-  const semi  = (s.match(/;/g)||[]).length;
-  return semi > comma ? ';' : ',';
+function readFileText(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = e => resolve(String(e.target.result || ''));
+    r.onerror = reject;
+    r.readAsText(file, 'utf-8');
+  });
 }
-function parseCSV(text){
-  const cleaned = text.replace(/\uFEFF/g,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
-  const lines = cleaned.split('\n').filter(l => l.trim() !== '');
-  const filtered = lines.filter(l => !l.toLowerCase().startsWith('sep='));
-  if (!filtered.length) return { headers: [], rows: [], delimiter: ',' };
 
-  const delimiter = detectDelimiter(filtered.join('\n'));
+// detecta separador por header + muestra (prioriza ; si aparece mucho)
+function detectDelimiter(text) {
+  const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
+  const head = lines.slice(0, 5).join('\n');
+  const commas = (head.match(/,/g) || []).length;
+  const semis  = (head.match(/;/g) || []).length;
+  // si hay sep=; explícito
+  if (/^sep=;/i.test(lines[0] || '')) return ';';
+  if (/^sep=,/i.test(lines[0] || '')) return ',';
+  return semis > commas ? ';' : ',';
+}
 
-  const rows = [];
-  let row = [];
-  let field = '';
+function parseCSVLine(line, delim) {
+  const result = [];
+  let cur = '';
   let inQuotes = false;
-
-  const pushField = () => { row.push(field); field = ''; };
-  const pushRow = () => {
-    // trim fields
-    const r = row.map(v => (v ?? '').trim());
-    if (r.some(v => v !== '')) rows.push(r);
-    row = [];
-  };
-
-  const s = filtered.join('\n') + '\n';
-  for (let i=0;i<s.length;i++){
-    const ch = s[i];
-    const nx = s[i+1];
-
-    if (ch === '"'){
-      if (inQuotes && nx === '"'){ field += '"'; i++; }
+  for (let i=0;i<line.length;i++){
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
       else inQuotes = !inQuotes;
       continue;
     }
-    if (!inQuotes && ch === delimiter){
-      pushField(); continue;
-    }
-    if (!inQuotes && ch === '\n'){
-      pushField(); pushRow(); continue;
-    }
-    field += ch;
+    if (ch === delim && !inQuotes) { result.push(cur); cur=''; continue; }
+    cur += ch;
   }
-
-  const headers = (rows[0] || []).map(h => String(h||'').trim());
-  const body = rows.slice(1);
-
-  return { headers, rows: body, delimiter };
+  result.push(cur);
+  return result;
 }
-function lowerHeaders(headers){
-  return headers.map(h => String(h||'').trim().toLowerCase());
+
+function parseCSV(text) {
+  const clean = String(text || '').replace(/\uFEFF/g,'');
+  const delim = detectDelimiter(clean);
+  const lines = clean.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
+
+  // filtra sep=
+  const filtered = lines.filter(l => !/^sep=/i.test(l.trim()));
+  if (filtered.length === 0) return { delim, headers: [], rows: [] };
+
+  const headers = parseCSVLine(filtered[0], delim).map(h => String(h||'').trim());
+  const rows = filtered.slice(1).map(l => parseCSVLine(l, delim));
+  return { delim, headers, rows };
 }
-function findIdx(headersLower, candidates){
+
+/* =========================
+   Normalizadores de alias (CLAVE)
+========================= */
+function cleanAliasBase(s) {
+  if (!s) return '';
+  return String(s)
+    .toLowerCase()
+    .trim()
+    .replace(/\uFEFF/g,'')
+    .replace(/\s+/g,' ')
+    .replace(/["']/g,'')
+    .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g,'');
+}
+
+// CONTACTS.name: "0011mar//ortiz lucrecia" -> alias "0011mar"
+function getAliasFromContactName(name) {
+  const raw = cleanAliasBase(name);
+  if (!raw) return '';
+  if (raw.includes('//')) return cleanAliasBase(raw.split('//')[0]);
+  return raw;
+}
+
+function getTitularFromContactName(name) {
+  const s = String(name || '');
+  if (!s.includes('//')) return '';
+  return cleanAliasBase(s.split('//').slice(1).join('//'));
+}
+
+// OPS.usuario: alias detectado (o titular) -> alias comparable
+function getAliasFromOpsUser(u) {
+  return cleanAliasBase(u);
+}
+
+/* =========================
+   OPS parsing: detecta columnas (sin depender de índices fijos)
+   Queremos: fecha, monto/cantidad, usuario (alias/titular)
+========================= */
+function findHeaderIndex(headersLower, candidates) {
   for (let i=0;i<headersLower.length;i++){
     const h = headersLower[i];
-    for (const c of candidates){
-      if (h === c || h.includes(c)) return i;
-    }
+    if (candidates.some(c => h === c || h.includes(c))) return i;
   }
   return -1;
 }
 
-/* =========================
-   Normalization / matching keys
-========================= */
-function stripAccents(s){
-  return String(s||'')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
-function normKey(s){
-  // normalize usernames (alias/titular) to comparable keys
-  const x = stripAccents(String(s||''))
-    .toLowerCase()
-    .trim();
-  // keep letters/digits/underscore only
-  return x.replace(/\s+/g,'').replace(/[^\p{L}\p{N}_]/gu,'');
-}
-function safeJSONParse(s){
-  try { return JSON.parse(s); } catch { return null; }
-}
-function extractKeysFromMetadata(meta){
-  const keys = [];
-  if (!meta) return keys;
-
-  // If JSON, traverse shallow
-  const obj = safeJSONParse(meta);
-  if (obj && typeof obj === 'object'){
-    const candidates = ['alias','usuario','user','username','titular','player','jugador','nickname','nick'];
-    for (const k of candidates){
-      if (obj[k]) keys.push(normKey(obj[k]));
-    }
-    // also scan any string values
-    for (const v of Object.values(obj)){
-      if (typeof v === 'string' && v.length <= 64) keys.push(normKey(v));
-    }
-    return keys.filter(Boolean);
-  }
-
-  // If plain text, try patterns
-  const t = String(meta);
-  const patterns = [
-    /alias\s*[:=]\s*([a-z0-9_\.]+)/i,
-    /usuario\s*[:=]\s*([a-z0-9_\.]+)/i,
-    /user(name)?\s*[:=]\s*([a-z0-9_\.]+)/i,
-    /titular\s*[:=]\s*([a-z0-9_\.]+)/i,
-  ];
-  for (const p of patterns){
-    const m = t.match(p);
-    if (m){
-      const val = m[m.length-1];
-      keys.push(normKey(val));
-    }
-  }
-  // fallback: if metadata is small, consider it a possible username
-  if (t.length <= 40) keys.push(normKey(t));
-  return keys.filter(Boolean);
+function parseNumberLoose(v) {
+  let s = String(v ?? '').trim();
+  if (!s) return 0;
+  // normaliza separadores
+  s = s.replace(/\s+/g,'');
+  // deja dígitos, punto, coma y -
+  s = s.replace(/[^0-9\-,.]/g,'');
+  // si tiene coma y punto, asume coma miles
+  if (s.includes(',') && s.includes('.')) s = s.replace(/,/g,'');
+  // si solo coma, la toma como decimal
+  if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.');
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
 }
 
-/* =========================
-   State
-========================= */
-let VIEW = 'all';
-let RESULTS = []; // combined list
-let OPS_STATS = new Map(); // key -> {opsCount, sumAmount, lastDateStr, lastDateObj}
-let OPS_UNIQUE_ACTIVE = 0;
-let DIAG = {};
+function parseDateLoose(v) {
+  const s = String(v ?? '').trim();
+  if (!s) return null;
+  // intenta ISO
+  let d = new Date(s.replace(' ', 'T'));
+  if (!isNaN(d.getTime())) return d;
+  d = new Date(s);
+  if (!isNaN(d.getTime())) return d;
+  return null;
+}
 
-/* =========================
-   Parse OPS (cargas) CSV
-   We auto-detect indices by header names when possible.
-   Expected typical columns (yours): Fecha | Estado | Cantidad | Tipo | Alias | Balance ...
-========================= */
-function parseOpsCSV(text){
-  const parsed = parseCSV(text);
-  const h = parsed.headers;
-  const hl = lowerHeaders(h);
+function parseOpsCSV(text) {
+  const { delim, headers, rows } = parseCSV(text);
+  const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
 
-  // Try detect columns
-  const idxFecha = findIdx(hl, ['fecha','date','created','createdat','data']);
-  const idxCantidad = findIdx(hl, ['cantidad','monto','amount','value','importe','sum']);
-  const idxAlias = findIdx(hl, ['alias','usuario','user','username','jugador','player','nick']);
-  const idxTitular = findIdx(hl, ['titular','nombre','name']); // optional
+  // detecta columnas típicas
+  const idxFecha = findHeaderIndex(headersLower, ['fecha','date','datetime']);
+  const idxMonto = findHeaderIndex(headersLower, ['cantidad','monto','importe','amount','balance']);
+  // usuario/alias
+  const idxAlias = findHeaderIndex(headersLower, ['alias','usuario','user','player','jugador','titular','cliente']);
 
-  // If no header, fallback based on your previous known formats:
-  // mastr: fecha=0, monto=3, usuario=6 (o 5)
-  // agente: fecha=0, monto=2, usuario=4 (o 3)
-  let mode = 'header';
-  let fallback = null;
-  if (h.length < 3 || (idxFecha === -1 && idxAlias === -1)){
-    // assume "agente" like
-    mode = 'fallback';
-    fallback = { fecha:0, monto:2, alias:4, alias2:3, titular:-1 };
+  // fallback clásico (por si viene como tu formato viejo)
+  const F_idxFecha = idxFecha !== -1 ? idxFecha : 0;
+  const F_idxMonto = idxMonto !== -1 ? idxMonto : (delim === ';' ? 2 : 3);
+  const F_idxUser  = idxAlias !== -1 ? idxAlias : (delim === ';' ? 4 : 4);
+
+  const parsed = [];
+  for (const r of rows) {
+    if (!r || r.length === 0) continue;
+    const fechaRaw = r[F_idxFecha] ?? '';
+    const montoRaw = r[F_idxMonto] ?? '';
+    const userRaw  = r[F_idxUser]  ?? '';
+
+    const usuario = getAliasFromOpsUser(userRaw);
+    if (!usuario) continue;
+
+    const monto = parseNumberLoose(montoRaw);
+    const fechaObj = parseDateLoose(fechaRaw);
+
+    parsed.push({ usuario, monto, fecha: String(fechaRaw||'').trim(), fechaObj });
   }
 
-  const stats = new Map();
-
-  const addUser = (userKey, monto, fechaStr, fechaObj) => {
-    if (!userKey) return;
-    const k = normKey(userKey);
-    if (!k) return;
-
-    const cur = stats.get(k) || { opsCount:0, sumAmount:0, lastDateStr:'', lastDateObj:null };
-    cur.opsCount += 1;
-    cur.sumAmount += (monto || 0);
-
-    // last date
-    const t = (fechaObj && !isNaN(fechaObj.getTime())) ? fechaObj.getTime() : NaN;
-    const prevT = (cur.lastDateObj && !isNaN(cur.lastDateObj.getTime())) ? cur.lastDateObj.getTime() : NaN;
-    if (!isNaN(t) && (isNaN(prevT) || t > prevT)){
-      cur.lastDateObj = fechaObj;
-      cur.lastDateStr = fechaStr || cur.lastDateStr;
-    } else if (!cur.lastDateStr && fechaStr){
-      cur.lastDateStr = fechaStr;
-    }
-
-    stats.set(k, cur);
-  };
-
-  const parseDate = (s) => {
-    if (!s) return null;
-    const x = String(s).trim();
-    // try ISO-like
-    let d = new Date(x.replace(' ', 'T'));
-    if (!isNaN(d.getTime())) return d;
-    d = new Date(x);
-    if (!isNaN(d.getTime())) return d;
-    return null;
-  };
-  const parseMoney = (v) => {
-    const s = String(v ?? '').replace(/\s+/g,'');
-    const cleaned = s.replace(/[^0-9,.\-]/g,'');
-    // convert comma decimal if needed: if has ',' and no '.', treat ',' as decimal
-    let x = cleaned;
-    if (x.includes(',') && !x.includes('.')) x = x.replace(',', '.');
-    // remove thousand separators if both exist
-    if (x.includes(',') && x.includes('.')) x = x.replace(/,/g,'');
-    const n = parseFloat(x);
-    return isNaN(n) ? 0 : n;
-  };
-
-  let totalRows = 0;
-
-  for (const r of parsed.rows){
-    totalRows++;
-    let fechaStr = '';
-    let monto = 0;
-    let alias = '';
-    let titular = '';
-
-    if (mode === 'fallback'){
-      const f = fallback;
-      fechaStr = (r[f.fecha] ?? '').trim();
-      monto = parseMoney(r[f.monto]);
-      alias = (r[f.alias] ?? r[f.alias2] ?? '').trim();
-    } else {
-      fechaStr = idxFecha !== -1 ? (r[idxFecha] ?? '').trim() : (r[0] ?? '').trim();
-      monto = idxCantidad !== -1 ? parseMoney(r[idxCantidad]) : 0;
-      alias = idxAlias !== -1 ? (r[idxAlias] ?? '').trim() : '';
-      titular = idxTitular !== -1 ? (r[idxTitular] ?? '').trim() : '';
-    }
-
-    const fechaObj = parseDate(fechaStr);
-
-    if (alias) addUser(alias, monto, fechaStr, fechaObj);
-    if (titular) addUser(titular, monto, fechaStr, fechaObj);
-  }
-
-  return { stats, totalRows, mode, indices: { idxFecha, idxCantidad, idxAlias, idxTitular }, delimiter: parsed.delimiter, headers: parsed.headers };
+  return { delim, headers, headersLower, parsed };
 }
 
 /* =========================
-   Parse Contacts CSV (Whaticket):
-   number,name,email,tags,metadata
+   CONTACTS parsing
+   Esperado: number,name,email,tags,metadata
 ========================= */
-function parseContactsCSV(text){
-  const parsed = parseCSV(text);
-  const h = parsed.headers;
-  const hl = lowerHeaders(h);
+function parseContactsCSV(text) {
+  const { delim, headers, rows } = parseCSV(text);
+  const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
 
-  const idxNumber = findIdx(hl, ['number','telefono','tel','phone','cel']);
-  const idxName = findIdx(hl, ['name','nombre']);
-  const idxEmail = findIdx(hl, ['email','mail']);
-  const idxTags = findIdx(hl, ['tags','tag']);
-  const idxMeta = findIdx(hl, ['metadata','meta','dados','data']);
+  const idxNumber = findHeaderIndex(headersLower, ['number','telefono','tel','phone']);
+  const idxName   = findHeaderIndex(headersLower, ['name','nombre']);
+  const idxEmail  = findHeaderIndex(headersLower, ['email']);
+  const idxTags   = findHeaderIndex(headersLower, ['tags']);
+  const idxMeta   = findHeaderIndex(headersLower, ['metadata']);
 
-  // fallback by position if needed
-  const get = (row, idx, fallbackIdx) => (idx !== -1 ? row[idx] : (fallbackIdx !== undefined ? row[fallbackIdx] : ''));
+  const okHeader = (idxNumber !== -1 && idxName !== -1);
 
   const contacts = [];
-  for (const r of parsed.rows){
-    const number = String(get(r, idxNumber, 0) || '').trim();
-    const name = String(get(r, idxName, 1) || '').trim();
-    const email = String(get(r, idxEmail, 2) || '').trim();
-    const tags = String(get(r, idxTags, 3) || '').trim();
-    const metadata = String(get(r, idxMeta, 4) || '').trim();
-
-    // Build matching keys
-    const keys = new Set();
-    if (name) keys.add(normKey(name));
-    extractKeysFromMetadata(metadata).forEach(k => keys.add(k));
+  for (const r of rows) {
+    if (!r || r.length === 0) continue;
+    const number = String(r[idxNumber] ?? '').trim();
+    const name   = String(r[idxName] ?? '').trim();
+    if (!number && !name) continue;
 
     contacts.push({
       number,
       name,
-      email,
-      tags,
-      metadata,
-      keys: Array.from(keys).filter(Boolean)
+      email: String(r[idxEmail] ?? '').trim(),
+      tags: String(r[idxTags] ?? '').trim(),
+      metadata: String(r[idxMeta] ?? '').trim(),
+      alias: getAliasFromContactName(name),
+      titular: getTitularFromContactName(name),
     });
   }
-
-  return { contacts, totalRows: parsed.rows.length, delimiter: parsed.delimiter, headers: parsed.headers, headerOk: (idxNumber !== -1 && idxName !== -1) };
+  return { delim, headers, headersLower, contacts, okHeader };
 }
 
 /* =========================
-   Compare & build results
+   Estado global + vistas
 ========================= */
-function buildResults(contacts, opsStats){
-  const out = [];
-  let activeCount = 0;
+let App = {
+  opsAgg: new Map(),            // alias -> {count,totalMonto,lastFecha,lastFechaObj}
+  activeAliasSet: new Set(),    // alias activos (ops)
+  contacts: [],                 // contactos parseados
+  merged: [],                   // tabla final
+  view: 'all',                  // all | active | inactive
+  debug: {}
+};
 
-  for (const c of contacts){
-    let matchKey = '';
-    let stat = null;
-
-    for (const k of c.keys){
-      if (opsStats.has(k)){
-        matchKey = k;
-        stat = opsStats.get(k);
-        break;
-      }
+function computeOpsAgg(opsParsed) {
+  const agg = new Map();
+  for (const r of opsParsed) {
+    const key = r.usuario;
+    if (!key) continue;
+    if (!agg.has(key)) {
+      agg.set(key, { usuario:key, count:0, totalMonto:0, lastFecha:'', lastFechaObj:null });
     }
+    const it = agg.get(key);
+    it.count += 1;
+    it.totalMonto += (r.monto || 0);
 
-    const isActive = !!stat;
-    if (isActive) activeCount++;
-
-    out.push({
-      usuario: c.name || '(sin nombre)',
-      telefono: c.number || '',
-      estado: isActive ? 'ACTIVO' : 'NO ACTIVO',
-      opsCount: stat ? stat.opsCount : 0,
-      montoMes: stat ? stat.sumAmount : 0,
-      ultimaFecha: stat ? (stat.lastDateStr || '') : '',
-      ultimaFechaObj: stat ? stat.lastDateObj : null,
-      tags: c.tags || '',
-      email: c.email || '',
-      metadata: c.metadata || '',
-      matchKey
-    });
+    // fecha más reciente
+    const curT = (r.fechaObj && !isNaN(r.fechaObj.getTime())) ? r.fechaObj.getTime() : NaN;
+    const prevT = (it.lastFechaObj && !isNaN(it.lastFechaObj.getTime())) ? it.lastFechaObj.getTime() : NaN;
+    if (!isNaN(curT) && (isNaN(prevT) || curT > prevT)) {
+      it.lastFechaObj = r.fechaObj;
+      it.lastFecha = r.fecha || '';
+    } else if (!it.lastFecha && r.fecha) {
+      it.lastFecha = r.fecha;
+    }
   }
+  return agg;
+}
 
-  return { out, activeCount, noActiveCount: out.length - activeCount };
+function buildMergedTable(contacts, opsAgg) {
+  const activeSet = new Set(opsAgg.keys());
+  const merged = contacts.map(c => {
+    const alias = c.alias; // clave principal
+    const isActive = alias && activeSet.has(alias);
+    const ops = isActive ? opsAgg.get(alias) : null;
+    return {
+      ...c,
+      status: isActive ? 'ACTIVO' : 'NO ACTIVO',
+      opsCount: ops ? ops.count : 0,
+      opsMonto: ops ? ops.totalMonto : 0,
+      lastFecha: ops ? (ops.lastFecha || '') : ''
+    };
+  });
+  return { merged, activeSet };
 }
 
 /* =========================
-   Render table
+   Render
 ========================= */
-function money(v){
-  try { return '$' + Number(v||0).toLocaleString('es-AR', { maximumFractionDigits: 2 }); }
-  catch { return '$' + (v||0); }
-}
-function escapeHtml(s){
-  return String(s ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-function render(){
-  const statusBox = document.getElementById('statusBox');
-  const tableWrap = document.getElementById('tableWrap');
+function render() {
+  const statContacts = document.getElementById('statContacts');
+  const statOpsActivos = document.getElementById('statOpsActivos');
+  const statMatchActivos = document.getElementById('statMatchActivos');
+  const statNoActivos = document.getElementById('statNoActivos');
+  const summary = document.getElementById('summary');
+  const results = document.getElementById('results');
 
-  let rows = RESULTS.slice();
+  const all = App.merged || [];
+  const activos = all.filter(x => x.status === 'ACTIVO');
+  const noactivos = all.filter(x => x.status === 'NO ACTIVO');
 
-  if (VIEW === 'active') rows = rows.filter(r => r.estado === 'ACTIVO');
-  if (VIEW === 'noactive') rows = rows.filter(r => r.estado !== 'ACTIVO');
+  const view = App.view;
+  let showing = all;
+  if (view === 'active') showing = activos;
+  if (view === 'inactive') showing = noactivos;
 
-  const maxRows = parseInt(document.getElementById('maxRows').value, 10) || 0;
-  if (maxRows > 0) rows = rows.slice(0, maxRows);
+  statContacts.textContent = all.length.toLocaleString('es-AR');
+  statOpsActivos.textContent = (App.activeAliasSet.size || 0).toLocaleString('es-AR');
+  statMatchActivos.textContent = activos.length.toLocaleString('es-AR');
+  statNoActivos.textContent = noactivos.length.toLocaleString('es-AR');
 
-  statusBox.innerHTML = `
-    <b>Procesado</b><br>
-    Ops: <b>${DIAG.opsTotalRows.toLocaleString()}</b> registros ·
-    <b>${OPS_UNIQUE_ACTIVE.toLocaleString()}</b> usuarios únicos activos.
-    Contacts: <b>${DIAG.contactsTotalRows.toLocaleString()}</b> filas.
-    <div class="muted small" style="margin-top:6px">
-      Matching por <b>name/metadata</b> (contacts) vs <b>alias/titular</b> (cargas), normalizado (lowercase + sin tildes + sin símbolos).
-    </div>
+  const dbg = document.getElementById('showDebug').checked;
+  const dbgLine = dbg
+    ? `<div style="margin-top:8px"><b>Debug:</b> ops_delim="${escapeHtml(App.debug.ops_delim)}" • contacts_delim="${escapeHtml(App.debug.contacts_delim)}" • contacts_header_ok=${App.debug.contacts_header_ok ? 'true' : 'false'} • ops_headers="${escapeHtml((App.debug.ops_headers || []).slice(0,8).join(' | '))}"</div>`
+    : '';
+
+  summary.innerHTML = `
+    <b>Procesado</b><br/>
+    Ops: <b>${(App.debug.ops_rows||0).toLocaleString('es-AR')}</b> registros •
+    <b>${(App.activeAliasSet.size||0).toLocaleString('es-AR')}</b> usuarios únicos activos.<br/>
+    Contacts: <b>${(all.length||0).toLocaleString('es-AR')}</b> filas.<br/>
+    Vista: <b>${view === 'all' ? 'Todos' : (view === 'active' ? 'Activos' : 'No Activos')}</b>.
+    ${dbgLine}
   `;
 
-  const html = `
+  // Tabla
+  let html = '';
+  html += `<div class="pill">Mostrando ${showing.length.toLocaleString('es-AR')} filas.</div>`;
+
+  html += `
     <table>
       <thead>
         <tr>
-          <th>Usuario</th>
+          <th>Usuario (alias detectado)</th>
           <th>Teléfono</th>
           <th>Estado</th>
           <th>Operaciones mes</th>
@@ -702,151 +614,53 @@ function render(){
         </tr>
       </thead>
       <tbody>
-        ${rows.map(r => `
-          <tr>
-            <td>${escapeHtml(r.usuario)}</td>
-            <td>${escapeHtml(r.telefono)}</td>
-            <td>${r.estado === 'ACTIVO'
-                ? `<span class="badge good">ACTIVO</span>`
-                : `<span class="badge bad">NO ACTIVO</span>`}
-            </td>
-            <td>${(r.opsCount||0).toLocaleString()}</td>
-            <td>${escapeHtml(money(r.montoMes||0))}</td>
-            <td>${escapeHtml(r.ultimaFecha || '')}</td>
-            <td>${escapeHtml(r.tags || '')}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    <div class="muted small" style="margin-top:8px">
-      Mostrando <b>${rows.length.toLocaleString()}</b> filas (${VIEW === 'all' ? 'todos' : VIEW}).
-    </div>
   `;
-  tableWrap.innerHTML = html;
 
-  // Stats pills
-  document.getElementById('totalContacts').textContent = (DIAG.contactsTotalRows ?? '—').toLocaleString?.() ?? '—';
-  document.getElementById('uniqueActiveOps').textContent = OPS_UNIQUE_ACTIVE.toLocaleString();
-  document.getElementById('matchedActive').textContent = DIAG.activeCount.toLocaleString();
-  document.getElementById('matchedNoActive').textContent = DIAG.noActiveCount.toLocaleString();
+  const limit = 1200; // para no colgar el navegador si son 33k en pantalla
+  const sliced = showing.slice(0, limit);
 
-  // diag debug
-  const dbg = document.getElementById('debugMode').checked;
-  const diag = document.getElementById('diag');
-  if (!dbg){ diag.textContent = ''; return; }
+  for (const r of sliced) {
+    const badge = r.status === 'ACTIVO'
+      ? `<span class="badge b-active">ACTIVO</span>`
+      : `<span class="badge b-inactive">NO ACTIVO</span>`;
 
-  diag.textContent =
-    `diag: ops_delim="${DIAG.opsDelimiter}", contacts_delim="${DIAG.contactsDelimiter}", ` +
-    `ops_mode="${DIAG.opsMode}", ops_headers="${(DIAG.opsHeadersPreview||'')}", contacts_headers_ok=${DIAG.contactsHeaderOk}`;
+    const phone = r.number ? (r.number.startsWith('+') ? r.number : ('+'+r.number)) : '';
+    const user = r.alias || r.name || '';
+
+    html += `
+      <tr>
+        <td>${escapeHtml(user)}</td>
+        <td>${escapeHtml(phone)}</td>
+        <td>${badge}</td>
+        <td>${(r.opsCount||0).toLocaleString('es-AR')}</td>
+        <td>$${(r.opsMonto||0).toLocaleString('es-AR')}</td>
+        <td>${escapeHtml(r.lastFecha || '')}</td>
+        <td>${escapeHtml(r.tags || '')}</td>
+      </tr>
+    `;
+  }
+
+  html += `</tbody></table>`;
+
+  if (showing.length > limit) {
+    html += `<div class="smallnote">*Mostrando solo ${limit} filas en pantalla para no trabar Chrome. La exportación sale completa.</div>`;
+  }
+
+  results.innerHTML = html;
 }
 
 /* =========================
-   Export: PLANILLA formato inicial
-   Header EXACTO como tu planilla_exportada_2026-01-28.csv
+   Export: PLANILLA estilo inicial (la grande)
+   - Activo => "ESTA CARGANDO"
+   - No Activo => "A CONTACTAR"
 ========================= */
-function exportPlanillaCSV(){
-  if (!RESULTS.length){
-    showToast('Primero procesá los archivos', 1800);
-    return;
-  }
-
-  const onlyNo = document.getElementById('onlyNoActive').checked;
-  let rows = RESULTS.slice();
-  if (onlyNo) rows = rows.filter(r => r.estado !== 'ACTIVO');
-
-  const maxRows = parseInt(document.getElementById('maxRows').value, 10) || 0;
-  if (maxRows > 0) rows = rows.slice(0, maxRows);
-
-  // Build helper lists for side-columns (como tu export inicial)
-  // - ya contactados: vacío (porque eso lo resolvés en el proceso siguiente)
-  // - recuperados!: vacío
-  // - actualmente cargando: lista de ACTIVOS
-  // - turno mañana/tarde/noche: ACTIVOS según hora de ultimaFecha
-  const activos = RESULTS.filter(r => r.estado === 'ACTIVO');
-
-  const turno = { TM: [], TT: [], TN: [] };
-  for (const r of activos){
-    let h = NaN;
-    if (r.ultimaFechaObj && !isNaN(r.ultimaFechaObj.getTime())) h = r.ultimaFechaObj.getHours();
-    if (isNaN(h) && r.ultimaFecha){
-      const m = String(r.ultimaFecha).match(/(\d{2}):(\d{2})(?::(\d{2}))?$/);
-      if (m) h = parseInt(m[1], 10);
-    }
-    if (isNaN(h)) turno.TN.push(r.usuario);
-    else if (h >= 6 && h < 14) turno.TM.push(r.usuario);
-    else if (h >= 14 && h < 22) turno.TT.push(r.usuario);
-    else turno.TN.push(r.usuario);
-  }
-
-  const actualmenteCargando = activos.map(r => r.usuario);
-
-  // Header EXACTO (lo mismo que tu archivo)
-  const header =
-`usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
-
-  // Mapeo de estados a planilla (como tu sistema)
-  const statusToSheet = (estado) => {
-    // Querés que los detectados como activos queden "ACTIVOS"
-    // pero el header de tu planilla usa el lenguaje anterior:
-    // EN CONTACTO / A CONTACTAR, etc.
-    return (estado === 'ACTIVO') ? 'EN CONTACTO' : 'A CONTACTAR';
-  };
-
-  const csvEscape = (v) => {
-    const s = String(v ?? '');
-    if (s.includes('"') || s.includes(',') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
-    return '"' + s + '"';
-  };
-
-  // La planilla original armaba columnas laterales por listas.
-  // Para mantener el mismo comportamiento: calculamos un maxLength
-  // entre main list y las listas laterales.
-  const maxLength = Math.max(
-    rows.length,
-    actualmenteCargando.length,
-    turno.TM.length,
-    turno.TT.length,
-    turno.TN.length
-  );
-
-  let csv = header;
-
-  for (let i=0;i<maxLength;i++){
-    const main = rows[i];
-
-    const usuario = main ? main.usuario : '';
-    const estadoRev = main ? statusToSheet(main.estado) : '';
-    const estadoAct = main ? statusToSheet(main.estado) : '';
-
-    const row = [
-      main ? csvEscape(usuario) : '',
-      main ? csvEscape(estadoRev) : '',
-      '', // columna vacía (como tu header)
-      main ? csvEscape(estadoAct) : '',
-      csvEscape('NO'),
-      csvEscape('NO'),
-      '', // TURNO DE LAS CARGAS (lo dejás para después)
-      csvEscape('NO'),
-      csvEscape(''), // ya contactados
-      csvEscape(''), // recuperados!
-      csvEscape(actualmenteCargando[i] || ''),
-      csvEscape(turno.TM[i] || ''),
-      csvEscape(turno.TT[i] || ''),
-      csvEscape(turno.TN[i] || ''),
-      csvEscape('') // contactos a borrar
-    ];
-
-    csv += row.join(',') + '\n';
-  }
-
-  downloadFile(csv, `planilla_exportada_${new Date().toISOString().slice(0,10)}.csv`, 'text/csv;charset=utf-8;');
-  showToast('Planilla exportada (formato inicial)', 1600);
+function csvEscape(v) {
+  const s = String(v ?? '');
+  if (s.includes('"') || s.includes(',') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
+  return '"' + s + '"';
 }
 
-/* =========================
-   Download helper
-========================= */
-function downloadFile(content, fileName, mimeType){
+function downloadFile(content, fileName, mimeType) {
   const bom = mimeType.includes('csv') ? '\uFEFF' : '';
   const blob = new Blob([bom + content], { type: mimeType });
   const link = document.createElement('a');
@@ -857,81 +671,153 @@ function downloadFile(content, fileName, mimeType){
   document.body.removeChild(link);
 }
 
-/* =========================
-   Main flow
-========================= */
-async function readFileText(file){
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.onload = e => resolve(String(e.target.result || ''));
-    fr.onerror = reject;
-    fr.readAsText(file, 'utf-8');
-  });
+function exportPlanilla() {
+  const onlyNoAct = document.getElementById('exportOnlyNoActivos').checked;
+  const maxRows = parseInt(document.getElementById('limitRows').value, 10) || 0;
+
+  let rows = App.merged.slice();
+  if (onlyNoAct) rows = rows.filter(r => r.status === 'NO ACTIVO');
+
+  if (maxRows > 0) rows = rows.slice(0, maxRows);
+
+  // Header EXACTO como tu export inicial
+  const headers =
+`usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
+
+  const estadoRevision = (r) => {
+    // Lo que pediste: activos => "ESTA CARGANDO"; no activos => "A CONTACTAR"
+    if (r.status === 'ACTIVO') return 'ESTA CARGANDO';
+    return 'A CONTACTAR';
+  };
+
+  // Columnas auxiliares (como tu export viejo)
+  const yaContactados = [];      // lo vas a llenar después en el proceso humano
+  const recuperados = [];
+  const actualmenteCargando = rows.filter(r => r.status === 'ACTIVO').map(r => r.alias || r.name);
+  const turnoManana = [];
+  const turnoTarde = [];
+  const turnoNoche = [];
+  const aBorrar = [];
+
+  const maxLength = Math.max(
+    rows.length,
+    yaContactados.length,
+    recuperados.length,
+    actualmenteCargando.length,
+    turnoManana.length,
+    turnoTarde.length,
+    turnoNoche.length,
+    aBorrar.length
+  );
+
+  let csv = headers;
+
+  for (let i=0;i<maxLength;i++){
+    const r = rows[i];
+    const usuario = r ? (r.alias || r.name || '') : '';
+    const est = r ? estadoRevision(r) : '';
+
+    const line = [
+      r ? csvEscape(usuario) : '',
+      r ? csvEscape(est) : '',
+      '',
+      r ? csvEscape(est) : '',
+      csvEscape('NO'),
+      csvEscape('NO'),
+      '',
+      csvEscape('NO'),
+      csvEscape(yaContactados[i] || ''),
+      csvEscape(recuperados[i] || ''),
+      csvEscape(actualmenteCargando[i] || ''),
+      csvEscape(turnoManana[i] || ''),
+      csvEscape(turnoTarde[i] || ''),
+      csvEscape(turnoNoche[i] || ''),
+      csvEscape(aBorrar[i] || '')
+    ].join(',');
+
+    csv += line + '\n';
+  }
+
+  const name = `planilla_exportada_${new Date().toISOString().slice(0,10)}.csv`;
+  downloadFile(csv, name, 'text/csv;charset=utf-8;');
+  showToast('Planilla exportada');
 }
 
+/* =========================
+   Procesar principal
+========================= */
 document.getElementById('processBtn').addEventListener('click', async () => {
   const fOps = document.getElementById('fileOps').files[0];
   const fContacts = document.getElementById('fileContacts').files[0];
-  if (!fOps || !fContacts){
-    showToast('Cargá ambos archivos CSV primero', 2600);
-    return;
-  }
+  if (!fOps || !fContacts) return showToast('Cargá ambos archivos CSV', 2500);
 
-  setSpinning(true);
-  showToast('Procesando…', 8000);
+  showToast('Procesando y comparando…', 8000);
 
-  try{
-    const [opsText, contactsText] = await Promise.all([readFileText(fOps), readFileText(fContacts)]);
+  try {
+    const [opsText, contactsText] = await Promise.all([ readFileText(fOps), readFileText(fContacts) ]);
 
-    // Parse ops
-    const opsParsed = parseOpsCSV(opsText);
-    OPS_STATS = opsParsed.stats;
-    OPS_UNIQUE_ACTIVE = OPS_STATS.size;
+    const ops = parseOpsCSV(opsText);
+    const contacts = parseContactsCSV(contactsText);
 
-    // Parse contacts
-    const contactsParsed = parseContactsCSV(contactsText);
+    const opsAgg = computeOpsAgg(ops.parsed);
+    const { merged, activeSet } = buildMergedTable(contacts.contacts, opsAgg);
 
-    // Compare
-    const built = buildResults(contactsParsed.contacts, OPS_STATS);
-    RESULTS = built.out;
+    App.opsAgg = opsAgg;
+    App.activeAliasSet = activeSet;
+    App.contacts = contacts.contacts;
+    App.merged = merged;
 
-    DIAG = {
-      opsTotalRows: opsParsed.totalRows,
-      contactsTotalRows: contactsParsed.totalRows,
-      activeCount: built.activeCount,
-      noActiveCount: built.noActiveCount,
-      opsDelimiter: opsParsed.delimiter,
-      contactsDelimiter: contactsParsed.delimiter,
-      opsMode: opsParsed.mode,
-      opsHeadersPreview: (opsParsed.headers || []).slice(0, 8).join(' | '),
-      contactsHeaderOk: contactsParsed.headerOk,
-      contactsDelimiter: contactsParsed.delimiter,
-      contactsHeaders: contactsParsed.headers
+    App.debug = {
+      ops_delim: ops.delim,
+      contacts_delim: contacts.delim,
+      contacts_header_ok: contacts.okHeader,
+      ops_rows: ops.parsed.length,
+      ops_headers: ops.headers
     };
 
-    render();
-    showToast('Listo — resultados actualizados', 1700);
+    // Debug extra de “por qué no matchea”
+    if (document.getElementById('showDebug').checked) {
+      const sampleNoMatch = [];
+      let aliasVacios = 0;
 
-  } catch (e){
+      for (const c of contacts.contacts) {
+        if (!c.alias) { aliasVacios++; continue; }
+        if (!activeSet.has(c.alias) && sampleNoMatch.length < 20) {
+          sampleNoMatch.push({ name: c.name, alias: c.alias });
+        }
+      }
+      console.log('DEBUG alias vacíos en contacts:', aliasVacios);
+      console.log('DEBUG sample NO MATCH (primeros 20):', sampleNoMatch);
+      console.log('DEBUG active users (ops) size:', activeSet.size);
+    }
+
+    render();
+    showToast('Listo — resultados actualizados', 1800);
+
+  } catch (e) {
     console.error(e);
-    showToast('Error procesando archivos', 3200);
-    alert('Error procesando archivos: ' + (e?.message || e));
-  } finally {
-    setSpinning(false);
+    showToast('Error procesando archivos', 3000);
+    alert('Error: ' + (e && e.message ? e.message : e));
   }
 });
 
-document.getElementById('exportPlanillaBtn').addEventListener('click', exportPlanillaCSV);
+/* =========================
+   Vistas
+========================= */
+document.getElementById('viewAllBtn').addEventListener('click', () => { App.view='all'; render(); });
+document.getElementById('viewActivosBtn').addEventListener('click', () => { App.view='active'; render(); });
+document.getElementById('viewNoActivosBtn').addEventListener('click', () => { App.view='inactive'; render(); });
 
-// Tabs
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    VIEW = btn.dataset.view;
-    render();
-  });
+/* =========================
+   Export
+========================= */
+document.getElementById('exportPlanillaBtn').addEventListener('click', () => {
+  if (!App.merged || App.merged.length === 0) return showToast('Primero procesá los archivos', 2000);
+  exportPlanilla();
 });
+
+/* Inicial */
+render();
 </script>
 </body>
 </html>
