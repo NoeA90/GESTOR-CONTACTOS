@@ -651,7 +651,7 @@ function render() {
 
 /* =========================
    Export: PLANILLA estilo inicial (la grande)
-   - Activo => "ESTA CARGANDO"
+   - Activo => "JUGANDO"
    - No Activo => "A CONTACTAR"
 ========================= */
 function csvEscape(v) {
@@ -685,8 +685,8 @@ function exportPlanilla() {
 `usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
 
   const estadoRevision = (r) => {
-    // Lo que pediste: activos => "ESTA CARGANDO"; no activos => "A CONTACTAR"
-    if (r.status === 'ACTIVO') return 'ESTA CARGANDO';
+    // Lo que pediste: activos => "JUGANDO"; no activos => "A CONTACTAR"
+    if (r.status === 'ACTIVO') return 'JUGANDO';
     return 'A CONTACTAR';
   };
 
