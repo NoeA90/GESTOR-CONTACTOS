@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Recuperación • Activos vs No Activos</title>
+  <title>NEXO SMOKY • Activos vs No Activos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
@@ -16,198 +16,72 @@
       --chip:#0d131d;
     }
     *{box-sizing:border-box;font-family:Inter,Roboto,Arial}
-    body{
-      margin:0;
-      padding:22px;
-      min-height:100vh;
-      background:var(--bg);
-      color:white;
-    }
-    h1{margin:0 0 14px 0;font-size:22px;font-weight:700}
-    .card{
-      background:var(--card);
-      padding:18px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      box-shadow:0 0 20px #0004;
-      margin-bottom:16px;
-    }
+    body{margin:0;padding:22px;min-height:100vh;background:var(--bg);color:#fff}
+    h1{margin:0 0 8px 0;font-size:22px;font-weight:900}
+    .sub{color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.35}
+    .card{background:var(--card);padding:18px;border-radius:14px;border:1px solid var(--border);
+      box-shadow:0 0 20px #0004;margin-bottom:16px}
     .row{display:flex;gap:16px;flex-wrap:wrap}
-    .box{
-      flex:1;
-      background:#0f141d;
-      padding:14px;
-      border-radius:12px;
-      border:1px solid #1b2230;
-      min-width:280px;
-    }
-    .section-title{
-      font-size:13px;
-      font-weight:800;
-      margin:0 0 10px 0;
-      color:#c8ff9b;
-    }
-    input[type=file]{
-      width:100%;
-      padding:12px;
-      background:#0d131d;
-      border:1px dashed #2a3647;
-      border-radius:10px;
-      color:var(--muted);
-      cursor:pointer;
-    }
+    .box{flex:1;background:#0f141d;padding:14px;border-radius:12px;border:1px solid #1b2230;min-width:280px}
+    .section-title{font-size:13px;font-weight:900;margin:0 0 10px 0;color:#c8ff9b}
+    input[type=file]{width:100%;padding:12px;background:#0d131d;border:1px dashed #2a3647;border-radius:10px;color:var(--muted);cursor:pointer}
     .hint{margin-top:8px;font-size:12px;color:var(--muted);line-height:1.35}
-    .btn-main{
-      width:100%;
-      padding:14px;
-      font-size:15px;
-      font-weight:900;
-      background:var(--accent);
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
-      color:#121715;
-      margin-top:14px;
-    }
-    .btn{
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid #273347;
-      background:#0d131d;
-      color:white;
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
-    }
+    .btn-main{width:100%;padding:14px;font-size:15px;font-weight:1000;background:var(--accent);
+      border:none;border-radius:10px;cursor:pointer;color:#121715;margin-top:14px}
+    .btn{padding:10px 12px;border-radius:10px;border:1px solid #273347;background:#0d131d;color:#fff;cursor:pointer;font-weight:900;font-size:13px}
     .btn:hover{filter:brightness(1.08)}
     .btn-green{border-color:#2c6b2c}
     .btn-red{border-color:#6b2c2c}
     .btn-cyan{border-color:#2c6b6b}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
-    .pill{
-      padding:8px 10px;
-      border-radius:999px;
-      background:var(--chip);
-      border:1px solid #1c2533;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:800;
-    }
+    .pill{padding:8px 10px;border-radius:999px;background:var(--chip);border:1px solid #1c2533;color:var(--muted);font-size:12px;font-weight:900}
     .stats{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px;margin-top:14px}
-    .stat{
-      background:#0d131d;
-      border:1px solid #1c2533;
-      border-radius:14px;
-      padding:12px;
-    }
-    .stat .label{font-size:12px;color:var(--muted);font-weight:800}
+    .stat{background:#0d131d;border:1px solid #1c2533;border-radius:14px;padding:12px}
+    .stat .label{font-size:12px;color:var(--muted);font-weight:900}
     .stat .value{font-size:28px;font-weight:1000;margin-top:6px}
-    .green{color:var(--accent)}
-    .red{color:var(--danger)}
-    .cyan{color:var(--accent2)}
-    .summary{
-      margin-top:12px;
-      padding:12px;
-      border-radius:12px;
-      background:#0d131d;
-      border:1px solid #1c2533;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-    table{
-      width:100%;
-      margin-top:14px;
-      border-collapse:collapse;
-      background:#0d131d;
-      border-radius:12px;
-      overflow:hidden;
-      border:1px solid #1c2533;
-    }
-    th,td{
-      padding:10px;
-      border-bottom:1px solid #1c2533;
-      font-size:13px;
-      vertical-align:top;
-    }
-    th{
-      background:#16202c;
-      font-weight:900;
-      color:#c8ff9b;
-      position:sticky; top:0;
-      z-index:1;
-    }
+    .green{color:var(--accent)} .red{color:var(--danger)} .cyan{color:var(--accent2)}
+    .summary{margin-top:12px;padding:12px;border-radius:12px;background:#0d131d;border:1px solid #1c2533;color:var(--muted);
+      font-size:13px;line-height:1.45}
+    table{width:100%;margin-top:14px;border-collapse:collapse;background:#0d131d;border-radius:12px;overflow:hidden;border:1px solid #1c2533}
+    th,td{padding:10px;border-bottom:1px solid #1c2533;font-size:13px;vertical-align:top}
+    th{background:#16202c;font-weight:1000;color:#c8ff9b;position:sticky;top:0;z-index:1}
     tr:hover td{background:#141c27}
-    .badge{
-      display:inline-block;
-      padding:4px 10px;
-      border-radius:999px;
-      font-weight:1000;
-      font-size:12px;
-      border:1px solid;
-      white-space:nowrap;
-    }
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:1000;font-size:12px;border:1px solid;white-space:nowrap}
     .b-active{color:var(--accent);border-color:#2c6b2c;background:#0c1b12}
     .b-inactive{color:var(--danger);border-color:#6b2c2c;background:#1b0c0c}
-    .toast{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      background:#16202c;
-      padding:12px 14px;
-      border-radius:12px;
-      opacity:0;
-      transform:translateY(16px);
-      pointer-events:none;
-      transition:.25s;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      border:1px solid #2a3647;
-      max-width:420px;
-    }
+    .toast{position:fixed;right:18px;bottom:18px;background:#16202c;padding:12px 14px;border-radius:12px;opacity:0;
+      transform:translateY(16px);pointer-events:none;transition:.25s;display:flex;gap:10px;align-items:center;border:1px solid #2a3647;max-width:420px}
     .toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
-    .spinner{
-      width:16px;height:16px;border-radius:50%;
-      border:2px solid #44546a;border-top-color:var(--accent);
-      animation:spin 1s linear infinite;
-    }
+    .spinner{width:16px;height:16px;border-radius:50%;border:2px solid #44546a;border-top-color:var(--accent);animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .optline{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px}
-    input[type=number]{
-      width:140px;
-      padding:8px;
-      background:#0d131d;
-      border-radius:10px;
-      border:1px solid #1c2533;
-      color:white;
-      font-weight:800;
-    }
-    label.inline{
-      font-size:12px;
-      color:var(--muted);
-      display:flex;
-      gap:8px;
-      align-items:center;
-      font-weight:800;
-    }
-    .smallnote{font-size:12px;color:var(--muted);margin-top:8px}
-    @media (max-width:900px){
-      .stats{grid-template-columns:repeat(2,minmax(180px,1fr));}
-    }
+    input[type=number]{width:160px;padding:8px;background:#0d131d;border-radius:10px;border:1px solid #1c2533;color:#fff;font-weight:900}
+    label.inline{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;font-weight:900}
+    .smallnote{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.35}
+    .logoBox{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .logoPh{width:38px;height:38px;border-radius:10px;background:linear-gradient(180deg,#243044,#101827);border:1px solid #2a3647}
+    @media (max-width:900px){ .stats{grid-template-columns:repeat(2,minmax(180px,1fr));} }
   </style>
 </head>
 <body>
 
-<h1>Recuperación • Activos vs No Activos</h1>
+<div class="logoBox">
+  <div class="logoPh" title="Logo NEXO (placeholder)"></div>
+  <div>
+    <h1>NEXO SMOKY</h1>
+    <div class="sub">
+      Fusiona: <b>Contactos Whaticket</b> + <b>Cargas/Operaciones</b> → marca <b>JUGANDO</b> vs <b>A CONTACTAR</b> y exporta planilla lista.
+    </div>
+  </div>
+</div>
 
 <div class="card">
   <div class="row">
     <div class="box">
-      <div class="section-title">Cargas del mes (CSV)</div>
+      <div class="section-title">Cargas del mes / Operaciones (CSV)</div>
       <input type="file" id="fileOps" accept=".csv" />
       <div class="hint">
-        Este CSV es el de operaciones/cargas del período. Soporta separador automático <b>,</b> o <b>;</b>.
+        CSV de operaciones. Detecta separador <b>,</b> o <b>;</b>. Busca columnas tipo: fecha, cantidad/monto, alias/usuario/jugador/titular.
       </div>
     </div>
 
@@ -215,24 +89,17 @@
       <div class="section-title">Contactos Whaticket (CSV)</div>
       <input type="file" id="fileContacts" accept=".csv" />
       <div class="hint">
-        Debe exportar columnas: <b>number,name,email,tags,metadata</b><br/>
-        El alias suele venir en <b>name</b> como: <b>0011mar//Nombre Apellido</b>
+        Debe exportar: <b>number,name,email,tags,metadata</b><br/>
+        Ej name: <b>0011mar//Nombre Apellido</b> (alias = 0011mar)
       </div>
     </div>
 
-    <div class="box" style="max-width:420px">
+    <div class="box" style="max-width:460px">
       <div class="section-title">Opciones</div>
 
       <div class="optline">
-        <label class="inline">
-          <input type="checkbox" id="exportOnlyNoActivos">
-          Exportar SOLO NO ACTIVOS
-        </label>
-
-        <label class="inline">
-          <input type="checkbox" id="showDebug">
-          Mostrar debug
-        </label>
+        <label class="inline"><input type="checkbox" id="exportOnlyNoActivos"> Exportar SOLO A CONTACTAR</label>
+        <label class="inline"><input type="checkbox" id="showDebug"> Mostrar debug (console)</label>
       </div>
 
       <div class="optline">
@@ -241,44 +108,43 @@
       </div>
 
       <div class="smallnote">
-        - Los que aparecen en cargas ⇒ <span class="badge b-active">ACTIVO</span><br/>
-        - Los que NO aparecen ⇒ <span class="badge b-inactive">NO ACTIVO</span> (para recontactar)
+        ✅ ACTIVO se exporta como: <span class="badge b-active">JUGANDO</span><br/>
+        ❌ NO ACTIVO se exporta como: <span class="badge b-inactive">A CONTACTAR</span><br/>
+        <span style="opacity:.9">El sistema usa Web Worker para que Chrome no se cuelgue con 33k.</span>
       </div>
     </div>
   </div>
 
-  <button id="processBtn" class="btn-main">Procesar y Comparar</button>
+  <button id="processBtn" class="btn-main">Procesar y Comparar (sin colgar Chrome)</button>
 
   <div class="toolbar">
-    <button class="btn btn-cyan" id="exportPlanillaBtn">Exportar Planilla (CSV)</button>
+    <button class="btn btn-cyan" id="exportPlanillaBtn">Exportar Planilla Blanca (CSV)</button>
+    <button class="btn btn-cyan" id="exportWhaticketBtn">Exportar CSV Whaticket (tags)</button>
     <button class="btn" id="viewAllBtn">Vista: Todos</button>
-    <button class="btn btn-green" id="viewActivosBtn">Vista: Activos</button>
-    <button class="btn btn-red" id="viewNoActivosBtn">Vista: No Activos</button>
+    <button class="btn btn-green" id="viewActivosBtn">Vista: Jugando</button>
+    <button class="btn btn-red" id="viewNoActivosBtn">Vista: A contactar</button>
   </div>
 
   <div class="stats">
     <div class="stat">
-      <div class="label">Contactos totales</div>
+      <div class="label">Contactos totales (WTK)</div>
       <div class="value green" id="statContacts">0</div>
     </div>
     <div class="stat">
-      <div class="label">Usuarios únicos activos (cargas)</div>
+      <div class="label">Usuarios únicos activos (ops)</div>
       <div class="value cyan" id="statOpsActivos">0</div>
     </div>
     <div class="stat">
-      <div class="label">Detectados ACTIVO (match)</div>
+      <div class="label">Match ACTIVO (en WTK)</div>
       <div class="value green" id="statMatchActivos">0</div>
     </div>
     <div class="stat">
-      <div class="label">Detectados NO ACTIVO</div>
+      <div class="label">A contactar (en WTK)</div>
       <div class="value red" id="statNoActivos">0</div>
     </div>
   </div>
 
-  <div id="summary" class="summary">
-    Sin procesar.
-  </div>
-
+  <div id="summary" class="summary">Sin procesar.</div>
   <div id="results"></div>
 </div>
 
@@ -289,7 +155,7 @@
 
 <script>
 /* =========================
-   UI helpers
+   Toast + utils
 ========================= */
 const toast = document.getElementById('toast');
 const toastText = document.getElementById('toastText');
@@ -300,15 +166,10 @@ function showToast(text, duration=2200) {
   toast.classList.add('show');
   toastTimer = setTimeout(()=>{ toast.classList.remove('show'); toastTimer = null; }, duration);
 }
-
 function escapeHtml(s) {
   if (s === null || s === undefined) return '';
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
-
-/* =========================
-   CSV parsing (robusto + separador auto)
-========================= */
 function readFileText(file) {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -318,328 +179,334 @@ function readFileText(file) {
   });
 }
 
-function detectDelimiter(text) {
-  const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
-  const head = lines.slice(0, 5).join('\n');
-  const commas = (head.match(/,/g) || []).length;
-  const semis  = (head.match(/;/g) || []).length;
-  if (/^sep=;/i.test(lines[0] || '')) return ';';
-  if (/^sep=,/i.test(lines[0] || '')) return ',';
-  return semis > commas ? ';' : ',';
-}
+/* =========================
+   Worker (para no colgar Chrome)
+========================= */
+const workerCode = `
+  let STATE = {
+    merged: [],
+    activeSetSize: 0,
+    contactsCount: 0,
+    matchActivos: 0,
+    noActivos: 0,
+    opsRows: 0,
+    debug: {}
+  };
 
-function parseCSVLine(line, delim) {
-  const result = [];
-  let cur = '';
-  let inQuotes = false;
-  for (let i=0;i<line.length;i++){
-    const ch = line[i];
-    if (ch === '"') {
-      if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-      continue;
+  function detectDelimiter(text) {
+    const lines = String(text||'').replace(/\\r\\n/g,'\\n').replace(/\\r/g,'\\n').split('\\n').filter(l => l.trim() !== '');
+    if (/^sep=;/i.test(lines[0] || '')) return ';';
+    if (/^sep=,/i.test(lines[0] || '')) return ',';
+    const head = lines.slice(0, 5).join('\\n');
+    const commas = (head.match(/,/g) || []).length;
+    const semis  = (head.match(/;/g) || []).length;
+    return semis > commas ? ';' : ',';
+  }
+
+  function parseCSVLine(line, delim) {
+    const result = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i=0;i<line.length;i++){
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+        else inQuotes = !inQuotes;
+        continue;
+      }
+      if (ch === delim && !inQuotes) { result.push(cur); cur=''; continue; }
+      cur += ch;
     }
-    if (ch === delim && !inQuotes) { result.push(cur); cur=''; continue; }
-    cur += ch;
-  }
-  result.push(cur);
-  return result;
-}
-
-function parseCSV(text) {
-  const clean = String(text || '').replace(/\uFEFF/g,'');
-  const delim = detectDelimiter(clean);
-  const lines = clean.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
-  const filtered = lines.filter(l => !/^sep=/i.test(l.trim()));
-  if (filtered.length === 0) return { delim, headers: [], rows: [] };
-  const headers = parseCSVLine(filtered[0], delim).map(h => String(h||'').trim());
-  const rows = filtered.slice(1).map(l => parseCSVLine(l, delim));
-  return { delim, headers, rows };
-}
-
-/* =========================
-   Normalizadores de alias (CLAVE)
-========================= */
-function cleanAliasBase(s) {
-  if (!s) return '';
-  return String(s)
-    .toLowerCase()
-    .trim()
-    .replace(/\uFEFF/g,'')
-    .replace(/\s+/g,' ')
-    .replace(/["']/g,'')
-    .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g,'');
-}
-
-function getAliasFromContactName(name) {
-  const raw = cleanAliasBase(name);
-  if (!raw) return '';
-  if (raw.includes('//')) return cleanAliasBase(raw.split('//')[0]);
-  return raw;
-}
-
-function getTitularFromContactName(name) {
-  const s = String(name || '');
-  if (!s.includes('//')) return '';
-  return cleanAliasBase(s.split('//').slice(1).join('//'));
-}
-
-function getAliasFromOpsUser(u) {
-  return cleanAliasBase(u);
-}
-
-/* =========================
-   OPS parsing
-========================= */
-function findHeaderIndex(headersLower, candidates) {
-  for (let i=0;i<headersLower.length;i++){
-    const h = headersLower[i];
-    if (candidates.some(c => h === c || h.includes(c))) return i;
-  }
-  return -1;
-}
-
-function parseNumberLoose(v) {
-  let s = String(v ?? '').trim();
-  if (!s) return 0;
-  s = s.replace(/\s+/g,'');
-  s = s.replace(/[^0-9\-,.]/g,'');
-  if (s.includes(',') && s.includes('.')) s = s.replace(/,/g,'');
-  if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.');
-  const n = parseFloat(s);
-  return isNaN(n) ? 0 : n;
-}
-
-function parseDateLoose(v) {
-  const s = String(v ?? '').trim();
-  if (!s) return null;
-  let d = new Date(s.replace(' ', 'T'));
-  if (!isNaN(d.getTime())) return d;
-  d = new Date(s);
-  if (!isNaN(d.getTime())) return d;
-  return null;
-}
-
-function parseOpsCSV(text) {
-  const { delim, headers, rows } = parseCSV(text);
-  const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
-
-  const idxFecha = findHeaderIndex(headersLower, ['fecha','date','datetime']);
-  const idxMonto = findHeaderIndex(headersLower, ['cantidad','monto','importe','amount','balance']);
-  const idxAlias = findHeaderIndex(headersLower, ['alias','usuario','user','player','jugador','titular','cliente']);
-
-  const F_idxFecha = idxFecha !== -1 ? idxFecha : 0;
-  const F_idxMonto = idxMonto !== -1 ? idxMonto : (delim === ';' ? 2 : 3);
-  const F_idxUser  = idxAlias !== -1 ? idxAlias : (delim === ';' ? 4 : 4);
-
-  const parsed = [];
-  for (const r of rows) {
-    if (!r || r.length === 0) continue;
-    const fechaRaw = r[F_idxFecha] ?? '';
-    const montoRaw = r[F_idxMonto] ?? '';
-    const userRaw  = r[F_idxUser]  ?? '';
-
-    const usuario = getAliasFromOpsUser(userRaw);
-    if (!usuario) continue;
-
-    const monto = parseNumberLoose(montoRaw);
-    const fechaObj = parseDateLoose(fechaRaw);
-
-    parsed.push({ usuario, monto, fecha: String(fechaRaw||'').trim(), fechaObj });
+    result.push(cur);
+    return result;
   }
 
-  return { delim, headers, headersLower, parsed };
-}
+  function parseCSV(text) {
+    const clean = String(text || '').replace(/\\uFEFF/g,'');
+    const delim = detectDelimiter(clean);
+    const lines = clean.replace(/\\r\\n/g,'\\n').replace(/\\r/g,'\\n').split('\\n').filter(l => l.trim() !== '');
+    const filtered = lines.filter(l => !/^sep=/i.test(l.trim()));
+    if (filtered.length === 0) return { delim, headers: [], rows: [] };
+    const headers = parseCSVLine(filtered[0], delim).map(h => String(h||'').trim());
+    const rows = filtered.slice(1).map(l => parseCSVLine(l, delim));
+    return { delim, headers, rows };
+  }
 
-/* =========================
-   CONTACTS parsing
-========================= */
-function parseContactsCSV(text) {
-  const { delim, headers, rows } = parseCSV(text);
-  const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
+  function findHeaderIndex(headersLower, candidates) {
+    for (let i=0;i<headersLower.length;i++){
+      const h = headersLower[i];
+      if (candidates.some(c => h === c || h.includes(c))) return i;
+    }
+    return -1;
+  }
 
-  const idxNumber = findHeaderIndex(headersLower, ['number','telefono','tel','phone']);
-  const idxName   = findHeaderIndex(headersLower, ['name','nombre']);
-  const idxEmail  = findHeaderIndex(headersLower, ['email']);
-  const idxTags   = findHeaderIndex(headersLower, ['tags']);
-  const idxMeta   = findHeaderIndex(headersLower, ['metadata']);
+  function cleanAliasBase(s) {
+    if (!s) return '';
+    return String(s)
+      .toLowerCase()
+      .trim()
+      .replace(/\\uFEFF/g,'')
+      .replace(/\\s+/g,' ')
+      .replace(/["']/g,'')
+      .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g,'');
+  }
 
-  const okHeader = (idxNumber !== -1 && idxName !== -1);
+  function getAliasFromContactName(name) {
+    const raw = cleanAliasBase(name);
+    if (!raw) return '';
+    if (raw.includes('//')) return cleanAliasBase(raw.split('//')[0]);
+    return raw;
+  }
 
-  const contacts = [];
-  for (const r of rows) {
-    if (!r || r.length === 0) continue;
-    const number = String(r[idxNumber] ?? '').trim();
-    const name   = String(r[idxName] ?? '').trim();
-    if (!number && !name) continue;
+  function parseNumberLoose(v) {
+    let s = String(v ?? '').trim();
+    if (!s) return 0;
+    s = s.replace(/\\s+/g,'');
+    s = s.replace(/[^0-9\\-,.]/g,'');
+    if (s.includes(',') && s.includes('.')) s = s.replace(/,/g,'');
+    if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.');
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+  }
 
-    contacts.push({
-      number,
-      name,
-      email: String(r[idxEmail] ?? '').trim(),
-      tags: String(r[idxTags] ?? '').trim(),
-      metadata: String(r[idxMeta] ?? '').trim(),
-      alias: getAliasFromContactName(name),
-      titular: getTitularFromContactName(name),
+  function parseOpsCSV(text) {
+    const { delim, headers, rows } = parseCSV(text);
+    const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
+
+    const idxFecha = findHeaderIndex(headersLower, ['fecha','date','datetime']);
+    const idxMonto = findHeaderIndex(headersLower, ['cantidad','monto','importe','amount','balance']);
+    const idxAlias = findHeaderIndex(headersLower, ['alias','usuario','user','player','jugador','titular','cliente']);
+
+    const F_idxFecha = idxFecha !== -1 ? idxFecha : 0;
+    const F_idxMonto = idxMonto !== -1 ? idxMonto : (delim === ';' ? 2 : 3);
+    const F_idxUser  = idxAlias !== -1 ? idxAlias : 4;
+
+    const agg = new Map();
+    let rowsCount = 0;
+
+    for (const r of rows) {
+      if (!r || r.length === 0) continue;
+      const userRaw = r[F_idxUser] ?? '';
+      const usuario = cleanAliasBase(userRaw);
+      if (!usuario) continue;
+
+      const monto = parseNumberLoose(r[F_idxMonto] ?? '');
+      rowsCount++;
+
+      if (!agg.has(usuario)) agg.set(usuario, { count:0, totalMonto:0 });
+      const it = agg.get(usuario);
+      it.count += 1;
+      it.totalMonto += (monto || 0);
+    }
+
+    return { delim, headers, rowsCount, agg };
+  }
+
+  function parseContactsCSV(text) {
+    const { delim, headers, rows } = parseCSV(text);
+    const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
+
+    const idxNumber = findHeaderIndex(headersLower, ['number','telefono','tel','phone']);
+    const idxName   = findHeaderIndex(headersLower, ['name','nombre']);
+    const idxEmail  = findHeaderIndex(headersLower, ['email']);
+    const idxTags   = findHeaderIndex(headersLower, ['tags']);
+    const idxMeta   = findHeaderIndex(headersLower, ['metadata']);
+
+    const contacts = [];
+    for (const r of rows) {
+      if (!r || r.length === 0) continue;
+      const number = String(r[idxNumber] ?? '').trim();
+      const name   = String(r[idxName] ?? '').trim();
+      if (!number && !name) continue;
+
+      const alias = getAliasFromContactName(name);
+      contacts.push({
+        number,
+        name,
+        email: String(r[idxEmail] ?? '').trim(),
+        tags: String(r[idxTags] ?? '').trim(),
+        metadata: String(r[idxMeta] ?? '').trim(),
+        alias
+      });
+    }
+
+    return { delim, headers, contacts, okHeader: (idxNumber !== -1 && idxName !== -1) };
+  }
+
+  function buildMerged(contacts, opsAgg) {
+    const activeSet = new Set(opsAgg.keys());
+    let matchActivos = 0;
+    let noActivos = 0;
+
+    const merged = contacts.map(c => {
+      const alias = c.alias;
+      const isActive = alias && activeSet.has(alias);
+      if (isActive) matchActivos++; else noActivos++;
+
+      return {
+        ...c,
+        status: isActive ? 'JUGANDO' : 'A CONTACTAR',
+        opsCount: isActive ? opsAgg.get(alias).count : 0,
+        opsMonto: isActive ? opsAgg.get(alias).totalMonto : 0
+      };
     });
-  }
-  return { delim, headers, headersLower, contacts, okHeader };
-}
 
-/* =========================
-   Estado global + vistas
-========================= */
+    return { merged, activeSetSize: activeSet.size, matchActivos, noActivos };
+  }
+
+  function csvEscape(v) {
+    const s = String(v ?? '');
+    return '"' + s.replace(/"/g,'""') + '"';
+  }
+
+  function exportPlanillaBlanca(merged, onlyNoAct, maxRows) {
+    let rows = merged.slice();
+    if (onlyNoAct) rows = rows.filter(r => r.status === 'A CONTACTAR');
+    if (maxRows > 0) rows = rows.slice(0, maxRows);
+
+    // ✅ Mantengo tu header y le agrego al final "telefono" para que NO ROMPA lo anterior,
+    // pero te deja el número listo para el siguiente gestor.
+    const headers =
+'usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar,telefono\\n';
+
+    // En tu lógica: Activo => JUGANDO; No activo => A CONTACTAR
+    const estadoRevision = (r) => r.status === 'JUGANDO' ? 'JUGANDO' : 'A CONTACTAR';
+
+    let csv = headers;
+
+    // Columna "actualmente cargando": dejamos SOLO usuarios JUGANDO (para que el otro gestor los detecte)
+    const actualmenteJugando = rows.filter(r => r.status === 'JUGANDO').map(r => (r.alias || r.name || ''));
+
+    const maxLength = Math.max(rows.length, actualmenteJugando.length);
+
+    for (let i=0;i<maxLength;i++){
+      const r = rows[i];
+      const usuario = r ? (r.alias || r.name || '') : '';
+      const est = r ? estadoRevision(r) : '';
+      const phone = r ? (r.number ? (r.number.startsWith('+') ? r.number : ('+'+r.number)) : '') : '';
+
+      const line = [
+        r ? csvEscape(usuario) : '',
+        r ? csvEscape(est) : '',
+        '',
+        r ? csvEscape(est) : '',
+        csvEscape('NO'),
+        csvEscape('NO'),
+        '',
+        csvEscape('NO'),
+        csvEscape(''),
+        csvEscape(''),
+        csvEscape(actualmenteJugando[i] || ''),
+        csvEscape(''),
+        csvEscape(''),
+        csvEscape(''),
+        csvEscape(''),
+        csvEscape(phone)
+      ].join(',');
+
+      csv += line + '\\n';
+    }
+
+    return csv;
+  }
+
+  function exportWhaticketCSV(merged, tagActivo='ACTIVO', tagNoActivo='A_CONTACTAR', maxRows=0) {
+    let rows = merged.slice();
+    if (maxRows > 0) rows = rows.slice(0, maxRows);
+
+    const headers = 'number,name,email,tags,metadata\\n';
+    let csv = headers;
+
+    for (const r of rows) {
+      const num = r.number || '';
+      const name = r.name || '';
+      const email = r.email || '';
+      let tags = (r.tags || '').trim();
+      const add = (r.status === 'JUGANDO') ? tagActivo : tagNoActivo;
+
+      // evita duplicar tag
+      const tagsArr = tags ? tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+      const has = tagsArr.some(t => t.toLowerCase() === add.toLowerCase());
+      if (!has) tagsArr.push(add);
+      tags = tagsArr.join(',');
+
+      csv += [
+        csvEscape(num),
+        csvEscape(name),
+        csvEscape(email),
+        csvEscape(tags),
+        csvEscape(r.metadata || '')
+      ].join(',') + '\\n';
+    }
+
+    return csv;
+  }
+
+  self.onmessage = (ev) => {
+    const { type, opsText, contactsText, onlyNoAct, limitRows, exportMaxRows } = ev.data || {};
+
+    if (type === 'PROCESS') {
+      const ops = parseOpsCSV(opsText);
+      const contacts = parseContactsCSV(contactsText);
+
+      const mergedPack = buildMerged(contacts.contacts, ops.agg);
+
+      STATE.merged = mergedPack.merged;
+      STATE.activeSetSize = mergedPack.activeSetSize;
+      STATE.contactsCount = contacts.contacts.length;
+      STATE.matchActivos = mergedPack.matchActivos;
+      STATE.noActivos = mergedPack.noActivos;
+      STATE.opsRows = ops.rowsCount;
+      STATE.debug = {
+        ops_delim: ops.delim,
+        contacts_delim: contacts.delim,
+        contacts_header_ok: contacts.okHeader,
+        ops_headers: ops.headers
+      };
+
+      // preview chico (para render sin colgar)
+      const previewLimit = 1200;
+      const preview = STATE.merged.slice(0, previewLimit);
+
+      self.postMessage({
+        type:'PROCESS_DONE',
+        stats: {
+          contacts: STATE.contactsCount,
+          opsActivos: STATE.activeSetSize,
+          matchActivos: STATE.matchActivos,
+          noActivos: STATE.noActivos,
+          opsRows: STATE.opsRows
+        },
+        debug: STATE.debug,
+        preview,
+        previewLimit
+      });
+      return;
+    }
+
+    if (type === 'EXPORT_PLANILLA') {
+      const csv = exportPlanillaBlanca(STATE.merged, !!onlyNoAct, exportMaxRows || 0);
+      self.postMessage({ type:'EXPORT_PLANILLA_DONE', csv });
+      return;
+    }
+
+    if (type === 'EXPORT_WTK') {
+      const csv = exportWhaticketCSV(STATE.merged, 'ACTIVO', 'A_CONTACTAR', exportMaxRows || 0);
+      self.postMessage({ type:'EXPORT_WTK_DONE', csv });
+      return;
+    }
+  };
+`;
+
+const worker = new Worker(URL.createObjectURL(new Blob([workerCode], {type:'text/javascript'})));
+
 let App = {
-  opsAgg: new Map(),
-  activeAliasSet: new Set(),
-  contacts: [],
-  merged: [],
   view: 'all',
-  debug: {}
+  stats: {contacts:0, opsActivos:0, matchActivos:0, noActivos:0, opsRows:0},
+  debug: {},
+  preview: [],
+  previewLimit: 1200
 };
-
-function computeOpsAgg(opsParsed) {
-  const agg = new Map();
-  for (const r of opsParsed) {
-    const key = r.usuario;
-    if (!key) continue;
-    if (!agg.has(key)) {
-      agg.set(key, { usuario:key, count:0, totalMonto:0, lastFecha:'', lastFechaObj:null });
-    }
-    const it = agg.get(key);
-    it.count += 1;
-    it.totalMonto += (r.monto || 0);
-
-    const curT = (r.fechaObj && !isNaN(r.fechaObj.getTime())) ? r.fechaObj.getTime() : NaN;
-    const prevT = (it.lastFechaObj && !isNaN(it.lastFechaObj.getTime())) ? it.lastFechaObj.getTime() : NaN;
-    if (!isNaN(curT) && (isNaN(prevT) || curT > prevT)) {
-      it.lastFechaObj = r.fechaObj;
-      it.lastFecha = r.fecha || '';
-    } else if (!it.lastFecha && r.fecha) {
-      it.lastFecha = r.fecha;
-    }
-  }
-  return agg;
-}
-
-function buildMergedTable(contacts, opsAgg) {
-  const activeSet = new Set(opsAgg.keys());
-  const merged = contacts.map(c => {
-    const alias = c.alias;
-    const isActive = alias && activeSet.has(alias);
-    const ops = isActive ? opsAgg.get(alias) : null;
-    return {
-      ...c,
-      status: isActive ? 'ACTIVO' : 'NO ACTIVO',
-      opsCount: ops ? ops.count : 0,
-      opsMonto: ops ? ops.totalMonto : 0,
-      lastFecha: ops ? (ops.lastFecha || '') : ''
-    };
-  });
-  return { merged, activeSet };
-}
-
-/* =========================
-   Render
-========================= */
-function render() {
-  const statContacts = document.getElementById('statContacts');
-  const statOpsActivos = document.getElementById('statOpsActivos');
-  const statMatchActivos = document.getElementById('statMatchActivos');
-  const statNoActivos = document.getElementById('statNoActivos');
-  const summary = document.getElementById('summary');
-  const results = document.getElementById('results');
-
-  const all = App.merged || [];
-  const activos = all.filter(x => x.status === 'ACTIVO');
-  const noactivos = all.filter(x => x.status === 'NO ACTIVO');
-
-  const view = App.view;
-  let showing = all;
-  if (view === 'active') showing = activos;
-  if (view === 'inactive') showing = noactivos;
-
-  statContacts.textContent = all.length.toLocaleString('es-AR');
-  statOpsActivos.textContent = (App.activeAliasSet.size || 0).toLocaleString('es-AR');
-  statMatchActivos.textContent = activos.length.toLocaleString('es-AR');
-  statNoActivos.textContent = noactivos.length.toLocaleString('es-AR');
-
-  const dbg = document.getElementById('showDebug').checked;
-  const dbgLine = dbg
-    ? `<div style="margin-top:8px"><b>Debug:</b> ops_delim="${escapeHtml(App.debug.ops_delim)}" • contacts_delim="${escapeHtml(App.debug.contacts_delim)}" • contacts_header_ok=${App.debug.contacts_header_ok ? 'true' : 'false'} • ops_headers="${escapeHtml((App.debug.ops_headers || []).slice(0,8).join(' | '))}"</div>`
-    : '';
-
-  summary.innerHTML = `
-    <b>Procesado</b><br/>
-    Ops: <b>${(App.debug.ops_rows||0).toLocaleString('es-AR')}</b> registros •
-    <b>${(App.activeAliasSet.size||0).toLocaleString('es-AR')}</b> usuarios únicos activos.<br/>
-    Contacts: <b>${(all.length||0).toLocaleString('es-AR')}</b> filas.<br/>
-    Vista: <b>${view === 'all' ? 'Todos' : (view === 'active' ? 'Activos' : 'No Activos')}</b>.
-    ${dbgLine}
-  `;
-
-  let html = '';
-  html += `<div class="pill">Mostrando ${showing.length.toLocaleString('es-AR')} filas.</div>`;
-
-  html += `
-    <table>
-      <thead>
-        <tr>
-          <th>Usuario (alias detectado)</th>
-          <th>Teléfono</th>
-          <th>Estado</th>
-          <th>Operaciones mes</th>
-          <th>Monto mes</th>
-          <th>Última fecha</th>
-          <th>Tags</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-
-  const limit = 1200;
-  const sliced = showing.slice(0, limit);
-
-  for (const r of sliced) {
-    const badge = r.status === 'ACTIVO'
-      ? `<span class="badge b-active">ACTIVO</span>`
-      : `<span class="badge b-inactive">NO ACTIVO</span>`;
-
-    const phone = r.number ? (r.number.startsWith('+') ? r.number : ('+'+r.number)) : '';
-    const user = r.alias || r.name || '';
-
-    html += `
-      <tr>
-        <td>${escapeHtml(user)}</td>
-        <td>${escapeHtml(phone)}</td>
-        <td>${badge}</td>
-        <td>${(r.opsCount||0).toLocaleString('es-AR')}</td>
-        <td>$${(r.opsMonto||0).toLocaleString('es-AR')}</td>
-        <td>${escapeHtml(r.lastFecha || '')}</td>
-        <td>${escapeHtml(r.tags || '')}</td>
-      </tr>
-    `;
-  }
-
-  html += `</tbody></table>`;
-
-  if (showing.length > limit) {
-    html += `<div class="smallnote">*Mostrando solo ${limit} filas en pantalla para no trabar Chrome. La exportación sale completa.</div>`;
-  }
-
-  results.innerHTML = html;
-}
-
-/* =========================
-   Export: PLANILLA estilo inicial
-   FIX CLAVE: "actualmente cargando" SIEMPRE sale del total (App.merged),
-   aunque exportes SOLO NO ACTIVOS.
-========================= */
-function csvEscape(v) {
-  const s = String(v ?? '');
-  if (s.includes('"') || s.includes(',') || s.includes('\n')) return '"' + s.replace(/"/g,'""') + '"';
-  return '"' + s + '"';
-}
 
 function downloadFile(content, fileName, mimeType) {
   const bom = mimeType.includes('csv') ? '\uFEFF' : '';
@@ -652,156 +519,147 @@ function downloadFile(content, fileName, mimeType) {
   document.body.removeChild(link);
 }
 
-function exportPlanilla() {
-  const onlyNoAct = document.getElementById('exportOnlyNoActivos').checked;
-  const maxRows = parseInt(document.getElementById('limitRows').value, 10) || 0;
+function render() {
+  const statContacts = document.getElementById('statContacts');
+  const statOpsActivos = document.getElementById('statOpsActivos');
+  const statMatchActivos = document.getElementById('statMatchActivos');
+  const statNoActivos = document.getElementById('statNoActivos');
+  const summary = document.getElementById('summary');
+  const results = document.getElementById('results');
 
-  // rows = lo que exportás como "base" (puede ser todos o solo no activos)
-  let rows = App.merged.slice();
-  if (onlyNoAct) rows = rows.filter(r => r.status === 'NO ACTIVO');
-  if (maxRows > 0) rows = rows.slice(0, maxRows);
+  statContacts.textContent = (App.stats.contacts||0).toLocaleString('es-AR');
+  statOpsActivos.textContent = (App.stats.opsActivos||0).toLocaleString('es-AR');
+  statMatchActivos.textContent = (App.stats.matchActivos||0).toLocaleString('es-AR');
+  statNoActivos.textContent = (App.stats.noActivos||0).toLocaleString('es-AR');
 
-  // ✅ FIX: actualmenteCargando SIEMPRE se arma del universo completo
-  const actualmenteCargando = (App.merged || [])
-    .filter(r => r.status === 'ACTIVO')
-    .map(r => (r.alias || r.name || '').trim())
-    .filter(Boolean);
+  const dbg = document.getElementById('showDebug').checked;
+  const dbgLine = dbg
+    ? `<div style="margin-top:8px"><b>Debug:</b> ops_delim="${escapeHtml(App.debug.ops_delim)}" • contacts_delim="${escapeHtml(App.debug.contacts_delim)}" • contacts_header_ok=${App.debug.contacts_header_ok ? 'true' : 'false'}</div>`
+    : '';
 
-  // Header EXACTO
-  const headers =
-`usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
+  summary.innerHTML = `
+    <b>Procesado</b><br/>
+    Ops: <b>${(App.stats.opsRows||0).toLocaleString('es-AR')}</b> registros •
+    <b>${(App.stats.opsActivos||0).toLocaleString('es-AR')}</b> usuarios únicos activos.<br/>
+    Contacts: <b>${(App.stats.contacts||0).toLocaleString('es-AR')}</b> filas.<br/>
+    Vista: <b>${App.view === 'all' ? 'Todos' : (App.view === 'active' ? 'JUGANDO' : 'A CONTACTAR')}</b>.
+    ${dbgLine}
+  `;
 
-  const estadoRevision = (r) => {
-    // ✅ Activos => JUGANDO (no "ESTAN CARGANDO")
-    if (r.status === 'ACTIVO') return 'JUGANDO';
-    return 'A CONTACTAR';
-  };
+  // Filtra preview según vista (sin colgar)
+  let showing = App.preview.slice();
+  if (App.view === 'active') showing = showing.filter(r => r.status === 'JUGANDO');
+  if (App.view === 'inactive') showing = showing.filter(r => r.status === 'A CONTACTAR');
 
-  const yaContactados = [];
-  const recuperados = [];
-  const turnoManana = [];
-  const turnoTarde = [];
-  const turnoNoche = [];
-  const aBorrar = [];
+  let html = '';
+  html += `<div class="pill">Mostrando preview: ${showing.length.toLocaleString('es-AR')} filas (máx ${App.previewLimit}). Exporta completo sin preview.</div>`;
 
-  // maxLength: para que la columna "actualmente cargando" se exporte completa
-  const maxLength = Math.max(
-    rows.length,
-    yaContactados.length,
-    recuperados.length,
-    actualmenteCargando.length,
-    turnoManana.length,
-    turnoTarde.length,
-    turnoNoche.length,
-    aBorrar.length
-  );
+  html += `
+    <table>
+      <thead>
+        <tr>
+          <th>Alias</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Ops mes</th>
+          <th>Monto mes</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
 
-  let csv = headers;
+  for (const r of showing) {
+    const badge = r.status === 'JUGANDO'
+      ? `<span class="badge b-active">JUGANDO</span>`
+      : `<span class="badge b-inactive">A CONTACTAR</span>`;
 
-  for (let i=0;i<maxLength;i++){
-    const r = rows[i];
-    const usuario = r ? (r.alias || r.name || '') : '';
-    const est = r ? estadoRevision(r) : '';
+    const phone = r.number ? (r.number.startsWith('+') ? r.number : ('+'+r.number)) : '';
+    const alias = r.alias || '';
 
-    const line = [
-      r ? csvEscape(usuario) : '',
-      r ? csvEscape(est) : '',
-      '',
-      r ? csvEscape(est) : '',
-      csvEscape('NO'),
-      csvEscape('NO'),
-      '',
-      csvEscape('NO'),
-      csvEscape(yaContactados[i] || ''),
-      csvEscape(recuperados[i] || ''),
-      csvEscape(actualmenteCargando[i] || ''),  // ✅ acá sale siempre
-      csvEscape(turnoManana[i] || ''),
-      csvEscape(turnoTarde[i] || ''),
-      csvEscape(turnoNoche[i] || ''),
-      csvEscape(aBorrar[i] || '')
-    ].join(',');
-
-    csv += line + '\n';
+    html += `
+      <tr>
+        <td>${escapeHtml(alias)}</td>
+        <td>${escapeHtml(phone)}</td>
+        <td>${badge}</td>
+        <td>${(r.opsCount||0).toLocaleString('es-AR')}</td>
+        <td>$${(r.opsMonto||0).toLocaleString('es-AR')}</td>
+        <td>${escapeHtml(r.tags || '')}</td>
+      </tr>
+    `;
   }
 
-  const name = `planilla_exportada_${new Date().toISOString().slice(0,10)}.csv`;
-  downloadFile(csv, name, 'text/csv;charset=utf-8;');
-  showToast('Planilla exportada');
+  html += `</tbody></table>`;
+  results.innerHTML = html;
 }
 
+worker.onmessage = (ev) => {
+  const msg = ev.data || {};
+  if (msg.type === 'PROCESS_DONE') {
+    App.stats = msg.stats || App.stats;
+    App.debug = msg.debug || {};
+    App.preview = msg.preview || [];
+    App.previewLimit = msg.previewLimit || 1200;
+
+    if (document.getElementById('showDebug').checked) {
+      console.log('DEBUG', {stats: App.stats, debug: App.debug});
+    }
+
+    render();
+    showToast('Listo — comparación lista', 1600);
+  }
+
+  if (msg.type === 'EXPORT_PLANILLA_DONE') {
+    const name = `planilla_exportada_${new Date().toISOString().slice(0,10)}.csv`;
+    downloadFile(msg.csv || '', name, 'text/csv;charset=utf-8;');
+    showToast('Planilla Blanca exportada');
+  }
+
+  if (msg.type === 'EXPORT_WTK_DONE') {
+    const name = `whaticket_tags_${new Date().toISOString().slice(0,10)}.csv`;
+    downloadFile(msg.csv || '', name, 'text/csv;charset=utf-8;');
+    showToast('CSV Whaticket exportado');
+  }
+};
+
 /* =========================
-   Procesar principal
+   Handlers UI
 ========================= */
 document.getElementById('processBtn').addEventListener('click', async () => {
   const fOps = document.getElementById('fileOps').files[0];
   const fContacts = document.getElementById('fileContacts').files[0];
-  if (!fOps || !fContacts) return showToast('Cargá ambos archivos CSV', 2500);
+  if (!fOps || !fContacts) return showToast('Cargá ambos CSV', 2500);
 
-  showToast('Procesando y comparando…', 8000);
+  showToast('Procesando en background (Worker)…', 8000);
 
   try {
     const [opsText, contactsText] = await Promise.all([ readFileText(fOps), readFileText(fContacts) ]);
-
-    const ops = parseOpsCSV(opsText);
-    const contacts = parseContactsCSV(contactsText);
-
-    const opsAgg = computeOpsAgg(ops.parsed);
-    const { merged, activeSet } = buildMergedTable(contacts.contacts, opsAgg);
-
-    App.opsAgg = opsAgg;
-    App.activeAliasSet = activeSet;
-    App.contacts = contacts.contacts;
-    App.merged = merged;
-
-    App.debug = {
-      ops_delim: ops.delim,
-      contacts_delim: contacts.delim,
-      contacts_header_ok: contacts.okHeader,
-      ops_rows: ops.parsed.length,
-      ops_headers: ops.headers
-    };
-
-    if (document.getElementById('showDebug').checked) {
-      const sampleNoMatch = [];
-      let aliasVacios = 0;
-
-      for (const c of contacts.contacts) {
-        if (!c.alias) { aliasVacios++; continue; }
-        if (!activeSet.has(c.alias) && sampleNoMatch.length < 20) {
-          sampleNoMatch.push({ name: c.name, alias: c.alias });
-        }
-      }
-      console.log('DEBUG alias vacíos en contacts:', aliasVacios);
-      console.log('DEBUG sample NO MATCH (primeros 20):', sampleNoMatch);
-      console.log('DEBUG active users (ops) size:', activeSet.size);
-    }
-
-    render();
-    showToast('Listo — resultados actualizados', 1800);
-
+    worker.postMessage({ type:'PROCESS', opsText, contactsText });
   } catch (e) {
     console.error(e);
-    showToast('Error procesando archivos', 3000);
+    showToast('Error leyendo archivos', 3000);
     alert('Error: ' + (e && e.message ? e.message : e));
   }
 });
 
-/* =========================
-   Vistas
-========================= */
 document.getElementById('viewAllBtn').addEventListener('click', () => { App.view='all'; render(); });
 document.getElementById('viewActivosBtn').addEventListener('click', () => { App.view='active'; render(); });
 document.getElementById('viewNoActivosBtn').addEventListener('click', () => { App.view='inactive'; render(); });
 
-/* =========================
-   Export
-========================= */
 document.getElementById('exportPlanillaBtn').addEventListener('click', () => {
-  if (!App.merged || App.merged.length === 0) return showToast('Primero procesá los archivos', 2000);
-  exportPlanilla();
+  if (!App.preview || App.preview.length === 0) return showToast('Primero procesá los archivos', 2000);
+  const onlyNoAct = document.getElementById('exportOnlyNoActivos').checked;
+  const exportMaxRows = parseInt(document.getElementById('limitRows').value, 10) || 0;
+  worker.postMessage({ type:'EXPORT_PLANILLA', onlyNoAct, exportMaxRows });
 });
 
-/* Inicial */
+document.getElementById('exportWhaticketBtn').addEventListener('click', () => {
+  if (!App.preview || App.preview.length === 0) return showToast('Primero procesá los archivos', 2000);
+  const exportMaxRows = parseInt(document.getElementById('limitRows').value, 10) || 0;
+  worker.postMessage({ type:'EXPORT_WTK', exportMaxRows });
+});
+
+/* init */
 render();
 </script>
 </body>
