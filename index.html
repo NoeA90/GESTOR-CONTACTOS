@@ -318,13 +318,11 @@ function readFileText(file) {
   });
 }
 
-// detecta separador por header + muestra (prioriza ; si aparece mucho)
 function detectDelimiter(text) {
   const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
   const head = lines.slice(0, 5).join('\n');
   const commas = (head.match(/,/g) || []).length;
   const semis  = (head.match(/;/g) || []).length;
-  // si hay sep=; explícito
   if (/^sep=;/i.test(lines[0] || '')) return ';';
   if (/^sep=,/i.test(lines[0] || '')) return ',';
   return semis > commas ? ';' : ',';
@@ -352,11 +350,8 @@ function parseCSV(text) {
   const clean = String(text || '').replace(/\uFEFF/g,'');
   const delim = detectDelimiter(clean);
   const lines = clean.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l => l.trim() !== '');
-
-  // filtra sep=
   const filtered = lines.filter(l => !/^sep=/i.test(l.trim()));
   if (filtered.length === 0) return { delim, headers: [], rows: [] };
-
   const headers = parseCSVLine(filtered[0], delim).map(h => String(h||'').trim());
   const rows = filtered.slice(1).map(l => parseCSVLine(l, delim));
   return { delim, headers, rows };
@@ -376,7 +371,6 @@ function cleanAliasBase(s) {
     .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g,'');
 }
 
-// CONTACTS.name: "0011mar//ortiz lucrecia" -> alias "0011mar"
 function getAliasFromContactName(name) {
   const raw = cleanAliasBase(name);
   if (!raw) return '';
@@ -390,14 +384,12 @@ function getTitularFromContactName(name) {
   return cleanAliasBase(s.split('//').slice(1).join('//'));
 }
 
-// OPS.usuario: alias detectado (o titular) -> alias comparable
 function getAliasFromOpsUser(u) {
   return cleanAliasBase(u);
 }
 
 /* =========================
-   OPS parsing: detecta columnas (sin depender de índices fijos)
-   Queremos: fecha, monto/cantidad, usuario (alias/titular)
+   OPS parsing
 ========================= */
 function findHeaderIndex(headersLower, candidates) {
   for (let i=0;i<headersLower.length;i++){
@@ -410,13 +402,9 @@ function findHeaderIndex(headersLower, candidates) {
 function parseNumberLoose(v) {
   let s = String(v ?? '').trim();
   if (!s) return 0;
-  // normaliza separadores
   s = s.replace(/\s+/g,'');
-  // deja dígitos, punto, coma y -
   s = s.replace(/[^0-9\-,.]/g,'');
-  // si tiene coma y punto, asume coma miles
   if (s.includes(',') && s.includes('.')) s = s.replace(/,/g,'');
-  // si solo coma, la toma como decimal
   if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.');
   const n = parseFloat(s);
   return isNaN(n) ? 0 : n;
@@ -425,7 +413,6 @@ function parseNumberLoose(v) {
 function parseDateLoose(v) {
   const s = String(v ?? '').trim();
   if (!s) return null;
-  // intenta ISO
   let d = new Date(s.replace(' ', 'T'));
   if (!isNaN(d.getTime())) return d;
   d = new Date(s);
@@ -437,13 +424,10 @@ function parseOpsCSV(text) {
   const { delim, headers, rows } = parseCSV(text);
   const headersLower = headers.map(h => String(h||'').toLowerCase().trim());
 
-  // detecta columnas típicas
   const idxFecha = findHeaderIndex(headersLower, ['fecha','date','datetime']);
   const idxMonto = findHeaderIndex(headersLower, ['cantidad','monto','importe','amount','balance']);
-  // usuario/alias
   const idxAlias = findHeaderIndex(headersLower, ['alias','usuario','user','player','jugador','titular','cliente']);
 
-  // fallback clásico (por si viene como tu formato viejo)
   const F_idxFecha = idxFecha !== -1 ? idxFecha : 0;
   const F_idxMonto = idxMonto !== -1 ? idxMonto : (delim === ';' ? 2 : 3);
   const F_idxUser  = idxAlias !== -1 ? idxAlias : (delim === ';' ? 4 : 4);
@@ -469,7 +453,6 @@ function parseOpsCSV(text) {
 
 /* =========================
    CONTACTS parsing
-   Esperado: number,name,email,tags,metadata
 ========================= */
 function parseContactsCSV(text) {
   const { delim, headers, rows } = parseCSV(text);
@@ -507,11 +490,11 @@ function parseContactsCSV(text) {
    Estado global + vistas
 ========================= */
 let App = {
-  opsAgg: new Map(),            // alias -> {count,totalMonto,lastFecha,lastFechaObj}
-  activeAliasSet: new Set(),    // alias activos (ops)
-  contacts: [],                 // contactos parseados
-  merged: [],                   // tabla final
-  view: 'all',                  // all | active | inactive
+  opsAgg: new Map(),
+  activeAliasSet: new Set(),
+  contacts: [],
+  merged: [],
+  view: 'all',
   debug: {}
 };
 
@@ -527,7 +510,6 @@ function computeOpsAgg(opsParsed) {
     it.count += 1;
     it.totalMonto += (r.monto || 0);
 
-    // fecha más reciente
     const curT = (r.fechaObj && !isNaN(r.fechaObj.getTime())) ? r.fechaObj.getTime() : NaN;
     const prevT = (it.lastFechaObj && !isNaN(it.lastFechaObj.getTime())) ? it.lastFechaObj.getTime() : NaN;
     if (!isNaN(curT) && (isNaN(prevT) || curT > prevT)) {
@@ -543,7 +525,7 @@ function computeOpsAgg(opsParsed) {
 function buildMergedTable(contacts, opsAgg) {
   const activeSet = new Set(opsAgg.keys());
   const merged = contacts.map(c => {
-    const alias = c.alias; // clave principal
+    const alias = c.alias;
     const isActive = alias && activeSet.has(alias);
     const ops = isActive ? opsAgg.get(alias) : null;
     return {
@@ -596,7 +578,6 @@ function render() {
     ${dbgLine}
   `;
 
-  // Tabla
   let html = '';
   html += `<div class="pill">Mostrando ${showing.length.toLocaleString('es-AR')} filas.</div>`;
 
@@ -616,7 +597,7 @@ function render() {
       <tbody>
   `;
 
-  const limit = 1200; // para no colgar el navegador si son 33k en pantalla
+  const limit = 1200;
   const sliced = showing.slice(0, limit);
 
   for (const r of sliced) {
@@ -650,9 +631,9 @@ function render() {
 }
 
 /* =========================
-   Export: PLANILLA estilo inicial (la grande)
-   - Activo => "JUGANDO"
-   - No Activo => "A CONTACTAR"
+   Export: PLANILLA estilo inicial
+   FIX CLAVE: "actualmente cargando" SIEMPRE sale del total (App.merged),
+   aunque exportes SOLO NO ACTIVOS.
 ========================= */
 function csvEscape(v) {
   const s = String(v ?? '');
@@ -675,30 +656,35 @@ function exportPlanilla() {
   const onlyNoAct = document.getElementById('exportOnlyNoActivos').checked;
   const maxRows = parseInt(document.getElementById('limitRows').value, 10) || 0;
 
+  // rows = lo que exportás como "base" (puede ser todos o solo no activos)
   let rows = App.merged.slice();
   if (onlyNoAct) rows = rows.filter(r => r.status === 'NO ACTIVO');
-
   if (maxRows > 0) rows = rows.slice(0, maxRows);
 
-  // Header EXACTO como tu export inicial
+  // ✅ FIX: actualmenteCargando SIEMPRE se arma del universo completo
+  const actualmenteCargando = (App.merged || [])
+    .filter(r => r.status === 'ACTIVO')
+    .map(r => (r.alias || r.name || '').trim())
+    .filter(Boolean);
+
+  // Header EXACTO
   const headers =
 `usuarios,estado de revision,,estado actual,"VISTO, RESPONDIDO?",RECUPERADO,TURNO DE LAS CARGAS,interesado en jugar?,ya contactados,recuperados!,actualmente cargando,TURNO MAÑANA,TURNO TARDE,TURNO NOCHE,contactos a borrar\n`;
 
   const estadoRevision = (r) => {
-    // Lo que pediste: activos => "JUGANDO"; no activos => "A CONTACTAR"
+    // ✅ Activos => JUGANDO (no "ESTAN CARGANDO")
     if (r.status === 'ACTIVO') return 'JUGANDO';
     return 'A CONTACTAR';
   };
 
-  // Columnas auxiliares (como tu export viejo)
-  const yaContactados = [];      // lo vas a llenar después en el proceso humano
+  const yaContactados = [];
   const recuperados = [];
-  const actualmenteCargando = rows.filter(r => r.status === 'ACTIVO').map(r => r.alias || r.name);
   const turnoManana = [];
   const turnoTarde = [];
   const turnoNoche = [];
   const aBorrar = [];
 
+  // maxLength: para que la columna "actualmente cargando" se exporte completa
   const maxLength = Math.max(
     rows.length,
     yaContactados.length,
@@ -728,7 +714,7 @@ function exportPlanilla() {
       csvEscape('NO'),
       csvEscape(yaContactados[i] || ''),
       csvEscape(recuperados[i] || ''),
-      csvEscape(actualmenteCargando[i] || ''),
+      csvEscape(actualmenteCargando[i] || ''),  // ✅ acá sale siempre
       csvEscape(turnoManana[i] || ''),
       csvEscape(turnoTarde[i] || ''),
       csvEscape(turnoNoche[i] || ''),
@@ -775,7 +761,6 @@ document.getElementById('processBtn').addEventListener('click', async () => {
       ops_headers: ops.headers
     };
 
-    // Debug extra de “por qué no matchea”
     if (document.getElementById('showDebug').checked) {
       const sampleNoMatch = [];
       let aliasVacios = 0;
